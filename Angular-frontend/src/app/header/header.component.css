@@ -1,0 +1,29 @@
+
+.dropdown-menu .dropdown-item
+{
+  font-weight: bold;
+  color: #f9f9f9;
+}
+
+.dropdown-menu{
+  background-color: transparent;
+  border: transparent;
+  border: none;
+}
+.dropdown-menu .dropdown-item > li > a:hover {
+  background-image: none;
+
+  background-color: #000!important;
+}
+
+.navbar {
+  background: none;
+}
+.dropdown-content a:hover {
+  background-color: transparent;
+}
+
+.navbar-brand
+{
+  background-color: transparent;
+}

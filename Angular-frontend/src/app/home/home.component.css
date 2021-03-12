@@ -1,0 +1,68 @@
+.heading-box h2{ width:100%; color: red; }
+.text-box {
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  right: 15%;
+  color: #fff;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.car
+{
+  position:relative;
+  z-index:1;
+}
+
+#container {
+  position: relative;
+  text-align: center;
+  color: white;
+  width: 100%;
+}
+
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+/* Top right text */
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+}
+
+h1
+{
+font-style: italic;
+  font-weight: bolder;
+  font-size: 50px ;
+  font-family: "Times New Roman", Times, serif;
+}
+

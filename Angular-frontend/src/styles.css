@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+body, html {
+  height: 100%;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.bg {
+  /* The image used */
+  background-image: url('assets/images/grayWhite.webp');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
