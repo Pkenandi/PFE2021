@@ -1,34 +1,54 @@
 <div class="container mx-auto" style="margin-bottom: 50px; margin-top: 50px">
- <div class="row">
-   <div class="col-md-12 mr-2">
-     <carousel
-       [images]="images"
-       autoplay="true"
-       autoplayInterval="2500"
-       overflowCellsLimit="1"
-       dots="true"
-       arrows="true"
-       arrowsTheme="dark"
-       borderRadius="15px"
-       transitionDuration="1000"
-       loop="true"
-       width=1100
-       height=300
-       cellsToShow=3
-       class="car"
-     >
+    <div class="row">
+        <div class="col-md-12 mr-2">
+            <carousel [images]="images" autoplay="true" autoplayInterval="2500" overflowCellsLimit="1" dots="true" arrows="true" arrowsTheme="dark" borderRadius="15px" transitionDuration="1000" loop="true" width=1100 height=300 cellsToShow=3 class="car">
 
-     </carousel>
-   </div>
- </div>
+            </carousel>
+        </div>
+    </div>
 </div>
 
-<div id="container" class="container-fluid mb-4">
-  <img src="assets/images/medicals/img10.jpg" alt="Snow" style="width:100%;">
-  <div class="centered">
-    <h1 class="text-capitalize text-dark">
-      Welcome ...
-    </h1>
-  </div>
+<app-search-bar> </app-search-bar>
+
+<div class="container-fluid">
+    <div class="container mb-3">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12 text-center">
+                <p> <span style="font-size: x-large;">
+                  Besoin d'un conseil de médical ? <br>
+                 des questions à posées ?
+                </span>
+                    <br> <br>
+                    <small>Poser votre question ici </small> </p>
+
+                <button class="btn btn-lg btn-primary"> Poser ma question </button>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <span style="font-size: x-large;">
+                Questions recemment posées
+              </span>
+                <div class="card" style="width: 20rem;">
+                    <div class="card-body">
+                        <p class="card-text">Comment évité d'etre affecter par la Covid-19 ? </p>
+                    </div>
+                    <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                    <div class="card-body">
+                        <small> <strong>Reponse</strong> </small> <br>
+                        <p class="card-text">
+                            Portez votre masque en lieu public et lavez-vous les main regulierement
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<div id="container " class="container-fluid mb-4 ">
+    <img src="assets/images/medicals/img10.jpg " alt="Snow " style="width:100%; ">
+    <div class="centered ">
+        <h1 class="text-capitalize text-dark ">
+
+        </h1>
+    </div>
+</div>

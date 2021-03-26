@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/Services/user.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Angular-frontend';
+
+  constructor(public user: UserService){}
 }

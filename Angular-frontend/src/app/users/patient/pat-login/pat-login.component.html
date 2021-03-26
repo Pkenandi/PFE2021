@@ -1,0 +1,36 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <span style="margin-left: 10px"><i class="fas fa-user fa-5x"></i></span>
+            <h3> Connectez-vous </h3>
+            <small class="text-danger"> {{message}}</small>
+        </div>
+
+        <!-- Login Form -->
+        <form [formGroup]="patLogForm" (ngSubmit)="login()">
+
+            <input formControlName="username" type="text" id="login" class="fadeIn second" name="username" placeholder="Nom d'utilisateur" required>
+            <small *ngIf="username.invalid && username.touched"> username is required </small>
+
+            <input formControlName="password" type="password" id="password" class="fadeIn third form-control" name="password" placeholder="Mot de passe" required>
+
+            <input [disabled]="!patLogForm.valid" type="submit" class="fadeIn fourth" value="Log In">
+            <a routerLink='../../pat/register'> Créer un compte </a>
+        </form>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
+
+    </div>
+</div>

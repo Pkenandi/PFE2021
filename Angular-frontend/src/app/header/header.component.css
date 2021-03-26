@@ -1,29 +1,36 @@
-
-.dropdown-menu .dropdown-item
-{
-  font-weight: bold;
-  color: #f9f9f9;
+@media(min-width:768px) {
+    .nav-collapse {
+        display: block;
+    }
 }
 
-.dropdown-menu{
-  background-color: transparent;
-  border: transparent;
-  border: none;
+.dropdown-menu .dropdown-item {
+    font-weight: bold;
+    color: #f9f9f9;
 }
-.dropdown-menu .dropdown-item > li > a:hover {
-  background-image: none;
 
-  background-color: #000!important;
+.dropdown-menu {
+    background-color: transparent;
+    border: transparent;
+    border: none;
+}
+
+.dropdown-menu .dropdown-item>li>a:hover {
+    background-image: none;
+    background-color: #000!important;
 }
 
 .navbar {
-  background: none;
-}
-.dropdown-content a:hover {
-  background-color: transparent;
+    background: none;
+    background: #16222A;
+    background: -webkit-linear-gradient(59deg, #3A6073, #16222A);
+    background: linear-gradient(59deg, #3A6073, #16222A);
 }
 
-.navbar-brand
-{
-  background-color: transparent;
+.dropdown-content a:hover {
+    background-color: transparent;
+}
+
+.navbar-brand {
+    background-color: transparent;
 }

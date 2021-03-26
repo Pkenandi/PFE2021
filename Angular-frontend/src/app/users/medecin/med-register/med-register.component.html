@@ -1,0 +1,89 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+<div class="container">
+    <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+            <span style="margin-left: 100px"><i class="fas fa-user-md fa-5x"></i></span>
+            <h4 class="card-title mt-3 text-center">Créer un compte </h4>
+            <form [formGroup]="regMedForm" (ngSubmit)="registerMedecin()">
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input formControlName="nom" name="nom" class="form-control" placeholder="Nom ..." type="text">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
+                    </div>
+                    <input formControlName="prenom" name="prenom" class="form-control" placeholder="Prenom ..." type="text">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-user-md"></i> </span>
+                    </div>
+                    <input formControlName="cin" name="cin" class="form-control" placeholder="CIN ..." type="text">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
+                    </div>
+                    <input formControlName="specialite" name="specialite" class="form-control" placeholder="Specialité ..." type="text">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                    </div>
+                    <input formControlName="email" name="email" class="form-control" placeholder="Adresse mail" type="email">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                    </div>
+                    <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ... " type="text">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                    </div>
+                    <input formControlName="phone" name="phone" class="form-control" placeholder="Phone number" type="text">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input formControlName="password" name="password" class="form-control" placeholder="Create password" type="password">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Repeat password" type="password">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+                </div>
+                <!-- form-group// -->
+                <p class="text-center"> Vous avez un compte ? <a routerLink="../../med/login">Connectez-vous</a> </p>
+            </form>
+        </article>
+    </div>
+    <!-- card.// -->
+
+</div>

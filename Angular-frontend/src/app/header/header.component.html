@@ -1,43 +1,62 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-dark">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light shadow bg-info">
     <div class="container">
-      <a class="navbar-brand btn bg-light" routerLink=""> <img src="assets/images/drlogo.png" alt="Home"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" routerLink=""><img
-              src="../../assets/images/home-solid.svg" alt="">Home</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end">
-          <li class="nav-item dropdown" style="margin-left: 350px; margin-right: -120px">
-            <button class="btn btn-link dropdown-toggle text-light" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-briefcase" aria-hidden="true"></i>
-              Services
-            </button>
-            <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
-              <div class="dropdown-content">
-                <li><a class="dropdown-item" href="#"><img src="assets/images/teleC.png">  Téléconsultation</a></li>
-                <li><a class="dropdown-item" href="#"><img src="assets/images/teleEx.png">  Télé-expertise</a></li>
-                <li><a class="dropdown-item" href="#"><img src="assets/images/teleT.png"> Télétransmission</a></li>
-              </div>
-            </ul>
-          </li>
+        <a class="navbar-brand shadow" routerLink=""> <img src="assets/images/logo1.png" alt="Home"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end">
+                <li class="nav-item dropdown" style="margin-left: 550px; margin-right: -120px">
+                    <button class="btn btn-link dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-briefcase" aria-hidden="true"></i>
+            Services
+          </button>
+                    <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-content">
+                            <li>
+                                <a class="dropdown-item" href="#"><img src="assets/images/teleC.png"> Téléconsultation</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#"><img src="assets/images/teleEx.png"> Télé-expertise</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#"><img src="assets/images/teleT.png"> Télétransmission</a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
 
-          <li class="nav-item">
-            <a class="nav-link btn btn-sm btn-outline-primary text-light w-50" routerLink="user/login"
-               style="font-weight: bolder; margin-left: 170px; width: 200px"> <img src="assets/images/user.png" alt=""> Se connecter </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-sm btn-outline-danger text-light w-75" routerLink="user/register"
-               style="font-weight: bolder; margin-left: 50px"> <img src="assets/images/add-user.png" alt=""> S'inscrire </a>
-          </li>
-        </ul>
-      </div>
+
+                <li class="nav-item" *ngIf="!service.isAuthenticated">
+                    <a class="nav-link btn btn-myaccount text-light" routerLink="mon-compte" style="font-weight: bolder; margin-left: 170px; width: 130px;background-color: rgb(71, 148, 236); height: 40px;">
+                        <img src="assets/images/user.png" alt=""> Mon compte </a>
+                </li>
+                <li>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+                    <div class="collapse navbar-collapse" id="navbar-list-4">
+                        <ul *ngIf="service.isAuthenticated" class="navbar-nav ml-auto">
+                            <li class="nav-item" style="margin-left: 150px">
+                                <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="assets/images/bell-solid.svg" width="20" height="20" class="rounded-circle">
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ username }}
+                                    <img src="assets/images/profil.png" width="25" height="25" class="rounded-circle">
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item text-dark" href="#">Edit Profile</a>
+                                    <a class="dropdown-item text-dark" href="#">Log Out</a>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>

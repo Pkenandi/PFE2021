@@ -1,0 +1,99 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+<div class="container">
+    <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+            <span style="margin-left: 100px"><i class="fas fa-user fa-5x"></i></span>
+            <h4 class="card-title mt-3 text-center">Inscrivez-vous </h4>
+
+            <form [formGroup]="regPatForm" (ngSubmit)="registerPatient()">
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input formControlName="nom" name="nom" class="form-control" placeholder="Nom ..." type="text" required>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
+                    </div>
+                    <input formControlName="prenom" name="prenom" class="form-control" placeholder="Prenom ..." type="text" required>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
+                    </div>
+                    <input formControlName="username" name="username" class="form-control" placeholder="Nom d'utilisateur ..." type="text" required>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
+                    </div>
+                    <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ..." type="text" required>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+                    </div>
+                    <input formControlName="dateNaiss" name="dateNaiss" class="form-control" placeholder="Date naissance ..." type="date" required>
+                    <input formControlName="age" name="age" class="form-control" placeholder="Date naissance ..." type="hidden">
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fas fa-heartbeat"></i> </span>
+                    </div>
+                    <input formControlName="groupeSang" name="groupeSang" class="form-control" placeholder="Groupe sang ..." type="text" required>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                    </div>
+                    <input formControlName="email" name="email" class="form-control" placeholder="Email address" type="email" email required>
+                    <span class="text-danger">*</span>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                    </div>
+                    <input formControlName="phone" name="phone" class="form-control" placeholder="Phone number" type="text" required>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input formControlName="password" name="password" class="form-control" placeholder="Create password" type="password" required>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+                    <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Repeat password" type="password" required>
+                </div>
+
+                <div class="form-group">
+                    <button [disabled]="regPatForm.invalid" type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+                </div>
+                <!-- form-group// -->
+                <p class="text-center"> Vous avez un compte ? <a routerLink="../../pat/login">Connectez-vous</a> </p>
+            </form>
+        </article>
+    </div>
+    <!-- card.// -->
+
+</div>

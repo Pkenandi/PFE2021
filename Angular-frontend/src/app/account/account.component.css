@@ -1,0 +1,56 @@
+strong
+{
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20px;
+  color: black;
+}
+
+#regContainer{
+  background-color: #ADD8E6;
+  border-radius: 5px;
+  height: 350px;
+}
+#logContainer{
+  background-color: #ADD8E6;
+  border-radius: 5px;
+  height: 350px;
+  width: 500px;
+}
+
+span
+{
+  color: black;
+  font-weight: bold;
+}
+
+a{
+  color: white
+}
+
+#box2, #box1{
+  border: 2px black solid;
+  border-radius: 8px;
+  padding-right: 50px;
+  border-left-width: thin;
+  right: 13px;
+  left: 13px;
+  top: 15px;
+  bottom: 20px;
+}
+
+#box1:hover{
+  color: darkred;
+}
+
+#box2:hover{
+  color: darkred;
+}
+
+#box2{
+  height: 100px;
+  width: 70px
+}
+
+#box1{
+  height: 100px
+}
