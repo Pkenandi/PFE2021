@@ -19,7 +19,6 @@
         <form [formGroup]="patLogForm" (ngSubmit)="login()">
 
             <input formControlName="username" type="text" id="login" class="fadeIn second" name="username" placeholder="Nom d'utilisateur" required>
-            <small *ngIf="username.invalid && username.touched"> username is required </small>
 
             <input formControlName="password" type="password" id="password" class="fadeIn third form-control" name="password" placeholder="Mot de passe" required>
 

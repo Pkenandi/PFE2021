@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MedecinService } from '../Services/medecin.service';
+import { PatientService } from '../Services/patient.service';
 import { UserService } from '../Services/user.service';
 
 @Component({
@@ -7,14 +9,26 @@ import { UserService } from '../Services/user.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  username = '';
+
+  username: string;
 
   isAuthenticated = false;
-  constructor(public service: UserService) { }
+  constructor(
+    public _service: UserService,
+    public patientService: PatientService,
+    public medecinService: MedecinService) { }
 
   ngOnInit(): void {
   }
 
- username = this.service.username;
- 
+  onLoggedIn(): void
+  {
+    this.username = this._service.Username;
+  }
+
+  onLoggedOut(): void
+  {
+    this._service.logOut();
+  }
+
 }

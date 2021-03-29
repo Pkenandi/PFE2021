@@ -10,11 +10,12 @@
         <div id="rowElmt" class="row g-3 justify-content-center mt-1">
 
             <div class="col-lg-3 col-md-4 col-sm-12">
-                <input (click)="searchMedecin(key.value)" #key="ngModel" type="text" class="form-control" placeholder=" Nom du médecin " aria-label="name" ngModel autofocus>
+                <input (click)="searchMedecin(searchForm['nom'])" name="nom" formControlName="nom" type="text" class="form-control" placeholder=" Nom du médecin " aria-label="name" ngModel autofocus>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-12">
                 <select type="text" name="Spécialité " value="Specialité" class=" form-control " aria-label="specialite ">
                 <input type="search">
+                <option value="" selected disabled>--Specialité--</option>
                 <option> Cardiologie </option>
                 <option> Dermatologie </option>
                 <option> Chirurgie </option>

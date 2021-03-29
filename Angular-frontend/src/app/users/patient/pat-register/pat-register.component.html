@@ -13,8 +13,8 @@
             <h4 class="card-title mt-3 text-center">Inscrivez-vous </h4>
 
             <form [formGroup]="regPatForm" (ngSubmit)="registerPatient()">
-
-                <div class="form-group input-group">
+                <small class="alert-danger text-center"> {{ message }}</small>
+                <div class="form-group input-group is-invalid">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
@@ -83,7 +83,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Repeat password" type="password" required>
+                    <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Repeat password" type="password" [ngClass]="{'is-invalid':regPatForm.get('cpassword').errors && regPatForm.get('cpassword').touched}" required>
+                    <div class="invalid-feedback" *ngIf="regPatForm.get('cpassword').hasError('passwordMismatch')"> password Don't Match </div>
                 </div>
 
                 <div class="form-group">

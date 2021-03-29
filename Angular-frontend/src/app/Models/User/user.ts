@@ -1,10 +1,10 @@
 export class User {
-  protected Id: number;
-  protected nom: string;
-  protected prenom: string;
-  protected Ville: string;
-  protected email: string;
-  protected phone: string;
+  Id: number;
+  nom: string;
+  prenom: string;
+  Ville: string;
+  email: string;
+  phone: string;
   protected password: string;
   protected cpassword: string;
 
@@ -19,7 +19,7 @@ export class User {
     this.cpassword = cpassword;
   }
 
-  getNom(): string
+  public getNom(): string
   {
     return this.nom;
   }

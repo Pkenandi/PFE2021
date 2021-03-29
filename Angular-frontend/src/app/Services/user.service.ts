@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {PatLoginComponent} from '../users/patient/pat-login/pat-login.component';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -9,6 +10,7 @@ import { Patient } from '../Models/Patient/patient';
 import { Medecin } from '../Models/Medecin/medecin';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { basedUrl } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -20,49 +22,61 @@ const httpOptions = {
 export class UserService {
   isAuthenticated = false;
   message: any;
-  username = '';
-
-  // registrations
-
-  PatUrl = 'http://localhost:8080/user/patient/register';
-  MedUrl = 'http://localhost:8080/user/medecin/register';
-
-  // Login
-
-  logPatUrl = 'http://localhost:8080/user/patient/login';
-  logMedUrl = 'http://localhost:8080/user/medecin/login';
-  mainUrl = 'http://localhost:8080/';
+  Username;
 
   constructor(private _http: HttpClient, private router: Router) {}
+
+  // tslint:disable-next-line: typedef
+  setIsAuthenticated(value: boolean)
+  {
+    this.isAuthenticated = value;
+  }
+
+  getIsAuthenticated(): boolean
+  {
+    return this.isAuthenticated;
+  }
 
   // Registrations Methods
 
   registerPatient(user: any): Observable<any>{
-    return this._http.post(this.PatUrl, user);
+    return this._http.post(`${basedUrl}patient/register`, user, {responseType: 'text'});
   }
 
   registerMedecin(user: any): Observable<any> {
-    return this._http.post(this.MedUrl, user);
+    return this._http.post(`${basedUrl}medecin/register`, user, {responseType: 'text'});
   }
 
   // Log methods
 
-  logoutPatient(): void {
-    this.isAuthenticated = false;
-    this.router.navigate(['../pat/login']);
-  }
-
-  logoutMedecin(): void {
-    this.isAuthenticated = false;
-    this.router.navigate(['../medecin/login']);
-  }
 
   loginPatient(username: string, password: string): Observable<any> {
-      return this._http.post(this.logPatUrl, { username, password});
+
+    return this._http.post(`${basedUrl}patient/login`, { username, password});
   }
 
   loginMedecin(cin: string, password: string): Observable<any> {
-    return this._http.post(this.logMedUrl, { cin, password });
+    return this._http.post(`${basedUrl}medecin/login`, { cin, password });
+  }
+
+  isLoggedIn(): boolean
+  {
+    const user = sessionStorage.getItem('name');
+
+    if (user === null)
+     {
+       return false;
+      }
+    else
+    {
+      return true;
+    }
+  }
+
+  logOut(): void
+  {
+    this.setIsAuthenticated(false);
+    sessionStorage.removeItem('name');
   }
 
 }

@@ -7,27 +7,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end">
                 <li class="nav-item dropdown" style="margin-left: 550px; margin-right: -120px">
-                    <button class="btn btn-link dropdown-toggle text-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-briefcase" aria-hidden="true"></i>
-            Services
-          </button>
-                    <ul class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
-                        <div class="dropdown-content">
-                            <li>
-                                <a class="dropdown-item" href="#"><img src="assets/images/teleC.png"> Téléconsultation</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"><img src="assets/images/teleEx.png"> Télé-expertise</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#"><img src="assets/images/teleT.png"> Télétransmission</a>
-                            </li>
-                        </div>
-                    </ul>
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Services
+      </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-dark" href="#">Télémedecine</a>
+                        <a class="dropdown-item text-dark" href="#">Téléexpertise</a>
+                        <a class="dropdown-item text-dark" href="#">Téléconsultation</a>
+                    </div>
                 </li>
 
 
-                <li class="nav-item" *ngIf="!service.isAuthenticated">
+                <li class="nav-item" *ngIf="!_service.isLoggedIn()">
                     <a class="nav-link btn btn-myaccount text-light" routerLink="mon-compte" style="font-weight: bolder; margin-left: 170px; width: 130px;background-color: rgb(71, 148, 236); height: 40px;">
                         <img src="assets/images/user.png" alt=""> Mon compte </a>
                 </li>
@@ -36,20 +27,26 @@
             <span class="navbar-toggler-icon"></span>
           </button>
                     <div class="collapse navbar-collapse" id="navbar-list-4">
-                        <ul *ngIf="service.isAuthenticated" class="navbar-nav ml-auto">
+                        <ul *ngIf="_service.isLoggedIn()" class="navbar-nav ml-auto">
                             <li class="nav-item" style="margin-left: 150px">
                                 <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img src="assets/images/bell-solid.svg" width="20" height="20" class="rounded-circle">
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ username }}
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{_service.Username}}
                                     <img src="assets/images/profil.png" width="25" height="25" class="rounded-circle">
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item text-dark" href="#">Edit Profile</a>
-                                    <a class="dropdown-item text-dark" href="#">Log Out</a>
+                                    <a class="dropdown-item text-dark" (click)="logOut()">Log Out</a>
                                 </div>
+                            </li>
+                            <li class="nav-item w-25 h-25" *ngIf="medecinService.log">
+                                <button class="btn btn-sm btn-block text-light" id="menu-toggle" routerLink="../med/dashboard">dashboard</button>
+                            </li>
+                            <li class="nav-item w-25 h-25" *ngIf="patientService.log">
+                                <button class="btn btn-sm btn-block text-light" id="menu-toggle" routerLink="../pat/dashboard">dashboard</button>
                             </li>
 
                         </ul>

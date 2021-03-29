@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from 'src/app/Models/User/user';
 import { Medecin } from 'src/app/Models/Medecin/medecin';
-import { FormControl, FormGroup} from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomValidationService } from 'src/app/Services/validations/custom-validation.service';
 
 @Component({
   selector: 'app-med-register',
@@ -14,20 +15,26 @@ import { Router } from '@angular/router';
 export class MedRegisterComponent implements OnInit {
 
   regMedForm = new FormGroup({
-    nom: new FormControl(''),
-    prenom: new FormControl(''),
-    specialite: new FormControl(''),
-    ville: new FormControl(''),
-    email: new FormControl(''),
-    phone: new FormControl(''),
-    cin: new FormControl(''),
-    password: new FormControl(''),
-    cpassword: new FormControl('')
+    nom: new FormControl('', [Validators.required]),
+    prenom: new FormControl('', [Validators.required]),
+    specialite: new FormControl('', [Validators.required]),
+    ville: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
+    cin: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    cpassword: new FormControl('', [Validators.required])
+  },
+  {
+    validators: this._validator.passwordMatchValidator('password' , 'cpassword')
   });
 
   medecins: Medecin[];
 
-  constructor(private service: UserService, private _router: Router) { }
+  constructor(
+    private service: UserService,
+    private _router: Router,
+    private _validator: CustomValidationService ) { }
 
   ngOnInit(): void {
   }
@@ -40,7 +47,7 @@ export class MedRegisterComponent implements OnInit {
     this.service.registerMedecin(this.regMedForm.value).subscribe(() => {
       this.service.isAuthenticated = true;
       this.regMedForm.reset({});
-      this._router.navigate(['../med/dashboard']);
+      this._router.navigate(['../med/login']);
     }, (error: HttpErrorResponse) => {
       console.log(error.message);
     });

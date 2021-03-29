@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Patient } from 'src/app/Models/Patient/patient';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { CustomValidationService } from 'src/app/Services/validations/custom-validation.service';
 
 @Component({
   selector: 'app-pat-register',
@@ -23,12 +24,18 @@ export class PatRegisterComponent implements OnInit {
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     cpassword: new FormControl('', [Validators.required])
+  },
+  {
+    validators: this.validation.passwordMatchValidator('password' , 'cpassword')
   });
 
   patients: Patient[];
   message = '';
 
-  constructor(private service: UserService, private _router: Router) { }
+  constructor(private service: UserService,
+              private _router: Router,
+              private validation: CustomValidationService)
+              { }
 
   ngOnInit(): void {
   }
@@ -44,11 +51,12 @@ export class PatRegisterComponent implements OnInit {
       console.log(this.patients);
       this.service.isAuthenticated = true;
       this.regPatForm.reset({});
-      this._router.navigate(['../pat/dashboard']);
+      this._router.navigate(['../pat/login']);
     },
     (error: HttpErrorResponse) => {
       console.log(error.message);
-      this.message = 'Un patient existe deja avec ces informations ...';
+      // tslint:disable-next-line: quotemark
+      this.message = "Sorry! There's an account with those Data !!!";
     });
   }
 

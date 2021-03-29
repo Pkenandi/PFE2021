@@ -51,7 +51,7 @@ export class SearchBarComponent implements OnInit {
         result.push(medecin);
       }
 
-      this.medecins = result;
+      this._service.medecins = result;
 
       if (result.length === 0 || !key)
       {

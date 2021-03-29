@@ -1,7 +1,7 @@
 import { User } from '../User/user';
 
 export class Patient extends User{
-  private username: string;
+  public username: string;
   private groupeSang: string;
   private age: number;
   private dateNaiss: Date;

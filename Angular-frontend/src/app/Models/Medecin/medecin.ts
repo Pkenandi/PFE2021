@@ -2,8 +2,8 @@ import { User } from '../User/user';
 
 
 export class Medecin extends User{
-  private cin: string;
-  private specialite: string;
+  cin: string;
+  specialite: string;
 
   // tslint:disable-next-line: max-line-length
   constructor(nom: string, prenom: string, ville: string, phone: string, email: string, password: string, Cpassword: string, cin: string, specialite: string)
@@ -13,15 +13,15 @@ export class Medecin extends User{
     this.specialite = specialite;
   }
 
-  getCin(): string
-{
-  return this.cin;
-}
+  public getCin(): string
+  {
+    return this.cin;
+  }
 
-getSpecialite(): string
-{
-  return this.specialite;
-}
+  public getSpecialite(): string
+  {
+    return this.specialite;
+  }
 
 }
 

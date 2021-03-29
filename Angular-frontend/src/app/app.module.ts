@@ -18,6 +18,18 @@ import { PatDashboardComponent } from './users/patient/pat-dashboard/pat-dashboa
 import { MedDashboardComponent } from './users/medecin/med-dashboard/med-dashboard.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { CardComponent } from './card/card.component';
+import { LogoutComponent } from './users/logout/logout.component';
+import { DossierMedicalComponent } from './users/patient/dossier-medical/dossier-medical.component';
+import { RendezVousComponent } from './users/patient/rendez-vous/rendez-vous.component';
+import { ShowDossierContenteComponent } from './users/patient/show-dossier-contente/show-dossier-contente.component';
+import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.component';
+import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
+import { UserService } from './Services/user.service';
+import { MedecinService } from './Services/medecin.service';
+import { PatientService } from './Services/patient.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -33,7 +45,13 @@ import { CardComponent } from './card/card.component';
     PatDashboardComponent,
     MedDashboardComponent,
     SearchBarComponent,
-    CardComponent
+    CardComponent,
+    LogoutComponent,
+    DossierMedicalComponent,
+    RendezVousComponent,
+    ShowDossierContenteComponent,
+    PatProfileComponent,
+    MedProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +59,10 @@ import { CardComponent } from './card/card.component';
     IvyCarouselModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    Ng2OrderModule,
+    Ng2SearchPipeModule
   ],
   exports: [
     HeaderComponent,
@@ -54,7 +75,7 @@ import { CardComponent } from './card/card.component';
     PatLoginComponent
   ],
 
-  providers: [],
+  providers: [UserService, MedecinService, PatientService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

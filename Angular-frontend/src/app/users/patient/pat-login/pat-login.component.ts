@@ -2,6 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Patient } from 'src/app/Models/Patient/patient';
+import { PatientService } from 'src/app/Services/patient.service';
 import { UserService } from 'src/app/Services/user.service';
 
 @Component({
@@ -13,13 +15,18 @@ export class PatLoginComponent implements OnInit {
 
   logData: any;
   message = '';
+  patient: Patient;
+
 
   patLogForm = new FormGroup({
     username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
   });
 
-  constructor(private service: UserService, private _router: Router) { }
+  constructor(
+    private userService: UserService,
+    private patientService: PatientService,
+    private _router: Router) { }
 
   ngOnInit(): void {
   }
@@ -28,11 +35,15 @@ export class PatLoginComponent implements OnInit {
   {
     this.logData = this.patLogForm.value;
     console.log(this.logData);
-    this.service.loginPatient(this.logData.username, this.logData.password)
+    this.patientService.Login(this.logData.username, this.logData.password)
       .subscribe(response => {
+        this.patient = response;
         this.patLogForm.reset({});
-        this.service.isAuthenticated = true;
-        this.username = this.logData.username;
+        this.userService.Username = this.patient.nom;
+        this.patientService.Username = this.patient.username;
+        this.userService.setIsAuthenticated(true);
+        sessionStorage.setItem('name', this.patient.nom);
+        this.patientService.log = true;
         this._router.navigate(['../pat/dashboard']);
       },
       (error: HttpErrorResponse) => {
@@ -41,7 +52,8 @@ export class PatLoginComponent implements OnInit {
       });
   }
 
-  get username(): any
+
+  get Username(): any
   { return this.patLogForm.get('username'); }
 
 }

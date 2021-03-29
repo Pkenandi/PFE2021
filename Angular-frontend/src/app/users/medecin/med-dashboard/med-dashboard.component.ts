@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as $ from 'jquery'
+import { UserService } from 'src/app/Services/user.service';
 
 @Component({
   selector: 'app-med-dashboard',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MedDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(public _service: UserService) { }
 
   ngOnInit(): void {
+      //Toggle Click Function
+    $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+    });
+
   }
 
 }
