@@ -10,8 +10,8 @@ public class Ordonnance {
     private Long id;
     private Integer numero;
     private LocalDate date;
-
-    @OneToOne( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idDossierMed")
-    private DossierMedical dossier;
+//
+//    @OneToOne( cascade = CascadeType.ALL)
+//    @JoinColumn( name = "idDossierMed")
+//    private DossierMedical dossier;
 }

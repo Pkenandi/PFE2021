@@ -10,7 +10,7 @@ public class Specialites {
     private Long id;
     private String specialite;
 
-    @ManyToMany
-    @JoinColumn( name = "idmedecin")
-    private List<Medecin> medecins;
+//    @ManyToMany
+//    @JoinColumn( name = "idmedecin")
+//    private List<Medecin> medecins;
 }

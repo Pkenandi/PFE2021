@@ -12,17 +12,17 @@ public class Consultation {
     private Integer numero;
     private LocalDate date;
 
-    @OneToMany
-    @JoinColumn( name = "idMedecin")
-    private List<Medecin> medecins;
-
-    @OneToMany( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idPatient")
-    private List <Patient> patients;
-
-    @OneToOne ( cascade = CascadeType.ALL)
-    @JoinColumn ( name = "idRdv", nullable = false)
-    private RendezVous rendezVous;
+//    @OneToMany
+//    @JoinColumn( name = "idMedecin")
+//    private List<Medecin> medecins;
+//
+//    @OneToMany( cascade = CascadeType.ALL)
+//    @JoinColumn( name = "idPatient")
+//    private List <Patient> patients;
+//
+//    @OneToOne ( cascade = CascadeType.ALL)
+//    @JoinColumn ( name = "idRdv", nullable = false)
+//    private RendezVous rendezVous;
 
 
     public Consultation() {

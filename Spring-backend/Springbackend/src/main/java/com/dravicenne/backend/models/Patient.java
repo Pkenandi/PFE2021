@@ -1,75 +1,78 @@
 package com.dravicenne.backend.models;
 
 import com.dravicenne.backend.enumeration.UserRole;
+import com.dravicenne.backend.models.dto.PatientDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Patient extends User implements Serializable {
+
     @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     private String groupeSang;
     @Transient
     private Integer age;
-    @Column(nullable = false)
     private LocalDate dateNaiss;
 
-    @OneToOne( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idRdv")
-    private RendezVous rendezVous;
+    // Relationships
 
-    @OneToOne( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idCons")
-    private Consultation consultation;
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "pr_id", referencedColumnName = "id")
+    private List<RendezVous> rendezVousList = new ArrayList<>();
+// -------
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn( name = "pc_id", referencedColumnName = "id")
+    private List<Consultation> consultations = new ArrayList<>();
+// -------
 
-    @OneToOne ( cascade = CascadeType.ALL)
-    @JoinColumn ( name = "idDossier")
-    private DossierMedical dossierMedical;
 
-    public Patient() {
+    //Methods
+    public void addRendezVous(RendezVous rendezVous) {
+         this.rendezVousList.add(rendezVous);
+    }
+    public void removeRendezVous( RendezVous rendezVous){
+        this.rendezVousList.remove(rendezVous);
+    }
+    // ---------------------------------
+    public void addConsultation(Consultation consultation){
+        this.consultations.add(consultation);
+    }
+    public void removeConsultation(Consultation consultation){
+        this.consultations.remove(consultation);
     }
 
-    public Patient(String nom, String prenom, String ville, String email,String groupeSang, String phone,LocalDate dateNaiss, String username, String password, String Cpassword) {
-        super(nom, prenom, ville, email, phone, password, Cpassword);
-        this.username = username;
-        this.groupeSang = groupeSang;
-        this.dateNaiss = dateNaiss;
-    }
+    public static Patient from(PatientDto patientDto){
+        Patient patient = new Patient();
 
-    public String getUsername() {
-        return username;
-    }
+        patient.setNom(patientDto.getNom());
+        patient.setPrenom(patientDto.getPrenom());
+        patient.setVille(patientDto.getVille());
+        patient.setUsername(patientDto.getUsername());
+        patient.setGroupeSang(patientDto.getGroupeSang());
+        patient.setAge(patientDto.getAge());
+        patient.setDateNaiss(patientDto.getDateNaiss());
+        patient.setEmail(patientDto.getEmail());
+        patient.setPhone(patientDto.getPhone());
+        patient.setPassword(patientDto.getPassword());
+        patient.setCpassword(patientDto.getCpassword());
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getGroupeSang() {
-        return groupeSang;
-    }
-
-    public void setGroupeSang(String groupeSang) {
-        this.groupeSang = groupeSang;
-    }
-
-    public Integer getAge() {
-        return Period.between(this.dateNaiss, LocalDate.now()).getYears();
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public LocalDate getDateNaiss() {
-        return dateNaiss;
-    }
-
-    public void setDateNaiss(LocalDate dateNaiss) {
-        this.dateNaiss = dateNaiss;
+        return patient;
     }
 
     @Override

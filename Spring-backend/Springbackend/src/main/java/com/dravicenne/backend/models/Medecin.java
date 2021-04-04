@@ -1,11 +1,20 @@
 package com.dravicenne.backend.models;
 
 import com.dravicenne.backend.enumeration.UserRole;
+import com.dravicenne.backend.models.dto.MedecinDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
 @Entity(name = "medecin")
 public class Medecin extends User implements Serializable {
     @Column(nullable = false, unique = true, updatable = false)
@@ -13,44 +22,44 @@ public class Medecin extends User implements Serializable {
     @Column(nullable = false)
     private String specialite;
 
-    @ManyToOne( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idRdv")
-    private RendezVous rendezVous;
+    @OneToMany( cascade = CascadeType.ALL)
+    @JoinColumn( name = "medId", referencedColumnName = "id")
+    private List<RendezVous> rendezVous = new ArrayList<>();
 
-    @ManyToOne( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idCons")
-    private Consultation consultation;
-
-    @ManyToOne( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idDossier")
-    private DossierMedical dossierMedical;
+//    @ManyToOne( cascade = CascadeType.ALL)
+//    @JoinColumn( name = "idCons")
+//    private Consultation consultation;
+//
+//    @ManyToOne( cascade = CascadeType.ALL)
+//    @JoinColumn( name = "idDossier")
+//    private DossierMedical dossierMedical;
 
     public Medecin() {
     }
 
-    public Medecin(String nom, String prenom, String ville, String email, String phone, String password, String cpassword, String cin, String specialite) {
-        super(nom, prenom, ville, email, phone, password, cpassword);
-        this.cin = cin;
-        this.specialite = specialite;
+    // Methods
+    public void connectToRendezVous(RendezVous rendezVous){
+        this.rendezVous.add(rendezVous);
     }
 
-    public String getCin() {
-        return cin;
+    public static Medecin from(MedecinDto medecinDto){
+        Medecin medecin = new Medecin();
+
+        medecin.setId(medecinDto.getId());
+        medecin.setNom(medecinDto.getNom());
+        medecin.setPrenom(medecinDto.getPrenom());
+        medecin.setSpecialite(medecinDto.getSpecialite());
+        medecin.setVille(medecinDto.getVille());
+        medecin.setEmail(medecinDto.getEmail());
+        medecin.setCin(medecinDto.getCin());
+        medecin.setCpassword(medecinDto.getCpassword());
+        medecin.setPassword(medecinDto.getPassword());
+        medecin.setPhone(medecinDto.getPhone());
+
+        return medecin;
     }
 
-    public void setCin(String cin) {
-        this.cin = cin;
-    }
-
-    public String getSpecialite() {
-        return specialite;
-    }
-
-    public void setSpecialite(String specialite) {
-        this.specialite = specialite;
-    }
-
-    @Override
+        @Override
     public String toString() {
         return "Medecin{" +
                 "cin='" + cin + '\'' +

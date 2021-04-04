@@ -1,10 +1,19 @@
 package com.dravicenne.backend.models;
 
+import com.dravicenne.backend.enumeration.State;
+import com.dravicenne.backend.models.dto.RendezVousDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RendezVous {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
@@ -12,68 +21,22 @@ public class RendezVous {
     private Integer numero;
     private LocalDate date;
     private String heure;
-    private boolean status;
+    private String status;
+    @ManyToOne
+    private Patient patient;
+    @ManyToOne
+    private Medecin medecin;
 
-    @OneToMany( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idPatient")
-    private List<Patient> patients;
+    public static RendezVous from(RendezVousDto rendezVousDto){
+        RendezVous rendezVous = new RendezVous();
 
-    @OneToMany( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idMedecin")
-    private List<Medecin> medecins;
+        rendezVous.setId(rendezVousDto.getId());
+        rendezVous.setHeure(rendezVousDto.getHeure());
+        rendezVous.setDate(rendezVousDto.getDate());
+        rendezVous.setStatus(rendezVousDto.getStatus());
+        rendezVous.setNumero(rendezVousDto.getNumero());
 
-    @OneToOne( cascade = CascadeType.ALL)
-    @JoinColumn( name = "idCons")
-    private Consultation consultation;
-
-    public RendezVous() {
-    }
-
-    public RendezVous(Integer numero, LocalDate date, String heure, boolean status) {
-        this.numero = numero;
-        this.date = date;
-        this.heure = heure;
-        this.status = status;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getHeure() {
-        return heure;
-    }
-
-    public void setHeure(String heure) {
-        this.heure = heure;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+        return rendezVous;
     }
 
     @Override
