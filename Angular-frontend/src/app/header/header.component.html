@@ -1,6 +1,8 @@
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 <nav class="navbar sticky-top navbar-expand-lg navbar-light shadow bg-info">
     <div class="container">
-        <a class="navbar-brand shadow" routerLink=""> <img src="assets/images/logo1.png" alt="Home"></a>
+        <a class="navbar-brand" routerLink=""> <img src="assets/images/logo1.png" alt="Home"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -29,24 +31,24 @@
                     <div class="collapse navbar-collapse" id="navbar-list-4">
                         <ul *ngIf="_service.isLoggedIn()" class="navbar-nav ml-auto">
                             <li class="nav-item" style="margin-left: 150px">
-                                <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img src="assets/images/bell-solid.svg" width="20" height="20" class="rounded-circle">
-                                </a>
+                                <a routerLink="notification" class="nav-link" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                <img src="assets/images/bell-solid.svg" width="20" height="20" class="rounded-circle" class="mb-4">
+
                             </li>
-                            <li class="nav-item dropdown">
+                            <li class="nav-item">
                                 <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{_service.Username}}
                                     <img src="assets/images/profil.png" width="25" height="25" class="rounded-circle">
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item text-dark" href="#">Edit Profile</a>
-                                    <a class="dropdown-item text-dark" (click)="logOut()">Log Out</a>
-                                </div>
+
                             </li>
                             <li class="nav-item w-25 h-25" *ngIf="medecinService.log">
                                 <button class="btn btn-sm btn-block text-light" id="menu-toggle" routerLink="../med/dashboard">dashboard</button>
                             </li>
                             <li class="nav-item w-25 h-25" *ngIf="patientService.log">
                                 <button class="btn btn-sm btn-block text-light" id="menu-toggle" routerLink="../pat/dashboard">dashboard</button>
+                            </li>
+                            <li class="nav-item w-25 h-25" *ngIf="medecinService.log || patientService.log">
+                                <button class="btn btn-sm btn-block text-light" id="menu-toggle" routerLink="../chat">Chat space </button>
                             </li>
 
                         </ul>

@@ -1,12 +1,15 @@
 <div class="d-flex" id="wrapper">
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">Bienvenue <span id="Dr">{{_service.Username}}</span> </div>
+        <div class="sidebar-heading text-center mt-2 mb-2 shadow">Bienvenue <span id="Dr">{{patientService.name}} {{patientService.lastName}}</span> </div>
         <div class="list-group list-group-flush">
-            <a href="#" class="list-group-item list-group-item-action bg-light"> Mes Rendez-vous </a>
-            <a (click)="setDossierValue()" class="btn list-group-item list-group-item-action bg-light"> Mon Dossier Médical </a>
-            <a (click)="setShowMedValue()" class="list-group-item list-group-item-action bg-light"> Trouver un Médecin </a>
-            <a routerLink="/user/logout" class="list-group-item list-group-item-action bg-light"> Se deconnecter </a>
+            <a routerLink="../../patient/{{patientService.Username}}" class="btn list-group-item list-group-item-action bg-light"> Profile </a>
+            <a href="#" class="btn list-group-item list-group-item-action bg-light"> Mes Rendez-vous </a>
+            <a routerLink="../../patient/dossier/{{patientService.Username}}" (click)="setDossierValue()" class="btn list-group-item list-group-item-action bg-light"> Mon Dossier Médical </a>
+            <a (click)="setShowMedValue()" class="btn list-group-item list-group-item-action bg-light"> Trouver un Médecin </a>
+            <a routerLink="/user/logout" class="btn list-group-item list-group-item-action bg-light">
+                <img src="assets/images/logout.png" alt="logout"> Deconnexion
+            </a>
         </div>
     </div>
 

@@ -38,9 +38,12 @@ export class PatLoginComponent implements OnInit {
     this.patientService.Login(this.logData.username, this.logData.password)
       .subscribe(response => {
         this.patient = response;
+        this.patientService.patient = response;
         this.patLogForm.reset({});
         this.userService.Username = this.patient.nom;
         this.patientService.Username = this.patient.username;
+        this.patientService.name = this.patient.nom;
+        this.patientService.lastName = this.patient.prenom;
         this.userService.setIsAuthenticated(true);
         sessionStorage.setItem('name', this.patient.nom);
         this.patientService.log = true;

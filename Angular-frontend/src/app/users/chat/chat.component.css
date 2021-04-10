@@ -1,0 +1,26 @@
+.chat {
+    margin-top: 5rem;
+    width: 40rem;
+}
+
+.chat-content {
+    border-radius: .25rem;
+    height: 40rem;
+    margin-bottom: 2rem;
+    overflow: scroll;
+}
+
+.card {
+    height: 100%;
+    background: beige
+}
+
+hr {
+    margin-bottom: 0%;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 0%;
+    margin-top: 5%;
+}

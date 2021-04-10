@@ -1,12 +1,12 @@
 export class User {
-  Id: number;
-  nom: string;
-  prenom: string;
-  Ville: string;
-  email: string;
-  phone: string;
-  protected password: string;
-  protected cpassword: string;
+  public Id: number;
+  public nom: string;
+  public prenom: string;
+  public Ville: string;
+  public email: string;
+  public phone: string;
+  public password: string;
+  public cpassword: string;
 
   constructor(nom: string, prenom: string, ville: string, email: string, phone: string, password: string, cpassword: string)
   {

@@ -4,22 +4,6 @@
     }
 }
 
-.dropdown-menu .dropdown-item {
-    font-weight: bold;
-    color: #f9f9f9;
-}
-
-.dropdown-menu {
-    background-color: transparent;
-    border: transparent;
-    border: none;
-}
-
-.dropdown-menu .dropdown-item>li>a:hover {
-    background-image: none;
-    background-color: #000!important;
-}
-
 .navbar {
     background: none;
     background: #16222A;
@@ -33,4 +17,22 @@
 
 .navbar-brand {
     background-color: transparent;
+}
+
+.open>.dropdown-menu {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 1;
+}
+
+.dropdown-menu {
+    opacity: .3;
+    -webkit-transform-origin: top;
+    transform-origin: top;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-transform: scale(1, 0);
+    display: block;
+    transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
 }

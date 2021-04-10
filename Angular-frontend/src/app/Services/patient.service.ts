@@ -11,6 +11,10 @@ import { UserService } from './user.service';
 export class PatientService {
 
 Username: any;
+name: any;
+lastName: any;
+patient: Patient;
+
 log = false;
 showMed = true;
 showDossier = false;
@@ -39,5 +43,10 @@ showDossier = false;
   getByUsername(username: string): Observable<Patient>
   {
       return this._http.get<Patient>(`${basedUrl}patient/${username}`);
+  }
+
+  updatePatient(patientDetails, username): Observable<any>
+  {
+    return this._http.put<any>(`${basedUrl}patient/update/${username}`, patientDetails);
   }
 }

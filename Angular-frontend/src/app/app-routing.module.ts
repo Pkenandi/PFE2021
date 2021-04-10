@@ -15,6 +15,8 @@ import { RendezVousComponent } from './users/patient/rendez-vous/rendez-vous.com
 import { ShowDossierContenteComponent } from './users/patient/show-dossier-contente/show-dossier-contente.component';
 import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.component';
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
+import { NotificationComponent } from './notification/notification.component';
+import { ChatComponent } from './users/chat/chat.component';
 
 
 const routes: Routes = [
@@ -29,7 +31,7 @@ const routes: Routes = [
   {
     path: 'patient/:username',
     component: PatProfileComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'medecin/:cin',
@@ -67,7 +69,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'pat/dossierMed',
+    path: 'patient/dossier/:username',
     component: DossierMedicalComponent,
     canActivate: [AuthGuard]
   },
@@ -80,6 +82,15 @@ const routes: Routes = [
     path: 'pat/rendezVous',
     component: RendezVousComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'notification',
+    component: NotificationComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'chat',
+    component: ChatComponent
   },
   {
     path: '',

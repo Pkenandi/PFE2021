@@ -2,8 +2,8 @@ import { User } from '../User/user';
 
 
 export class Medecin extends User{
-  cin: string;
-  specialite: string;
+  public cin: string;
+  public specialite: string;
 
   // tslint:disable-next-line: max-line-length
   constructor(nom: string, prenom: string, ville: string, phone: string, email: string, password: string, Cpassword: string, cin: string, specialite: string)

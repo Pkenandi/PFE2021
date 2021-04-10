@@ -2,9 +2,9 @@ import { User } from '../User/user';
 
 export class Patient extends User{
   public username: string;
-  private groupeSang: string;
-  private age: number;
-  private dateNaiss: Date;
+  public groupeSang: string;
+  public age: number;
+  public dateNaiss: Date;
 
   // tslint:disable-next-line: max-line-length
   constructor(nom: string, prenom: string, ville: string, phone: string, email: string, password: string, cpassword: string, username: string, groupeSang: string, datenaiss: Date)

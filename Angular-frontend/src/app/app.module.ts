@@ -30,6 +30,8 @@ import { PatientService } from './Services/patient.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NotificationComponent } from './notification/notification.component';
+import { ChatComponent } from './users/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     RendezVousComponent,
     ShowDossierContenteComponent,
     PatProfileComponent,
-    MedProfileComponent
+    MedProfileComponent,
+    NotificationComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

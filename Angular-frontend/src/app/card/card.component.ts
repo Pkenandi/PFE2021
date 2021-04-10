@@ -1,4 +1,5 @@
-import { FormGroup, FormControl } from '@angular/forms';
+
+import { FormGroup, FormControl, NgForm, FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Medecin } from '../Models/Medecin/medecin';
@@ -12,6 +13,8 @@ import { MedecinService } from '../Services/medecin.service';
 export class CardComponent implements OnInit {
 
   medecins: Medecin[];
+  specialite: any;
+  page =  1;
 
   constructor(public _service: MedecinService, private _router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -36,25 +39,16 @@ export class CardComponent implements OnInit {
     this._router.navigate(['../medecin/' + cin], { relativeTo: this.activatedRoute});
   }
 
-  public searchFilter(key: string): void
+  public searchFilter(): void
   {
-    const results: Medecin[] = [];
-
-    for ( const medecin of this.medecins)
+    if (this.specialite === '')
     {
-      if ( medecin.nom.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-      medecin.Ville.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
-      medecin.specialite.toLowerCase().indexOf(key.toLowerCase()) !== -1)
-      {
-        results.push(medecin);
-      }
-
-      this.medecins = results;
-
-      if ( results.length === 0 || !key)
-      {
-        this.getMedecins();
-      }
+      this.ngOnInit();
+    }else
+    {
+      this.medecins = this.medecins.filter(res => {
+        return res.specialite.toLowerCase().match(this.specialite.toLowerCase());
+      });
     }
   }
 }
