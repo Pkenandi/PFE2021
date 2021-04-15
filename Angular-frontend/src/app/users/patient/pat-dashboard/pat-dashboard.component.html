@@ -4,10 +4,17 @@
         <div class="sidebar-heading text-center mt-2 mb-2 shadow">Bienvenue <span id="Dr">{{patientService.name}} {{patientService.lastName}}</span> </div>
         <div class="list-group list-group-flush">
             <a routerLink="../../patient/{{patientService.Username}}" class="btn list-group-item list-group-item-action bg-light"> Profile </a>
-            <a href="#" class="btn list-group-item list-group-item-action bg-light"> Mes Rendez-vous </a>
-            <a routerLink="../../patient/dossier/{{patientService.Username}}" (click)="setDossierValue()" class="btn list-group-item list-group-item-action bg-light"> Mon Dossier Médical </a>
+            <button class="btn list-group-item list-group-item-action bg-light dropdown-btn">Mes Rendez-vous
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+              <button class="btn bg-light list-group-item list-group-item-action">  En attente </button>
+              <button class="btn bg-light list-group-item list-group-item-action">  Accepter </button>
+              <button class="btn bg-light list-group-item list-group-item-action">  Refuser  </button>
+            </div>
+            <a routerLink="../../patient/dossier/{{patientService.Username}}" class="btn list-group-item list-group-item-action bg-light"> Mon Dossier Médical </a>
             <a (click)="setShowMedValue()" class="btn list-group-item list-group-item-action bg-light"> Trouver un Médecin </a>
-            <a routerLink="/user/logout" class="btn list-group-item list-group-item-action bg-light">
+            <a routerLink="../../pat/logout" class="btn list-group-item list-group-item-action bg-light">
                 <img src="assets/images/logout.png" alt="logout"> Deconnexion
             </a>
         </div>
@@ -23,10 +30,6 @@
       </button>
         </nav>
         <div class="container-fluid">
-
-            <div class="mt-3 mb-3" *ngIf="patientService.showDossier">
-                <app-show-dossier-contente> </app-show-dossier-contente>
-            </div>
             <div class="" *ngIf="patientService.showMed">
                 <app-card> </app-card>
             </div>
@@ -34,4 +37,3 @@
     </div>
     <!-- /#page-content-wrapper -->
 </div>
-<!-- /#wrapper -->

@@ -17,6 +17,9 @@ import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.com
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
 import { NotificationComponent } from './notification/notification.component';
 import { ChatComponent } from './users/chat/chat.component';
+import {VideoComponent} from "./users/video/video.component";
+import {PatLogoutComponent} from "./users/patient/pat-logout/pat-logout.component";
+import {MedLogoutComponent} from "./users/medecin/med-logout/med-logout.component";
 
 
 const routes: Routes = [
@@ -31,12 +34,12 @@ const routes: Routes = [
   {
     path: 'patient/:username',
     component: PatProfileComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'medecin/:cin',
     component: MedProfileComponent,
-    canActivate: [AuthGuard]
+   // canActivate: [AuthGuard]
   },
   {
     path: 'med/login',
@@ -60,8 +63,12 @@ const routes: Routes = [
     component: PatRegisterComponent
   },
   {
-    path: 'user/logout',
-    component: LogoutComponent
+    path: 'pat/logout',
+    component: PatLogoutComponent
+  },
+  {
+    path: 'med/logout',
+    component: MedLogoutComponent
   },
   {
     path: 'pat/dashboard',
@@ -91,6 +98,10 @@ const routes: Routes = [
   {
     path: 'chat',
     component: ChatComponent
+  },
+  {
+    path: 'consultation',
+    component: VideoComponent
   },
   {
     path: '',

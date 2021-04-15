@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Patient } from 'src/app/Models/Patient/patient';
 import { PatientService } from 'src/app/Services/patient.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-pat-profile',
@@ -15,7 +16,7 @@ export class PatProfileComponent implements OnInit {
   updateForm = new FormGroup({
     nom: new FormControl(''),
     prenom: new FormControl(''),
-    age: new FormControl({value: '', disabled: true}),
+    age: new FormControl(''),
     ville: new FormControl(''),
     email: new FormControl(''),
     groupeSang: new FormControl(''),
@@ -26,10 +27,11 @@ export class PatProfileComponent implements OnInit {
     cpassword: new FormControl('')
   });
 
-  constructor(public patientService: PatientService, private route: ActivatedRoute) { }
+  constructor(public patientService: PatientService, private route: ActivatedRoute, private toaster: ToastrService) { }
 
   profileInfo: Patient = this.patientService.patient;
   UpdatedDetails: Patient;
+  date = new Date();
 
   ngOnInit(): void {
     this.patientService.getByUsername(this.route.snapshot.params.username).subscribe(
@@ -59,9 +61,17 @@ export class PatProfileComponent implements OnInit {
       response => {
         this.profileInfo = response;
         console.log(this.UpdatedDetails);
+        this.toaster.success(
+          "Vos informations ont étaient modifiées le \n"
+          + this.date.getDate()
+          + "-" + this.date.getMonth()
+          + "-" + this.date.getFullYear(),
+          "Modification");
       },
       (error: HttpErrorResponse) => {
-        console.log(error.message);
+        this.toaster.error(
+          "Désoler, impossible de modifier vos informations !! \n",
+          " => " + error.type);
       });
   }
 }

@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
+import { ToastrModule } from 'ngx-toastr';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -32,6 +33,14 @@ import { Ng2OrderModule } from 'ng2-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NotificationComponent } from './notification/notification.component';
 import { ChatComponent } from './users/chat/chat.component';
+import { VideoComponent } from './users/video/video.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatButtonModule} from "@angular/material/button";
+import {MatGridListModule} from "@angular/material/grid-list";
+import { MedLogoutComponent } from './users/medecin/med-logout/med-logout.component';
+import { PatLogoutComponent } from './users/patient/pat-logout/pat-logout.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +64,10 @@ import { ChatComponent } from './users/chat/chat.component';
     PatProfileComponent,
     MedProfileComponent,
     NotificationComponent,
-    ChatComponent
+    ChatComponent,
+    VideoComponent,
+    MedLogoutComponent,
+    PatLogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +78,13 @@ import { ChatComponent } from './users/chat/chat.component';
     ReactiveFormsModule,
     NgxPaginationModule,
     Ng2OrderModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatGridListModule,
+    ToastrModule.forRoot(),
   ],
   exports: [
     HeaderComponent,
@@ -76,7 +94,8 @@ import { ChatComponent } from './users/chat/chat.component';
     MedLoginComponent,
     MedRegisterComponent,
     PatRegisterComponent,
-    PatLoginComponent
+    PatLoginComponent,
+    BrowserAnimationsModule
   ],
 
   providers: [UserService, MedecinService, PatientService],

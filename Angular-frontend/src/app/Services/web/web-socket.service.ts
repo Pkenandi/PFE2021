@@ -15,11 +15,11 @@ export class WebSocketService {
   public openWebSocket(){
     this.webSocket = new WebSocket(webUrl);
 
-    this.webSocket.onopen = (event) =>{
+    this.webSocket.onopen = (event) => {
       console.log(' Open : ', event);
     };
 
-    this.webSocket.onmessage =(event) => {
+    this.webSocket.onmessage = (event) => {
       const chatMessage = JSON.parse(event.data);
       this.chatMessages.push(chatMessage);
     };

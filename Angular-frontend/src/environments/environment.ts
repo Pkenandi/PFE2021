@@ -9,6 +9,7 @@ export const environment = {
 export const basedUrl = 'http://localhost:8080/user/';
 export const mainUrl = 'http://localhost:8080/';
 export const webUrl = 'ws://localhost:8080/chat';
+export const videoUrl = 'ws://localhost:8081';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

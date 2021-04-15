@@ -1,0 +1,21 @@
+video{
+  width: 100%;
+  background: black;
+  margin-top: 50px;
+  border-radius: 5px;
+}
+
+.spaceTop{
+  margin-top: 10px;
+}
+
+#first{
+  margin-left: 300px;
+}
+
+p.video-description{
+  position: absolute;
+  color: darkolivegreen;
+  top: 25px;
+  left: 10px;
+}

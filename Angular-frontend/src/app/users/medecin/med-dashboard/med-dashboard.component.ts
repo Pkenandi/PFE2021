@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery'
 import { UserService } from 'src/app/Services/user.service';
+import {MedecinService} from "../../../Services/medecin.service";
 
 @Component({
   selector: 'app-med-dashboard',
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class MedDashboardComponent implements OnInit {
 
-  constructor(public _service: UserService) { }
+  constructor(public _service: UserService, public medecinService: MedecinService) { }
 
   ngOnInit(): void {
       //Toggle Click Function
@@ -17,7 +18,6 @@ export class MedDashboardComponent implements OnInit {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
     });
-
   }
 
 }

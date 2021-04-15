@@ -7,8 +7,9 @@ import { Patient } from '../Models/Patient/patient';
 import { Medecin } from '../Models/Medecin/medecin';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { basedUrl } from 'src/environments/environment';
+import {basedUrl, mainUrl} from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import {UserService} from "./user.service";
 
 
 @Injectable({
@@ -17,19 +18,31 @@ import { map } from 'rxjs/operators';
 export class MedecinService {
 
   log = false;
+  Cin: string;
   medecins: Medecin[];
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private userService: UserService) { }
 
-  getMedecins(): Observable<Medecin[]>
-  {
+  getMedecins(): Observable<Medecin[]> {
     return this._http.get<Medecin[]>(`${basedUrl}medecin/all`);
   }
 
-  getMedecinByCin(cin: string): Observable<Medecin>
-  {
+  getMedecinByCin(cin: string): Observable<Medecin>{
     return this._http.get<Medecin>(`${basedUrl}medecin/${cin}`)
                .pipe(map((medecin: Medecin) => medecin));
+  }
+
+  update(data, cin): Observable<any>{
+    return this._http.put<any>(`${basedUrl}medecin/update/${cin}`, data);
+  }
+
+  logOut(): void{
+    this.userService.logOut();
+    this.log = false;
+  }
+
+  Login(cin, password): Observable<any>{
+    return this.userService.loginMedecin(cin, password);
   }
 
 }

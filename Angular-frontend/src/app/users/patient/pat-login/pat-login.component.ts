@@ -55,6 +55,10 @@ export class PatLoginComponent implements OnInit {
       });
   }
 
+  logOut(): void{
+    this.patientService.log = false;
+  }
+
 
   get Username(): any
   { return this.patLogForm.get('username'); }
