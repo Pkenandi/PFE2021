@@ -2,11 +2,11 @@ package com.dravicenne.backend.models;
 
 import com.dravicenne.backend.enumeration.UserRole;
 import com.dravicenne.backend.models.dto.PatientDto;
+import com.dravicenne.backend.models.dto.PlainPatientDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +19,8 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@ToString
+@Table(name = "Patient")
 public class Patient extends User implements Serializable {
 
     @Column(unique = true, nullable = false)
@@ -32,15 +33,22 @@ public class Patient extends User implements Serializable {
 
     // Relationships
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "pr_id", referencedColumnName = "id")
+    @JoinColumn(name = "rendezVous_Id")
     private List<RendezVous> rendezVousList = new ArrayList<>();
 // -------
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn( name = "pc_id", referencedColumnName = "id")
+    @JoinColumn(name = "consultation_Id")
     private List<Consultation> consultations = new ArrayList<>();
 // -------
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "dossier_Id")
+    private DossierMedical dossierMedical;
 
     //Methods
     public void addRendezVous(RendezVous rendezVous) {
@@ -57,7 +65,7 @@ public class Patient extends User implements Serializable {
         this.consultations.remove(consultation);
     }
 
-    public static Patient from(PatientDto patientDto){
+    public static Patient from(PlainPatientDto patientDto){
         Patient patient = new Patient();
 
         patient.setNom(patientDto.getNom());
@@ -65,31 +73,68 @@ public class Patient extends User implements Serializable {
         patient.setVille(patientDto.getVille());
         patient.setUsername(patientDto.getUsername());
         patient.setGroupeSang(patientDto.getGroupeSang());
-        patient.setAge(patientDto.getAge());
-        patient.setDateNaiss(patientDto.getDateNaiss());
         patient.setEmail(patientDto.getEmail());
         patient.setPhone(patientDto.getPhone());
-        patient.setPassword(patientDto.getPassword());
-        patient.setCpassword(patientDto.getCpassword());
 
         return patient;
     }
 
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "username='" + username + '\'' +
-                ", groupeSang='" + groupeSang + '\'' +
-                ", age=" + age +
-                ", dateNaiss=" + dateNaiss +
-                ", Id=" + Id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", Ville='" + Ville + '\'' +
-                ", email='" + email + '\'' +
-                ", phone=" + phone +
-                ", password='" + password + '\'' +
-                ", Cpassword='" + Cpassword + '\'' +
-                '}';
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getGroupeSang() {
+        return groupeSang;
+    }
+
+    public void setGroupeSang(String groupeSang) {
+        this.groupeSang = groupeSang;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = Period.between(LocalDate.now(), dateNaiss).getYears();
+    }
+
+    public LocalDate getDateNaiss() {
+        return dateNaiss;
+    }
+
+    public void setDateNaiss(LocalDate dateNaiss) {
+        this.dateNaiss = dateNaiss;
+    }
+
+    @JsonManagedReference(value = "patient_rendezVous")
+    public List<RendezVous> getRendezVousList() {
+        return rendezVousList;
+    }
+
+    public void setRendezVousList(List<RendezVous> rendezVousList) {
+        this.rendezVousList = rendezVousList;
+    }
+
+    @JsonManagedReference(value = "patient_consultation")
+    public List<Consultation> getConsultations() {
+        return consultations;
+    }
+
+    public void setConsultations(List<Consultation> consultations) {
+        this.consultations = consultations;
+    }
+
+    @JsonManagedReference(value = "patient_dossierMedical")
+    public DossierMedical getDossierMedical() {
+        return dossierMedical;
+    }
+
+    public void setDossierMedical(DossierMedical dossierMedical) {
+        this.dossierMedical = dossierMedical;
     }
 }

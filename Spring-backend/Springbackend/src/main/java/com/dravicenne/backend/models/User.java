@@ -3,11 +3,13 @@ package com.dravicenne.backend.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "user")
@@ -28,18 +30,6 @@ public abstract class User implements Serializable {
     protected String phone;
     protected String password;
     protected String Cpassword;
+    protected String Token;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "Id=" + Id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", Ville='" + Ville + '\'' +
-                ", email='" + email + '\'' +
-                ", phone=" + phone +
-                ", password='" + password + '\'' +
-                ", Cpassword='" + Cpassword + '\'' +
-                '}';
-    }
 }

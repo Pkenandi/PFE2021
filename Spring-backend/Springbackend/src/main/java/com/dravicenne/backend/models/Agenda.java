@@ -1,10 +1,21 @@
 package com.dravicenne.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-public class Agenda {
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Agenda")
+public class Agenda implements Serializable {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     private Long id;
@@ -12,19 +23,9 @@ public class Agenda {
     private String heureDebut;
     private String heureFin;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn( name = "idmedecin")
-//    private Medecin medecin;
-
-
-    public Agenda() {
-    }
-
-    public Agenda(LocalDate date, String heureDebut, String heureFin) {
-        this.date = date;
-        this.heureDebut = heureDebut;
-        this.heureFin = heureFin;
-    }
+    @OneToOne( cascade = CascadeType.ALL)
+    @JoinColumn(name = "medecin_Id")
+    private Medecin medecin;
 
     public Long getId() {
         return id;
@@ -58,13 +59,12 @@ public class Agenda {
         this.heureFin = heureFin;
     }
 
-    @Override
-    public String toString() {
-        return "Agenda{" +
-                "id=" + id +
-                ", date=" + date +
-                ", heureDebut='" + heureDebut + '\'' +
-                ", heureFin='" + heureFin + '\'' +
-                '}';
+    @JsonBackReference(value = "medecin_agenda")
+    public Medecin getMedecin() {
+        return medecin;
+    }
+
+    public void setMedecin(Medecin medecin) {
+        this.medecin = medecin;
     }
 }

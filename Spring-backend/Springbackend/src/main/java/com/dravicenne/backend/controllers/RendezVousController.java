@@ -20,21 +20,17 @@ public class RendezVousController {
     public final RendezVousService rendezVousService;
 
     @PostMapping
-    public ResponseEntity<RendezVousDto> addRendezVous(@RequestBody final RendezVousDto rendezVousDto){
-        RendezVous rendezVous = this.rendezVousService.addRendezVous(RendezVous.from(rendezVousDto));
+    public ResponseEntity<RendezVous> addRendezVous(@RequestBody final RendezVous rendezVous){
+        RendezVous rendezVous1 = this.rendezVousService.addRendezVous(rendezVous);
 
-        return new ResponseEntity<>(RendezVousDto.from(rendezVous), HttpStatus.OK);
+        return new ResponseEntity<>(rendezVous1, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<RendezVousDto>> getAll() {
+    public ResponseEntity<List<RendezVous>> getAll() {
         List<RendezVous> rendezVousList = this.rendezVousService.findAll();
-        List<RendezVousDto> rendezVousDtoList = rendezVousList
-                .stream()
-                .map(RendezVousDto::from)
-                .collect(Collectors.toList());
 
-        return new ResponseEntity<>(rendezVousDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(rendezVousList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/getByStatus/{status}")
@@ -44,24 +40,24 @@ public class RendezVousController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<RendezVousDto> findById(@PathVariable final Long id){
+    public ResponseEntity<RendezVous> findById(@PathVariable final Long id){
         RendezVous rendezVous = this.rendezVousService.findById(id);
 
-        return new ResponseEntity<>(RendezVousDto.from(rendezVous), HttpStatus.OK);
+        return new ResponseEntity<>(rendezVous, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<RendezVousDto> deleteRendezVous(@PathVariable final Long id){
+    public ResponseEntity<RendezVous> deleteRendezVous(@PathVariable final Long id){
         RendezVous rendezVous = this.rendezVousService.deleteRendezVous(id);
 
-        return new ResponseEntity<>(RendezVousDto.from(rendezVous), HttpStatus.OK);
+        return new ResponseEntity<>(rendezVous, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RendezVousDto> editRendezVous(@PathVariable final Long id,
-                                                        @RequestBody RendezVousDto rendezVousDto){
-        RendezVous rendezVousToEdit = this.rendezVousService.editRendezVous(id, RendezVous.from(rendezVousDto));
+    public ResponseEntity<RendezVous> editRendezVous(@PathVariable final Long id,
+                                                        @RequestBody RendezVous rendezVous){
+        RendezVous rendezVousToEdit = this.rendezVousService.editRendezVous(id, rendezVous);
 
-        return new ResponseEntity<>(RendezVousDto.from(rendezVousToEdit), HttpStatus.OK);
+        return new ResponseEntity<>(rendezVousToEdit, HttpStatus.OK);
     }
 }

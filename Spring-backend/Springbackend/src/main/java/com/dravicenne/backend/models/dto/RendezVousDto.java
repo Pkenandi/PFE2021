@@ -27,7 +27,7 @@ public class RendezVousDto {
         rendezVousDto.setDate(rendezVous.getDate());
         rendezVousDto.setNumero(rendezVous.getNumero());
         rendezVousDto.setStatus(rendezVous.getStatus());
-        if(Objects.nonNull(rendezVous.getMedecin()) && Objects.nonNull(rendezVous.getPatient())){
+        if(Objects.nonNull(rendezVous.getPatient()) && Objects.nonNull(rendezVous.getMedecin())){
             rendezVousDto.setMedecinDto(PlainMedecinDto.from(rendezVous.getMedecin()));
             rendezVousDto.setPatientDto(PlainPatientDto.from(rendezVous.getPatient()));
         }

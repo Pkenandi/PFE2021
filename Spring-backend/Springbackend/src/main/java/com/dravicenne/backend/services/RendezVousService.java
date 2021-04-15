@@ -1,6 +1,7 @@
 package com.dravicenne.backend.services;
 
 import com.dravicenne.backend.enumeration.State;
+import com.dravicenne.backend.models.Patient;
 import com.dravicenne.backend.models.RendezVous;
 import com.dravicenne.backend.models.exception.NotFoundException;
 import com.dravicenne.backend.repositories.RendezVousRepository;
@@ -64,5 +65,7 @@ public class RendezVousService {
 
         return this.rendezVousRepository.save(rendezVousToEdit);
     }
+
+    // Get value attached with patient
 
 }

@@ -1,12 +1,9 @@
 package com.dravicenne.backend.services;
 
-import com.dravicenne.backend.models.Medecin;
-import com.dravicenne.backend.models.RendezVous;
-import com.dravicenne.backend.models.User;
+import com.dravicenne.backend.models.*;
 import com.dravicenne.backend.models.exception.NotFoundException;
 import com.dravicenne.backend.models.exception.RdvAlreadyTaken;
 import com.dravicenne.backend.repositories.MedecinRepository;
-import com.dravicenne.backend.models.Patient;
 import com.dravicenne.backend.repositories.PatientRepository;
 import com.dravicenne.backend.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -15,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -28,8 +27,10 @@ public class UserService {
     private final MedecinRepository medecinRepository;
     private final PatientRepository patientRepository;
     private final RendezVousService rendezVousService;
+    private final DossierService dossierService;
 
     // Users
+
     public void SaveUser(User user)
     {
         this.userRepository.save(user);
@@ -46,8 +47,9 @@ public class UserService {
     {
         return this.userRepository.findUserByPassword(password);
     }
-    public Optional<User> findById(Long id){
-        return this.userRepository.findById(id);
+    public User findById(Long id){
+        return this.userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(" User not found !"));
     }
 
     // Medecins
@@ -56,13 +58,36 @@ public class UserService {
     {
         return this.medecinRepository.findAll();
     }
-    public Medecin findMedecinByCinAndPassword(String cin, String password) { return this.medecinRepository.findMedecinByCinAndPassword(cin,password); }
-    public Medecin findMedecinByCin(String cin)
-    {
+    public Medecin findMedecinByCinAndPassword(String cin, String password) {
+        return this.medecinRepository.findMedecinByCinAndPassword(cin,password);
+    }
+    public Medecin findMedecinByCin(String cin) {
         return this.medecinRepository.findMedecinBycin(cin);
     }
-    public List<Medecin> findMedecinByNom(String nom){ return this.medecinRepository.findMedecinByNom(nom);}
-    public List<Medecin> findMedecinBySpecialite(String specialite) {return this.medecinRepository.findMedecinBySpecialite(specialite); }
+    public List<Medecin> findMedecinByNom(String nom){
+        return this.medecinRepository.findMedecinByNom(nom);
+    }
+    public Medecin updateMedecin(Medecin medecin, String cin){
+        Medecin medToUpdate = this.medecinRepository.findMedecinBycin(cin);
+
+        if(medToUpdate != null){
+            medToUpdate.setCin(medecin.getCin());
+            medToUpdate.setSpecialite(medecin.getSpecialite());
+            medToUpdate.setNom(medecin.getNom());
+            medToUpdate.setPrenom(medecin.getPrenom());
+            medToUpdate.setVille(medecin.getVille());
+            medToUpdate.setPhone(medecin.getPhone());
+            medToUpdate.setPassword(medecin.getPassword());
+            medToUpdate.setCpassword(medecin.getPassword());
+            medToUpdate.setEmail(medecin.getEmail());
+
+            return this.medecinRepository.save(medToUpdate);
+        }
+        return null;
+    }
+    public List<Medecin> findMedecinBySpecialite(String specialite) {
+        return this.medecinRepository.findMedecinBySpecialite(specialite);
+    }
     public Medecin connectToRendezVous(String cin, Long rdvId){
         Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
         RendezVous rendezVous = this.rendezVousService.findById(rdvId);
@@ -74,7 +99,7 @@ public class UserService {
             return medecin;
         }
     }
-    public void acceptRendezVous(Long rdvId, RendezVous rendezVous){
+    public void acceptRendezVous(Long rdvId, RendezVous rendezVous) {
         RendezVous rendezVousToAlter = this.rendezVousService.findById(rdvId);
 
         if(Objects.nonNull(rendezVousToAlter.getMedecin())){
@@ -92,6 +117,7 @@ public class UserService {
             this.rendezVousService.alterRendezVous(rdvId,rendezVousToAlter);
         }
     }
+
     // Patients
 
     public Patient findPatientByUsername(String username) {
@@ -102,7 +128,7 @@ public class UserService {
     }
     public List<Patient> findAllPatients()
     {
-        return this.patientRepository.findAll();
+        return new ArrayList<>(this.patientRepository.findAll());
     }
     public Patient updatePatient(Patient patient, String username) {
         Patient newPatient = this.patientRepository.findPatientByUsername(username);
@@ -145,6 +171,7 @@ public class UserService {
             throw new RdvAlreadyTaken(RdvId,rendezVous.getPatient().getUsername());
         }else{
             patient.addRendezVous(rendezVous);
+            rendezVous.setPatient(patient);
             return patient;
         }
     }
@@ -161,5 +188,39 @@ public class UserService {
             return patient;
         }
     }
+    public Patient addDossierMedical(String username, Long dossierId) {
+        Patient patient = this.patientRepository.findPatientByUsername(username);
+        DossierMedical dossierMedical = this.dossierService.findById(dossierId);
 
+        if(Objects.nonNull(dossierMedical.getPatient())){
+            throw new NotFoundException(" Dossier already taken ");
+        }else{
+            patient.setDossierMedical(dossierMedical);
+            dossierMedical.setPatient(patient);
+            return patient;
+        }
+    }
+    public Patient deleteDossierMedical(String username, Long id){
+        Patient patient = this.patientRepository.findPatientByUsername(username);
+        DossierMedical dossierMedical = this.dossierService.findById(id);
+
+        if(Objects.nonNull(dossierMedical.getPatient())){
+            throw new NotFoundException(" Dossier not found ");
+        }else{
+            patient.setDossierMedical(null);
+            this.dossierService.disablePatientId(id);
+            return patient;
+        }
+    }
+    public Patient findPatientWithRdv(String username) {
+        Patient patient = this.patientRepository.findPatientByUsername(username);
+        if(patient != null){
+            if(patient.getRendezVousList().isEmpty()){
+                return null;
+            }else{
+                return patient;
+            }
+        }
+        return null;
+    }
 }

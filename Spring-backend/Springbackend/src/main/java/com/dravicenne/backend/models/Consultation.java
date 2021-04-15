@@ -1,37 +1,36 @@
 package com.dravicenne.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class Consultation {
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Consultation")
+public class Consultation implements Serializable {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer numero;
     private LocalDate date;
+    private String tarification;
 
-//    @OneToMany
-//    @JoinColumn( name = "idMedecin")
-//    private List<Medecin> medecins;
-//
-//    @OneToMany( cascade = CascadeType.ALL)
-//    @JoinColumn( name = "idPatient")
-//    private List <Patient> patients;
-//
-//    @OneToOne ( cascade = CascadeType.ALL)
-//    @JoinColumn ( name = "idRdv", nullable = false)
-//    private RendezVous rendezVous;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medecin_Id")
+    private Medecin medecin;
 
-
-    public Consultation() {
-    }
-
-    public Consultation(Integer numero, LocalDate date) {
-        this.numero = numero;
-        this.date = date;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn( name = "patient_Id")
+    private Patient patient;
 
     public Long getId() {
         return id;
@@ -57,12 +56,21 @@ public class Consultation {
         this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return "Consultation{" +
-                "id=" + id +
-                ", numero=" + numero +
-                ", date=" + date +
-                '}';
+    @JsonBackReference(value = "medecin_consultation")
+    public Medecin getMedecin() {
+        return medecin;
+    }
+
+    public void setMedecin(Medecin medecin) {
+        this.medecin = medecin;
+    }
+
+    @JsonBackReference(value = "patient_consultation")
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

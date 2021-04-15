@@ -16,7 +16,6 @@ import org.springframework.web.filter.CorsFilter;
 import java.util.Arrays;
 
 @SpringBootApplication
-@CrossOrigin(origins = "http://localhost:4200")
 public class BackendApplication {
 
 	public static void main(String[] args) {

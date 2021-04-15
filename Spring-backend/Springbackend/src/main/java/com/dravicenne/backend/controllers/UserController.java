@@ -1,18 +1,24 @@
 package com.dravicenne.backend.controllers;
 
+import com.dravicenne.backend.models.DossierMedical;
+import com.dravicenne.backend.models.exception.NotFoundException;
 import com.dravicenne.backend.models.login.LoginMedecin;
 import com.dravicenne.backend.models.login.LoginPatient;
 import com.dravicenne.backend.models.Medecin;
 import com.dravicenne.backend.models.User;
 import com.dravicenne.backend.models.Patient;
+import com.dravicenne.backend.services.DossierService;
 import com.dravicenne.backend.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @ResponseBody
 @RestController
@@ -21,6 +27,15 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final DossierService dossierService;
+    private static final SecureRandom secureRandom = new SecureRandom(); //threadsafe
+    private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder(); //threadsafe
+
+    private String getJWTToken() {
+        byte[] randomBytes = new byte[100];
+        secureRandom.nextBytes(randomBytes);
+        return base64Encoder.encodeToString(randomBytes);
+    }
 
     //Register Api's for Users
     @PostMapping(value = "/patient/register")
@@ -78,6 +93,7 @@ public class UserController {
     public Patient PatientLogin(@RequestBody LoginPatient patient) throws Exception {
         String bodyUsername = patient.getUsername();
         String bodyPassword = patient.getPassword();
+        String token;
 
         if( bodyPassword != null && bodyUsername != null)
         {
@@ -86,6 +102,8 @@ public class UserController {
             {
                 if(logData.getUsername().equals(bodyUsername) && logData.getPassword().equals(bodyPassword))
                 {
+                    token = getJWTToken();
+                    logData.setToken(token);
                     return logData;
                 }else
                 {
@@ -173,34 +191,77 @@ public class UserController {
     // Update values 
     
     @PutMapping(value = "/patient/update/{username}")
-    public ResponseEntity<Patient> updatePatientByUsername(@RequestBody Patient patient,
-                                                           @PathVariable(value = "username") String username) throws Exception {
+    public ResponseEntity<Patient> updatePatient(@RequestBody final Patient patient,
+                                                 @PathVariable final String username) throws Exception {
         Patient newPatient = this.userService.updatePatient(patient, username);
 
         return new ResponseEntity<Patient>(newPatient, HttpStatus.OK);
     }
 
-    //Adding through relationships
+    @PutMapping(value = "/medecin/update/{cin}")
+    public ResponseEntity<Medecin> updateMedecin(
+            @RequestBody final Medecin medecin,
+            @PathVariable final String cin
+    ) throws Exception {
+        Medecin newMedecin = this.userService.updateMedecin(medecin, cin);
 
-    @PostMapping(value = "/patient/{username}/Rdv/{rdvId}/add")
-    public ResponseEntity<Patient> addRdvOfPatient(@PathVariable final String username,
-                                                   @PathVariable final Long rdvId){
-        Patient patient = this.userService.addRendezVous(username,rdvId);
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(newMedecin, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/medecin/{cin}/rdv/{rdvId}/assign")
+    // Operations through relationships
+
+    @PostMapping(value = "/patient/{username}/rendezvous/{rdvId}/add")
+    public ResponseEntity<Patient> addRdvOfPatient(@PathVariable final String username,
+                                                   @PathVariable final Long rdvId){
+        if(!this.dossierService.hasDossierMedical(username)){
+            throw new NotFoundException(" Please create a dossier medical before looking for a rendezVous !");
+        }
+        else{
+            Patient patient = this.userService.addRendezVous(username,rdvId);
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "/patient/{username}/rendezvous")
+    public ResponseEntity<Patient> getPatientWithRdv(@PathVariable final String username){
+                Patient patient = this.userService.findPatientWithRdv(username);
+
+                if(patient != null){
+                    return new ResponseEntity<>(patient, HttpStatus.OK);
+                }
+
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping(value = "/medecin/{cin}/rendezvous/{rdvId}/assign")
     public ResponseEntity<Medecin> assignRdvToMedecin(@PathVariable final String cin,
-                                                       @PathVariable final  Long rdvId){
+                                                      @PathVariable final  Long rdvId){
         Medecin medecin = this.userService.connectToRendezVous(cin,rdvId);
 
         return new ResponseEntity<>(medecin, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/patient/{username}/Rdv/{rdvId}/remove")
+    @DeleteMapping(value = "/patient/{username}/rendezvous/{rdvId}/remove")
     public ResponseEntity<Patient> deleteRdvOfPatient(@PathVariable final String username,
-                                                   @PathVariable final Long rdvId){
+                                                      @PathVariable final Long rdvId){
         Patient patient = this.userService.deleteRendezVous(username,rdvId);
         return new ResponseEntity<>(patient, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/patient/{username}/dossier/{id}/attach")
+    public ResponseEntity<Patient> attachPatientToDossier(@PathVariable final String username,
+                                                          @PathVariable final Long id){
+        Patient patient = this.userService.addDossierMedical(username,id);
+
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/patient/{username}/dossier/{id}/detach")
+    public ResponseEntity<Patient> detachPatientToDossier(@PathVariable final String username,
+                                                          @PathVariable final Long id){
+        Patient patient = this.userService.deleteDossierMedical(username,id);
+
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+    }
+
 }
