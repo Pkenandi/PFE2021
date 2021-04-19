@@ -1,11 +1,10 @@
 <div class="d-flex" id="wrapper">
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">Bienvenue <span id="Dr">Dr {{_service.Username}}</span> </div>
+        <div class="sidebar-heading text-center mt-2 mb-2 shadow">Bienvenue <br> <span id="Dr">Dr {{medecinService.medecin.prenom}} {{medecinService.medecin.nom}}</span> </div>
         <div class="list-group list-group-flush">
-          <a routerLink="../../medecin/{{medecinService.Cin}}" class="list-group-item list-group-item-action bg-light"> Profile </a>
-            <a href="#" class="list-group-item list-group-item-action bg-light"> Voir mes rendez-vous </a>
-            <a href="#" class="list-group-item list-group-item-action bg-light"> Mon agenda </a>
+          <a routerLink="../../medecin/{{medecinService.Cin}}" class="list-group-item list-group-item-action bg-light">
+            <img src="assets/images/profile.png">   Profile </a>
             <a routerLink="../../med/logout" class="list-group-item list-group-item-action bg-light">
               <img src="assets/images/logout.png" alt="logout"> Deconnexion </a>
         </div>
@@ -14,15 +13,33 @@
     <!-- /#sidebar-wrapper -->
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <button class="btn btn-outline-info" id="menu-toggle">Menu</button>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        </nav>
-        <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#agenda" data-toggle="tab">Mon agenda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Rdv" data-toggle="tab">Mes Rendez-vous</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Dm" data-toggle="tab">Dossiers Médicaux</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="container-fluid">
+        <div class="tab-content">
+          <div id="agenda" role="tabpanel" class="tab-pane active">
+             <h2> Mon agenda </h2>
+              <app-agenda></app-agenda>
+          </div>
+          <div id="Rdv" role="tabpanel" class="tab-pane">
+            Mes demandent des rendez-vous
+          </div>
+          <div id="Dm" role="tabpanel" class="tab-pane">
+            <h2> Dossiers Médicaux des mes patients</h2>
+          </div>
         </div>
-    </div>
+      </div>
     <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->

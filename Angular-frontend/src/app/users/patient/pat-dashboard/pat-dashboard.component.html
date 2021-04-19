@@ -1,20 +1,18 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
 <div class="d-flex" id="wrapper">
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading text-center mt-2 mb-2 shadow">Bienvenue <span id="Dr">{{patientService.name}} {{patientService.lastName}}</span> </div>
-        <div class="list-group list-group-flush">
-            <a routerLink="../../patient/{{patientService.Username}}" class="btn list-group-item list-group-item-action bg-light"> Profile </a>
-            <button class="btn list-group-item list-group-item-action bg-light dropdown-btn">Mes Rendez-vous
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-container">
-              <button class="btn bg-light list-group-item list-group-item-action">  En attente </button>
-              <button class="btn bg-light list-group-item list-group-item-action">  Accepter </button>
-              <button class="btn bg-light list-group-item list-group-item-action">  Refuser  </button>
-            </div>
-            <a routerLink="../../patient/dossier/{{patientService.Username}}" class="btn list-group-item list-group-item-action bg-light"> Mon Dossier Médical </a>
-            <a (click)="setShowMedValue()" class="btn list-group-item list-group-item-action bg-light"> Trouver un Médecin </a>
-            <a routerLink="../../pat/logout" class="btn list-group-item list-group-item-action bg-light">
+        <div class="sidebar-heading text-center mt-2 mb-2 shadow">Bienvenue <br> <span id="Dr">{{patientService.name}} {{patientService.lastName}}</span> </div>
+        <div class="list-group list-group-flush nav nav-tabs">
+          <a routerLink="../../patient/{{patientService?.patient.username}}" class=" nav-link btn list-group-item list-group-item-action bg-light">
+            <img src="assets/images/profile.png"> Profile
+          </a>
+
+            <a routerLink="../../pat/logout" class=" nav-link btn list-group-item list-group-item-action bg-light">
                 <img src="assets/images/logout.png" alt="logout"> Deconnexion
             </a>
         </div>
@@ -23,17 +21,32 @@
     <!-- /#sidebar-wrapper -->
     <!-- Page Content -->
     <div id="page-content-wrapper">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <button class="btn btn-outline-info" id="menu-toggle">Menu</button>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-        </nav>
-        <div class="container-fluid">
-            <div class="" *ngIf="patientService.showMed">
-                <app-card> </app-card>
-            </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#Med" data-toggle="tab">Trouver un médecin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Rdv" data-toggle="tab">Mes Rendez-vous</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Dm" data-toggle="tab">Mon dossier medical</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="container-fluid">
+        <div class="tab-content">
+          <div id="Med" role="tabpanel" class="tab-pane active">
+            <app-card> </app-card>
+          </div>
+          <div id="Rdv" role="tabpanel" class="tab-pane">
+            <app-list-rendezvous> </app-list-rendezvous>
+          </div>
+          <div id="Dm" role="tabpanel" class="tab-pane">
+            <app-dossier-medical></app-dossier-medical>
+          </div>
         </div>
+      </div>
     </div>
     <!-- /#page-content-wrapper -->
 </div>

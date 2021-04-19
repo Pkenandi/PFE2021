@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Patient } from 'src/app/Models/Patient/patient';
 import { PatientService } from 'src/app/Services/patient.service';
 import { UserService } from 'src/app/Services/user.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-pat-login',
@@ -26,17 +27,18 @@ export class PatLoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private patientService: PatientService,
-    private _router: Router) { }
+    private _router: Router,
+    private toast: ToastrService) { }
 
   ngOnInit(): void {
   }
 
-  login(): void
-  {
+  login(): void {
     this.logData = this.patLogForm.value;
     console.log(this.logData);
     this.patientService.Login(this.logData.username, this.logData.password)
-      .subscribe(response => {
+      .subscribe(
+        (response) => {
         this.patient = response;
         this.patientService.patient = response;
         this.patLogForm.reset({});
@@ -45,8 +47,9 @@ export class PatLoginComponent implements OnInit {
         this.patientService.name = this.patient.nom;
         this.patientService.lastName = this.patient.prenom;
         this.userService.setIsAuthenticated(true);
-        sessionStorage.setItem('name', this.patient.nom);
         this.patientService.log = true;
+        this.userService.isLoggedIn = true;
+        this.toast.success(" Bienvenue ! " + this.patient.nom, "Connexion");
         this._router.navigate(['../pat/dashboard']);
       },
       (error: HttpErrorResponse) => {
@@ -57,10 +60,7 @@ export class PatLoginComponent implements OnInit {
 
   logOut(): void{
     this.patientService.log = false;
+    this.userService.isLoggedIn = false;
   }
-
-
-  get Username(): any
-  { return this.patLogForm.get('username'); }
 
 }

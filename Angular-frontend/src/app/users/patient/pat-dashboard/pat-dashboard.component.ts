@@ -37,22 +37,8 @@ export class PatDashboardComponent implements OnInit {
     }
   }
 
-  setDossierValue(): void {
-    if (this.patientService.showDossier === true) {
-      this.patientService.showDossier = false;
-      this.patientService.showMed = true;
-    } else {
-      this.patientService.showDossier = true;
-      this.patientService.showMed = false;
-    }
-  }
-
   setShowMedValue(): void {
-    if (this.patientService.showMed === true) {
-      this.patientService.showMed = false;
-    } else {
-      this.patientService.showMed = true;
-    }
+    this.patientService.showMed = this.patientService.showMed !== true;
   }
 
 

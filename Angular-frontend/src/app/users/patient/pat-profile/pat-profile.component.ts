@@ -60,6 +60,7 @@ export class PatProfileComponent implements OnInit {
     this.patientService.updatePatient(this.UpdatedDetails , this.route.snapshot.params.username).subscribe(
       response => {
         this.profileInfo = response;
+        this.profileInfo = this.UpdatedDetails;
         console.log(this.UpdatedDetails);
         this.toaster.success(
           "Vos informations ont étaient modifiées le \n"

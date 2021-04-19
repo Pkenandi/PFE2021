@@ -20,6 +20,7 @@ export class MedecinService {
   log = false;
   Cin: string;
   medecins: Medecin[];
+  medecin: Medecin;
 
   constructor(private _http: HttpClient, private userService: UserService) { }
 

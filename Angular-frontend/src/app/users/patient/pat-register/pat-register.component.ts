@@ -5,6 +5,7 @@ import { Patient } from 'src/app/Models/Patient/patient';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidationService } from 'src/app/Services/validations/custom-validation.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-pat-register',
@@ -34,7 +35,8 @@ export class PatRegisterComponent implements OnInit {
 
   constructor(private service: UserService,
               private _router: Router,
-              private validation: CustomValidationService)
+              private validation: CustomValidationService,
+              private toast: ToastrService)
               { }
 
   ngOnInit(): void {
@@ -50,13 +52,14 @@ export class PatRegisterComponent implements OnInit {
     this.service.registerPatient(this.regPatForm.value).subscribe(() => {
       console.log(this.patients);
       this.service.isAuthenticated = true;
+      this.toast.success("Heureux de vous comptez parmis nous " + this.patients['nom']);
       this.regPatForm.reset({});
       this._router.navigate(['../pat/login']);
     },
     (error: HttpErrorResponse) => {
       console.log(error.message);
       // tslint:disable-next-line: quotemark
-      this.message = "Sorry! There's an account with those Data !!!";
+      this.toast.error("Désoler, une erreur s'est produite lors de la création de votre compte ! ");
     });
   }
 

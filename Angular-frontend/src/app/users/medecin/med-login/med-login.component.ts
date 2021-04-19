@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as medecin from 'src/app/Models/Medecin/medecin';
 import { UserService } from 'src/app/Services/user.service';
 import { MedecinService } from 'src/app/Services/medecin.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-med-login',
@@ -22,27 +23,32 @@ export class MedLoginComponent implements OnInit {
     password: new FormControl('', [Validators.required])
     });
 
-  constructor(private service: UserService, private medService: MedecinService, private _router: Router) { }
+  constructor(
+    private service: UserService,
+    private medService: MedecinService,
+    private _router: Router,
+    private toast: ToastrService) { }
 
   ngOnInit(): void {
 
   }
 
-  login(): void
-  {
+  login(): void {
     this.logData = this.medLogForm.value;
     console.log(this.logData);
+
     this.service.loginMedecin(this.logData.cin, this.logData.password)
         .subscribe(
           response => {
-            console.log(response);
             this.medecin = response;
             this.medLogForm.reset({});
             this.medService.Cin = this.medecin.cin;
             this.service.Username = this.medecin.nom;
             this.service.setIsAuthenticated(true);
-            sessionStorage.setItem('name',this.medecin.nom);
+            this.medService.medecin = this.medecin;
             this.medService.log = true;
+            this.service.isLoggedIn = true;
+            this.toast.success("Heureux de vous voir Dr " + this.medecin.nom)
             this._router.navigate(['../med/dashboard']);
           },
           error => {
@@ -53,5 +59,6 @@ export class MedLoginComponent implements OnInit {
 
   logOut(): void {
     this.medService.log = false;
+    this.service.isLoggedIn = false;
   }
 }

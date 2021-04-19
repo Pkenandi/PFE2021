@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core';
 import {PatLoginComponent} from '../users/patient/pat-login/pat-login.component';
 import {
   HttpClient,
-  HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
-import { User } from '../Models/User/user';
-import { Patient } from '../Models/Patient/patient';
-import { Medecin } from '../Models/Medecin/medecin';
+
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { basedUrl } from 'src/environments/environment';
@@ -23,6 +20,7 @@ export class UserService {
   isAuthenticated = false;
   message: any;
   Username;
+  isLoggedIn = false;
 
   constructor(private _http: HttpClient, private router: Router) {}
 
@@ -59,24 +57,10 @@ export class UserService {
     return this._http.post(`${basedUrl}medecin/login`, { cin, password });
   }
 
-  isLoggedIn(): boolean
-  {
-    const user = sessionStorage.getItem('name');
-
-    if (user === null)
-     {
-       return false;
-      }
-    else
-    {
-      return true;
-    }
-  }
-
   logOut(): void
   {
     this.setIsAuthenticated(false);
-    sessionStorage.removeItem('name');
+    this.isLoggedIn = false;
   }
 
 }

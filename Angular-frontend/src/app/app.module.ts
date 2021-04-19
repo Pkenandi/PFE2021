@@ -2,6 +2,9 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { ToastrModule } from 'ngx-toastr';
+import { CommonModule} from "@angular/common";
+import { NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
+import { FlatpickrModule} from "angularx-flatpickr";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -41,6 +44,23 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from "@angular/material/grid-list";
 import { MedLogoutComponent } from './users/medecin/med-logout/med-logout.component';
 import { PatLogoutComponent } from './users/patient/pat-logout/pat-logout.component';
+import { ListRendezvousComponent } from './users/patient/list-rendezvous/list-rendezvous.component';
+import { MatTabsModule } from "@angular/material/tabs";
+import { FormDossierComponent } from './users/patient/form-dossier/form-dossier.component';
+import { AgendaComponent } from './users/medecin/agenda/agenda.component';
+import {
+  ScheduleModule,
+  RecurrenceEditorModule,
+  DayService,
+  WeekService,
+  MonthService,
+  WorkWeekService,
+  MonthAgendaService
+} from "@syncfusion/ej2-angular-schedule";
+import {
+  CalendarModule, DateAdapter
+} from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -67,7 +87,10 @@ import { PatLogoutComponent } from './users/patient/pat-logout/pat-logout.compon
     ChatComponent,
     VideoComponent,
     MedLogoutComponent,
-    PatLogoutComponent
+    PatLogoutComponent,
+    ListRendezvousComponent,
+    FormDossierComponent,
+    AgendaComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +107,13 @@ import { PatLogoutComponent } from './users/patient/pat-logout/pat-logout.compon
     MatSidenavModule,
     MatButtonModule,
     MatGridListModule,
+    MatTabsModule,
     ToastrModule.forRoot(),
+    ScheduleModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory}),
+    CommonModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot()
   ],
   exports: [
     HeaderComponent,
@@ -98,7 +127,16 @@ import { PatLogoutComponent } from './users/patient/pat-logout/pat-logout.compon
     BrowserAnimationsModule
   ],
 
-  providers: [UserService, MedecinService, PatientService],
+  providers: [
+    UserService,
+    MedecinService,
+    PatientService,
+    DayService,
+    WeekService,
+    MonthService,
+    WorkWeekService,
+    MonthAgendaService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

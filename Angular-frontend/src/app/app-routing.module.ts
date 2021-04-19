@@ -20,6 +20,8 @@ import { ChatComponent } from './users/chat/chat.component';
 import {VideoComponent} from "./users/video/video.component";
 import {PatLogoutComponent} from "./users/patient/pat-logout/pat-logout.component";
 import {MedLogoutComponent} from "./users/medecin/med-logout/med-logout.component";
+import {ListRendezvousComponent} from "./users/patient/list-rendezvous/list-rendezvous.component";
+import {AgendaComponent} from "./users/medecin/agenda/agenda.component";
 
 
 const routes: Routes = [
@@ -34,12 +36,12 @@ const routes: Routes = [
   {
     path: 'patient/:username',
     component: PatProfileComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'medecin/:cin',
     component: MedProfileComponent,
-   // canActivate: [AuthGuard]
+   //canActivate: [AuthGuard]
   },
   {
     path: 'med/login',
@@ -52,7 +54,11 @@ const routes: Routes = [
   {
     path: 'med/dashboard',
     component: MedDashboardComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
+  },
+  {
+    path: 'med/agenda',
+    component: AgendaComponent
   },
   {
     path: 'pat/login',
@@ -73,12 +79,12 @@ const routes: Routes = [
   {
     path: 'pat/dashboard',
     component: PatDashboardComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'patient/dossier/:username',
     component: DossierMedicalComponent,
-    canActivate: [AuthGuard]
+   // canActivate: [AuthGuard]
   },
   {
     path: 'pat/dossier/content',
@@ -88,7 +94,11 @@ const routes: Routes = [
   {
     path: 'pat/rendezVous',
     component: RendezVousComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
+  },
+  {
+    path: 'pat/listRdv',
+    component: ListRendezvousComponent
   },
   {
     path: 'notification',
