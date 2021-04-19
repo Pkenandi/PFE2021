@@ -1,8 +1,11 @@
 # PFE2021
 Mon Projet de Fin d'Etudes ( Licence en Sciences informatiques ) 
 
-Sujet " Geestion de la prise de rendez-vous medical "
+Sujet " Gestion de la prise de rendez-vous medical et Consultation en ligne"
 
 Technologie utilisées :
 Angular 10
+Socket.io
+WebRTC
 Spring boot
+Spring Security
