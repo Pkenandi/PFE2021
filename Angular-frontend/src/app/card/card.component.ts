@@ -3,7 +3,7 @@ import { FormGroup, FormControl, NgForm, FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Medecin } from '../Models/Medecin/medecin';
-import { MedecinService } from '../Services/medecin.service';
+import { MedecinService } from '../Services/medecinService/medecin.service';
 
 @Component({
   selector: 'app-card',

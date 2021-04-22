@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Patient } from 'src/app/Models/Patient/patient';
-import { PatientService } from 'src/app/Services/patient.service';
-import { UserService } from 'src/app/Services/user.service';
+import { PatientService } from 'src/app/Services/patientservice/patient.service';
+import { UserService } from 'src/app/Services/userService/user.service';
 import {ToastrService} from "ngx-toastr";
 
 @Component({

@@ -8,12 +8,12 @@ strong
 #regContainer{
   background-color: #ADD8E6;
   border-radius: 5px;
-  height: 350px;
+  height: 300px;
 }
 #logContainer{
   background-color: #ADD8E6;
   border-radius: 5px;
-  height: 350px;
+  height: 300px;
   width: 500px;
 }
 
@@ -27,6 +27,10 @@ a{
   color: white
 }
 
+.msg strong{
+  font-size: 27px;
+}
+
 #box2, #box1{
   border: 2px black solid;
   border-radius: 8px;
@@ -36,6 +40,7 @@ a{
   left: 13px;
   top: 15px;
   bottom: 20px;
+  margin-top: 17px;
 }
 
 #box1:hover{

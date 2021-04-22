@@ -1,4 +1,4 @@
-import { UserService } from './../../../Services/user.service';
+import { UserService } from '../../../Services/userService/user.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Patient } from 'src/app/Models/Patient/patient';

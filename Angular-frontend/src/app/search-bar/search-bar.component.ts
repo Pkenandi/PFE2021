@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CardComponent } from '../card/card.component';
 import { Medecin } from '../Models/Medecin/medecin';
-import { MedecinService } from '../Services/medecin.service';
+import { MedecinService } from '../Services/medecinService/medecin.service';
 
 @Component({
   selector: 'app-search-bar',

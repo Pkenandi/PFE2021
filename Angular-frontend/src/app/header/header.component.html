@@ -2,7 +2,8 @@
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-light shadow bg-info">
   <div class="container">
-    <a class="navbar-brand" routerLink=""> <img src="assets/images/logo1.png" alt="Home"></a>
+    <a class="navbar-brand" routerLink="" (click)="setTitle('Acceuil')">
+      <img src="assets/images/logo1.png" alt="Home"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -23,7 +24,7 @@
 
         <li class="nav-item" *ngIf="!_service.isLoggedIn">
           <a class="nav-link btn btn-myaccount text-light" routerLink="mon-compte"
-             style="font-weight: bolder; margin-left: 140px; width: 130px;background-color: rgb(71, 148, 236); height: 40px;">
+             style="font-weight: bolder; margin-left: 140px; width: 130px;background-color: rgb(71, 148, 236); height: 40px;" (click)="setTitle('Mon compte')">
             <img src="assets/images/user.png" alt=""> Mon compte </a>
         </li>
 
@@ -58,12 +59,14 @@
                 </button>
               </li>
               <li class="nav-item w-25 h-25" *ngIf="patientService.log">
-                <button class="btn btn-sm btn-block text-light" id="menu-toggle" routerLink="../pat/dashboard">
+                <button class="btn btn-sm btn-block text-light" id="menu-toggle"
+                        routerLink="../pat/dashboard" (click)="setTitle('Dashboard')">
                   dashboard
                 </button>
               </li>
               <li class="nav-item w-25 h-25" *ngIf="medecinService.log || patientService.log">
-                <button class="btn btn-sm btn-block text-light" id="menu-toggle" routerLink="../chat">Chat space
+                <button class="btn btn-sm btn-block text-light" id="menu-toggle"
+                        routerLink="../chat" (click)="setTitle('Chat')">Chat space
                 </button>
               </li>
 

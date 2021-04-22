@@ -1,17 +1,124 @@
 <div class="container">
   <mat-tab-group>
     <mat-tab label="Accepter">
-      Rendez_vous accepter
+      <div class="container">
+        <div *ngIf="!isAccepted; else accpt">
+          <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
+            Vous n'avez aucun rendez-vous Accepter pour le moment </h2>
+        </div>
+      </div>
+      <ng-template #accpt>
+        <h2>Vos rendez-vous Accepter</h2>
+        <table class="table table-bordered" *ngFor="let item of accepted">
+          <thead>
+          <tr>
+            <th>Numero</th>
+            <th>Date du rendez-vous</th>
+            <th>Heure du rendez-vous</th>
+            <th>Status</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{item?.id}}</td>
+            <td>{{item?.date}}</td>
+            <td>{{item?.heure}}</td>
+            <td>{{item?.status}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-template>
     </mat-tab>
-
     <mat-tab label="Attente">
-      Rendez-vous en attente
+        <div class="container">
+          <div *ngIf="!isInWait; else att">
+            <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
+              Vous n'avez aucun Rendez-vous en Attente</h2>
+          </div>
+          <ng-template #att>
+            <h2>Vos rendez-vous en Attente</h2>
+            <table class="table table-bordered" *ngFor="let item of inWait">
+              <thead>
+              <tr>
+                <th>Numero</th>
+                <th>Date du rendez-vous</th>
+                <th>Heure du rendez-vous</th>
+                <th>Status</th>
+                <th class="col-1">Annuler</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{item?.id}}</td>
+                <td>{{item?.date}}</td>
+                <td>{{item?.heure}}</td>
+                <td>{{item?.status}}</td>
+                <td>
+                  <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </div>
     </mat-tab>
     <mat-tab label="Refuser">
-      Rendez-vous refuser
+      <div class="container">
+        <div *ngIf="!isDenied; else den">
+          <h2><i class="fas fa-exclamation-triangle" style="color: red"></i>
+            Vous n'avez aucun rendez-vous Refuser</h2>
+        </div>
+        <ng-template #den>
+          <h2>Vos rendez-vous Refuser</h2>
+          <table class="table table-bordered" *ngFor="let item of denied">
+            <thead>
+            <tr>
+              <th>Numero</th>
+              <th>Date du rendez-vous</th>
+              <th>Heure du rendez-vous</th>
+              <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{item?.id}}</td>
+              <td>{{item?.date}}</td>
+              <td>{{item?.heure}}</td>
+              <td>{{item?.status}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </div>
     </mat-tab>
     <mat-tab label="Annuler">
-      Rendez-vous annuler
+      <div class="container">
+        <div *ngIf="!isCanceled; else cans">
+          <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
+            Vous avez annuler aucun rendez-vous </h2>
+        </div>
+        <ng-template #cans>
+          <h2>Les Rendez-vous que vous avez annuler</h2>
+          <table class="table table-bordered" *ngFor="let item of canceled">
+            <thead>
+            <tr>
+              <th>Numero</th>
+              <th>Date du rendez-vous</th>
+              <th>Heure du rendez-vous</th>
+              <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{item?.id}}</td>
+              <td>{{item?.date}}</td>
+              <td>{{item?.heure}}</td>
+              <td>{{item?.status}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>

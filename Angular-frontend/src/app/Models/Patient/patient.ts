@@ -15,18 +15,4 @@ export class Patient extends User{
     this.dateNaiss = datenaiss;
   }
 
-  getUsername(): string
-  {
-    return this.username;
-  }
-
-  getGroupesang(): string
-  {
-    return this.groupeSang;
-  }
-
-  getDatenaiss(): Date
-  {
-    return this.dateNaiss;
-  }
 }

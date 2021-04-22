@@ -1,54 +1,247 @@
-<div class="container mx-auto" style="margin-bottom: 50px; margin-top: 50px">
-    <div class="row">
-        <div class="col-md-12 mr-2">
-            <carousel [images]="images" autoplay="true" autoplayInterval="2500" overflowCellsLimit="1" dots="true" arrows="true" arrowsTheme="dark" borderRadius="15px" transitionDuration="1000" loop="true" width=1100 height=300 cellsToShow=3 class="car">
-
-            </carousel>
-        </div>
-    </div>
+<div class="mt-2 container">
+  <div style="margin-bottom: -5rem; width: 30px" class="img bg-light clignote">
+    <img src="assets/images/news.png">
+  </div>
+  <div class="marquee-rtl" style="margin-top: 3.5rem">
+    <p><span class="text-danger text"> || Covid-19 : </span>
+      protégez-vous en prenant quelques précautions simples,
+      comme maintenir une distance physique avec autrui,
+      porter un masque, bien ventiler les pièces,
+      éviter les rassemblements, vous laver les mains, et tousser dans votre coude replié ou un mouchoir.
+      Suivez les recommandations locales là où vous vivez et travaillez.
+      Faites tout cela !
+      <span class="text-danger text">  || Vaccins contre la Covid-19 : </span>
+      Les vaccins sont une nouvelle arme essentielle dans la lutte contre la COVID-19
+      et il est extrêmement encourageant de constater que beaucoup d’entre eux s’avèrent efficaces
+      et passent en phase de mise au point. Travaillant le plus vite possible,
+      des scientifiques du monde entier collaborent et innovent pour fournir des tests de dépistage,
+      des traitements et des vaccins qui, ensemble,
+      permettront de sauver des vies et de mettre fin à la pandémie.
+    </p>
+  </div>
 </div>
 
-<app-search-bar> </app-search-bar>
+<div class="container mx-auto" style="margin-bottom: 50px; margin-top: 40px">
+  <div class="row">
+    <div class="col-md-12 mr-2">
+      <carousel [images]="images" autoplay="true" autoplayInterval="2500" overflowCellsLimit="1" dots="true"
+                arrows="true" arrowsTheme="dark" borderRadius="15px" transitionDuration="1000" loop="true" width=1100
+                height=300 cellsToShow=3 class="car">
 
-<div class="container-fluid">
-    <div class="container mb-3">
-        <div class="row">
-            <div class="col-lg-6 col-md-12 col-sm-12 text-center mt-5">
-                <p> <span style="font-size: x-large;">
+      </carousel>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-3 mb-4">
+  <div class="text-center words">
+    <p> Pourquoi prendre rendez-vous avec DrAvicenne.com ? </p>
+    <span> Avec Nous, vous prenez votre rendez-vous en ligne avec votre médecin autrement</span>
+  </div>
+  <div class="container-fluid">
+    <div class="row mt-5 paragraph" align="center">
+      <div class="col-md-4 col-lg-4 col-sm-12">
+        <img src="https://cdn.med.tn/img/step1.svg" alt="Accédez rapidement à votre medecin">
+        <p> Accédez rapidement à votre médecin </p>
+      </div>
+
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xl-4">
+        <img src="https://cdn.med.tn/img/step2.svg" alt="Prendre rendez-vous en ligne à tout moment">
+        <p> Prendre rendez-vous en ligne à tout moment </p>
+      </div>
+
+      <div class="col-md-4">
+        <img src="https://cdn.med.tn/img/step3.svg" alt="Prendre rendez-vous en ligne à tout moment">
+        <p> Recevez des SMS/Mail de rappel personnalisés </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" style="background-color: #e4dfee">
+  <div class="mb-3">
+    <div class="row ">
+      <div class="col-lg-5 col-md-12 col-sm-12 mx-auto text-center mt-3">
+        <p style="margin-top: 15px">
+          <span style="font-size: x-large;">
                   Besoin d'un conseil médical ? <br>
                  des questions à posées ?
                 </span>
-                    <br> <br>
-                    <small>Poser votre question ici </small> </p>
+          <br> <br>
+          <small>Poser votre question ici </small>
+          <br>
+          <br>
+          <button class="btn btn-lg btn-outline-primary btn-sm"> Poser ma question</button>
 
-                <button class="btn btn-lg btn-primary"> Poser ma question </button>
-            </div>
-            <div class="col-lg-6 col-md-12 col-sm-12 mt-5">
+        </p>
+
+      </div>
+      <div class="col-lg-4 col-md-12 col-sm-12 mt-3 mx-auto">
                 <span style="font-size: x-large;">
                 Questions recemment posées
               </span>
-                <div class="card shadow mt-3" style="width: 20rem;">
-                    <div class="card-body">
-                        <p class="card-text">Comment évité d'etre infecter par la Covid-19 ? </p>
-                    </div>
-                    <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
-                    <div class="card-body">
-                        <small> <strong>Reponse ... </strong> </small> <br>
-                        <p class="card-text">
-                            Portez votre masque en lieu public et lavez-vous les mains regulierement
-                        </p>
-                    </div>
+        <section class="pt-1">
+          <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="card shadow mt-3" style="width: 20rem;" >
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[0].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[0].answer}}
+                    </p>
+                  </div>
                 </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;" >
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[1].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[1].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;" >
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[2].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[2].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;" >
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[3].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[3].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;" >
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[4].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[4].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;" >
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[5].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[5].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;" >
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[6].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[6].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;" >
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[7].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[7].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
             </div>
+          </div>
+        </section>
+      </div>
+      <div class="col-lg-3 mt-5 justify-content-center mb-4">
+        <div class="conseil text-center">
+         <p class="text-center mt-2 p-1"> 5 Conseils Médicaux pour vivre plus longtemps dans la vie </p>
+          <img src="assets/images/healthcare.png" style="margin-left: 10px">
+          <h4><span># </span> Faire 30 minutes d'activité sportive par jour. </h4>
+          <h4><span># </span> Dormir 7 à 8 heures par nuit. </h4>
+          <h4><span># </span> Manger des fruits et des légumes. </h4>
+          <h4><span># </span> Ne pas fumer. </h4>
+          <h4><span># </span> Contrôler son poids et éviter les excès. </h4>
         </div>
+      </div>
     </div>
-</div>
-
-<div id="container " class="container-fluid mb-4 ">
-    <img src="assets/images/medicals/img10.jpg " alt="Snow " style="width:100%; ">
-    <div class="centered ">
-        <h1 class="text-capitalize text-dark ">
-
-        </h1>
-    </div>
+  </div>
 </div>

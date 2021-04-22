@@ -24,13 +24,13 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { CardComponent } from './card/card.component';
 import { LogoutComponent } from './users/logout/logout.component';
 import { DossierMedicalComponent } from './users/patient/dossier-medical/dossier-medical.component';
-import { RendezVousComponent } from './users/patient/rendez-vous/rendez-vous.component';
+import { RendezVousComponent } from './users/rendez-vous/rendez-vous.component';
 import { ShowDossierContenteComponent } from './users/patient/show-dossier-contente/show-dossier-contente.component';
 import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.component';
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
-import { UserService } from './Services/user.service';
-import { MedecinService } from './Services/medecin.service';
-import { PatientService } from './Services/patient.service';
+import { UserService } from './Services/userService/user.service';
+import { MedecinService } from './Services/medecinService/medecin.service';
+import { PatientService } from './Services/patientservice/patient.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -61,6 +61,7 @@ import {
   CalendarModule, DateAdapter
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { ProfileMedComponent } from './users/patient/profile-med/profile-med.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     PatLogoutComponent,
     ListRendezvousComponent,
     FormDossierComponent,
-    AgendaComponent
+    AgendaComponent,
+    ProfileMedComponent,
   ],
   imports: [
     BrowserModule,

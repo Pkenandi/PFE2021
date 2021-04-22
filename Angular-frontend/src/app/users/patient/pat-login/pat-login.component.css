@@ -46,14 +46,12 @@ small {
 #formContent {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    background: #fff;
+    background: white;
     padding: 30px;
     width: 90%;
     max-width: 450px;
     position: relative;
     padding: 0px;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
@@ -84,10 +82,10 @@ h2.active {
 input[type=button],
 input[type=submit],
 input[type=reset] {
-    background-color: #56baed;
+    background-color: #3982d7;
     border: none;
     color: white;
-    padding: 15px 80px;
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-block;

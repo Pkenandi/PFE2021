@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery'
-import { UserService } from 'src/app/Services/user.service';
-import {MedecinService} from "../../../Services/medecin.service";
+import { UserService } from 'src/app/Services/userService/user.service';
+import {MedecinService} from "../../../Services/medecinService/medecin.service";
 
 @Component({
   selector: 'app-med-dashboard',

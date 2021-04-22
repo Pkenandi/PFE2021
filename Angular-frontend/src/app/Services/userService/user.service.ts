@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {PatLoginComponent} from '../users/patient/pat-login/pat-login.component';
+import {PatLoginComponent} from '../../users/patient/pat-login/pat-login.component';
 import {
   HttpClient,
   HttpHeaders,

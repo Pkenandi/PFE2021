@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Patient } from 'src/app/Models/Patient/patient';
-import { PatientService } from 'src/app/Services/patient.service';
+import { PatientService } from 'src/app/Services/patientservice/patient.service';
 import {ToastrService} from "ngx-toastr";
 
 @Component({

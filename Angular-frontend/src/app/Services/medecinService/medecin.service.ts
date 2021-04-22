@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
 } from '@angular/common/http';
-import { User } from '../Models/User/user';
-import { Patient } from '../Models/Patient/patient';
-import { Medecin } from '../Models/Medecin/medecin';
+import { User } from '../../Models/User/user';
+import { Patient } from '../../Models/Patient/patient';
+import { Medecin } from '../../Models/Medecin/medecin';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import {basedUrl, mainUrl} from 'src/environments/environment';
 import { map } from 'rxjs/operators';
-import {UserService} from "./user.service";
+import {UserService} from "../userService/user.service";
 
 
 @Injectable({

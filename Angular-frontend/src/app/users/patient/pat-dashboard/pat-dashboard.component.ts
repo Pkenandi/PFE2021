@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery'
-import {PatientService} from 'src/app/Services/patient.service';
-import {UserService} from 'src/app/Services/user.service';
+import {PatientService} from 'src/app/Services/patientservice/patient.service';
+import {UserService} from 'src/app/Services/userService/user.service';
 
 @Component({
   selector: 'app-pat-dashboard',

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Medecin } from 'src/app/Models/Medecin/medecin';
-import { MedecinService } from 'src/app/Services/medecin.service';
+import { MedecinService } from 'src/app/Services/medecinService/medecin.service';
 import {FormControl, FormGroup} from "@angular/forms";
 import DateTimeFormat = Intl.DateTimeFormat;
 

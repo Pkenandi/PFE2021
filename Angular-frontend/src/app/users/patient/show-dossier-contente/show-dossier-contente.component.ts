@@ -1,7 +1,7 @@
 import { DossierMedical } from './../../../Models/DossierMedical/dossier-medical';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { PatientService } from 'src/app/Services/patient.service';
+import { PatientService } from 'src/app/Services/patientservice/patient.service';
 
 @Component({
   selector: 'app-show-dossier-contente',

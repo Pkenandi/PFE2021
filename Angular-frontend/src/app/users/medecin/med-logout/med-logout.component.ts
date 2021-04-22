@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MedecinService} from "../../../Services/medecin.service";
+import {MedecinService} from "../../../Services/medecinService/medecin.service";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 

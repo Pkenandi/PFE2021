@@ -6,95 +6,100 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
 
-<div class="container">
-    <div class="card bg-light">
-        <article class="card-body mx-auto" style="max-width: 400px;">
-            <span style="margin-left: 100px"><i class="fas fa-user fa-5x"></i></span>
-            <h4 class="card-title mt-3 text-center">Inscrivez-vous </h4>
+<div class="container row">
+  <div class="col-lg-6 col-md-6 mt-5">
+    <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
+  </div>
 
-            <form [formGroup]="regPatForm" (ngSubmit)="registerPatient()">
-                <small class="alert-danger text-center"> {{ message }}</small>
-                <div class="form-group input-group is-invalid">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                    </div>
-                    <input formControlName="nom" name="nom" class="form-control" placeholder="Nom ..." type="text" required>
-                </div>
+  <div class="col-md-6 col-lg-6">
+    <div class="card bg-light mx-auto mt-3">
+      <article class="card-body mx-auto" style="width: 400px;">
+        <span style="margin-left: 145px"><i class="fas fa-user fa-5x"></i></span>
+        <h4 class="card-title mt-3 text-center">Inscrivez-vous </h4>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
-                    </div>
-                    <input formControlName="prenom" name="prenom" class="form-control" placeholder="Prenom ..." type="text" required>
-                </div>
+        <form [formGroup]="regPatForm" (ngSubmit)="registerPatient()">
+          <small class="alert-danger text-center"> {{ message }}</small>
+          <div class="form-group input-group is-invalid">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input formControlName="nom" name="nom" class="form-control" placeholder="Nom ..." type="text" required>
+          </div>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
-                    </div>
-                    <input formControlName="username" name="username" class="form-control" placeholder="Nom d'utilisateur ..." type="text" required>
-                </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="far fa-user"></i> </span>
+            </div>
+            <input formControlName="prenom" name="prenom" class="form-control" placeholder="Prenom ..." type="text" required>
+          </div>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
-                    </div>
-                    <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ..." type="text" required>
-                </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="far fa-user"></i> </span>
+            </div>
+            <input formControlName="username" name="username" class="form-control" placeholder="Nom d'utilisateur ..." type="text" required>
+          </div>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
-                    </div>
-                    <input formControlName="dateNaiss" name="dateNaiss" class="form-control" placeholder="Date naissance ..." type="date" required>
-                    <input formControlName="age" name="age" class="form-control" placeholder="Date naissance ..." type="hidden">
-                </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="far fa-user"></i> </span>
+            </div>
+            <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ..." type="text" required>
+          </div>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-heartbeat"></i> </span>
-                    </div>
-                    <input formControlName="groupeSang" name="groupeSang" class="form-control" placeholder="Groupe sang ..." type="text" required>
-                </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+            </div>
+            <input formControlName="dateNaiss" name="dateNaiss" class="form-control" placeholder="Date naissance ..." type="date" required>
+            <input formControlName="age" name="age" class="form-control" placeholder="Date naissance ..." type="hidden">
+          </div>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                    </div>
-                    <input formControlName="email" name="email" class="form-control" placeholder="Email address" type="email" email required>
-                    <span class="text-danger">*</span>
-                </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fas fa-heartbeat"></i> </span>
+            </div>
+            <input formControlName="groupeSang" name="groupeSang" class="form-control" placeholder="Groupe sang ..." type="text" required>
+          </div>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                    </div>
-                    <input formControlName="phone" name="phone" class="form-control" placeholder="Phone number" type="text" required>
-                </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+            </div>
+            <input formControlName="email" name="email" class="form-control" placeholder="Email address" type="email" email required>
+            <span class="text-danger">*</span>
+          </div>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                    </div>
-                    <input formControlName="password" name="password" class="form-control" placeholder="Create password" type="password" required>
-                </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+            </div>
+            <input formControlName="phone" name="phone" class="form-control" placeholder="Phone" type="text" required>
+          </div>
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                    </div>
-                    <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Repeat password" type="password" [ngClass]="{'is-invalid':regPatForm.get('cpassword').errors && regPatForm.get('cpassword').touched}" required>
-                    <div class="invalid-feedback" *ngIf="regPatForm.get('cpassword').hasError('passwordMismatch')"> password Don't Match </div>
-                </div>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input formControlName="password" name="password" class="form-control" placeholder="password" type="password" required>
+          </div>
 
-                <div class="form-group">
-                    <button [disabled]="regPatForm.invalid" type="submit" class="btn btn-primary btn-block"> Create Account  </button>
-                </div>
-                <!-- form-group// -->
-                <p class="text-center"> Vous avez un compte ? <a routerLink="../../pat/login">Connectez-vous</a> </p>
-            </form>
-        </article>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Confirmation" type="password" [ngClass]="{'is-invalid':regPatForm.get('cpassword').errors && regPatForm.get('cpassword').touched}" required>
+            <div class="invalid-feedback" *ngIf="regPatForm.get('cpassword').hasError('passwordMismatch')"> password Don't Match </div>
+          </div>
+
+          <div class="form-group">
+            <button [disabled]="regPatForm.invalid" type="submit" class="btn btn-primary btn-block btn-sm"> Créer  </button>
+          </div>
+          <!-- form-group// -->
+          <p class="text-center"> Vous avez un compte ? <a routerLink="../../pat/login" class="text-light">Connectez-vous</a> </p>
+        </form>
+      </article>
     </div>
     <!-- card.// -->
-
+  </div>
 </div>

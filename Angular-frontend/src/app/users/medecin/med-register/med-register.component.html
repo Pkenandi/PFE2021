@@ -7,83 +7,90 @@
 
 
 <div class="container">
-    <div class="card bg-light">
-        <article class="card-body mx-auto" style="max-width: 400px;">
-            <span style="margin-left: 100px"><i class="fas fa-user-md fa-5x"></i></span>
-            <h4 class="card-title mt-3 text-center">Créer un compte </h4>
-            <form [formGroup]="regMedForm" (ngSubmit)="registerMedecin()">
+  <div class="row">
 
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                    </div>
-                    <input formControlName="nom" name="nom" class="form-control" placeholder="Nom ..." type="text">
-                </div>
-
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
-                    </div>
-                    <input formControlName="prenom" name="prenom" class="form-control" placeholder="Prenom ..." type="text">
-                </div>
-
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fas fa-user-md"></i> </span>
-                    </div>
-                    <input formControlName="cin" name="cin" class="form-control" placeholder="CIN ..." type="text">
-                </div>
-
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
-                    </div>
-                    <input formControlName="specialite" name="specialite" class="form-control" placeholder="Specialité ..." type="text">
-                </div>
-
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                    </div>
-                    <input formControlName="email" name="email" class="form-control" placeholder="Adresse mail" type="email">
-                </div>
-
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                    </div>
-                    <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ... " type="text">
-                </div>
-
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                    </div>
-                    <input formControlName="phone" name="phone" class="form-control" placeholder="Phone number" type="text">
-                </div>
-
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                    </div>
-                    <input formControlName="password" name="password" class="form-control" placeholder="Create password" type="password">
-                </div>
-
-                <div class="form-group input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                    </div>
-                    <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Repeat password" type="password">
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
-                </div>
-                <!-- form-group// -->
-                <p class="text-center"> Vous avez un compte ? <a routerLink="../../med/login">Connectez-vous</a> </p>
-            </form>
-        </article>
+    <div class="col-lg-6 col-md-6 mt-5">
+      <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
     </div>
-    <!-- card.// -->
 
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="card bg-light mx-auto mt-3">
+        <article class="card-body mx-auto bg-light" style="width: 400px;">
+            <span style="margin-left: 150px;">
+              <i class="fas fa-user-md fa-5x mb-4"></i></span>
+          <form [formGroup]="regMedForm" (ngSubmit)="registerMedecin()">
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+              </div>
+              <input formControlName="nom" name="nom" class="form-control" placeholder="Nom ..." type="text">
+            </div>
+
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="far fa-user"></i> </span>
+              </div>
+              <input formControlName="prenom" name="prenom" class="form-control" placeholder="Prenom ..." type="text">
+            </div>
+
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fas fa-user-md"></i> </span>
+              </div>
+              <input formControlName="cin" name="cin" class="form-control" placeholder="CIN ..." type="text">
+            </div>
+
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="far fa-user"></i> </span>
+              </div>
+              <input formControlName="specialite" name="specialite" class="form-control" placeholder="Specialité ..." type="text">
+            </div>
+
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+              </div>
+              <input formControlName="email" name="email" class="form-control" placeholder="Adresse mail" type="email">
+            </div>
+
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+              </div>
+              <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ... " type="text">
+            </div>
+
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+              </div>
+              <input formControlName="phone" name="phone" class="form-control" placeholder="Phone number" type="text">
+            </div>
+
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+              </div>
+              <input formControlName="password" name="password" class="form-control" placeholder="password" type="password">
+            </div>
+
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+              </div>
+              <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Confirmation" type="password">
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block btn-sm"> Soumettre  </button>
+            </div>
+            <!-- form-group// -->
+            <p class="text-center"> Vous avez un compte ? <a routerLink="../../med/login">Connectez-vous</a> </p>
+          </form>
+        </article>
+      </div>
+      <!-- card.// -->
+    </div>
+  </div>
 </div>

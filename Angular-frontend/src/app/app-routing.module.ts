@@ -9,10 +9,8 @@ import { PatRegisterComponent } from './users/patient/pat-register/pat-register.
 import { MedLoginComponent } from './users/medecin/med-login/med-login.component';
 import { MedRegisterComponent } from './users/medecin/med-register/med-register.component';
 import { AuthGuard } from './guards/auth.guard';
-import { LogoutComponent } from './users/logout/logout.component';
 import { DossierMedicalComponent } from './users/patient/dossier-medical/dossier-medical.component';
-import { RendezVousComponent } from './users/patient/rendez-vous/rendez-vous.component';
-import { ShowDossierContenteComponent } from './users/patient/show-dossier-contente/show-dossier-contente.component';
+import { RendezVousComponent } from './users/rendez-vous/rendez-vous.component';
 import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.component';
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
 import { NotificationComponent } from './notification/notification.component';
@@ -22,6 +20,7 @@ import {PatLogoutComponent} from "./users/patient/pat-logout/pat-logout.componen
 import {MedLogoutComponent} from "./users/medecin/med-logout/med-logout.component";
 import {ListRendezvousComponent} from "./users/patient/list-rendezvous/list-rendezvous.component";
 import {AgendaComponent} from "./users/medecin/agenda/agenda.component";
+import {ProfileMedComponent} from "./users/patient/profile-med/profile-med.component";
 
 
 const routes: Routes = [
@@ -37,6 +36,10 @@ const routes: Routes = [
     path: 'patient/:username',
     component: PatProfileComponent,
     //canActivate: [AuthGuard]
+  },
+  {
+    path: 'Med/:cin',
+    component: ProfileMedComponent
   },
   {
     path: 'medecin/:cin',
@@ -87,12 +90,7 @@ const routes: Routes = [
    // canActivate: [AuthGuard]
   },
   {
-    path: 'pat/dossier/content',
-    component: ShowDossierContenteComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'pat/rendezVous',
+    path: 'rendezVous',
     component: RendezVousComponent,
     //canActivate: [AuthGuard]
   },

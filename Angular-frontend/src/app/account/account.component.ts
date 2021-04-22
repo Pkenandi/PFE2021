@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-account',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  constructor( private title: Title) { }
 
   ngOnInit(): void {
   }
 
+  setTitle(title: string): void {
+    this.title.setTitle(title + " - DrAvicenne");
+  }
 }

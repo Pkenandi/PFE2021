@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MedecinService } from '../Services/medecin.service';
-import { PatientService } from '../Services/patient.service';
-import { UserService } from '../Services/user.service';
+import { MedecinService } from '../Services/medecinService/medecin.service';
+import { PatientService } from '../Services/patientservice/patient.service';
+import { UserService } from '../Services/userService/user.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-header',
@@ -16,19 +17,21 @@ export class HeaderComponent implements OnInit {
   constructor(
     public _service: UserService,
     public patientService: PatientService,
-    public medecinService: MedecinService) { }
+    public medecinService: MedecinService,
+    private title: Title) { }
 
   ngOnInit(): void {
   }
 
-  onLoggedIn(): void
-  {
+  onLoggedIn(): void {
     this.username = this._service.Username;
   }
 
-  onLoggedOut(): void
-  {
+  onLoggedOut(): void {
     this._service.logOut();
   }
 
+  setTitle(title): void{
+    this.title.setTitle(title + ' - DrAvicenne');
+  }
 }

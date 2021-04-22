@@ -1,12 +1,13 @@
 import { DossierMedical } from '../../../Models/DossierMedical/dossier-medical';
 import { Component, OnInit } from '@angular/core';
 import { Patient } from 'src/app/Models/Patient/patient';
-import { PatientService } from 'src/app/Services/patient.service';
-import { DossierMedicalService } from 'src/app/Services/dossier-medical.service';
+import { PatientService } from 'src/app/Services/patientservice/patient.service';
+import { DossierMedicalService } from 'src/app/Services/dossierService/dossier-medical.service';
 import { FormControl, FormGroup} from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Tab } from 'src/app/Models/tab';
+import {HttpErrorResponse} from "@angular/common/http";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-dossier-medical',
@@ -17,7 +18,8 @@ export class DossierMedicalComponent implements OnInit {
 
   patient: Patient = this.patientService.patient;
   dossier: DossierMedical = null;
-  exist: boolean = true;
+  numero = this.getRandomInt(2000);
+  exist: boolean = false;
   Tab: Tab = null;
 
   dossierForm = new FormGroup({
@@ -27,11 +29,63 @@ export class DossierMedicalComponent implements OnInit {
 
   constructor(public patientService: PatientService,
               public dossierService: DossierMedicalService,
-              private route: Router) { }
+              private route: Router,
+              private toast: ToastrService) { }
 
   ngOnInit(): void {
-
+    this.findWithPatient();
+    this.dossierForm = new FormGroup({
+      numero: new FormControl(this.numero),
+      // tslint:disable-next-line: quotemark
+      antecedent: new FormControl(" Pas d'antecedent ")
+    });
   }
 
+  findWithPatient(): void{
+    this.dossierService.findWithPatient(this.patient.username).subscribe(
+      (response) => {
+        this.dossier = response;
+        if(this.dossier == null){
+          this.exist = false
+        }else{
+          this.exist = true;
+        }
+      },
+      (error) => {
+        console.log(" Erreur : " + error.message);
+      }
+    )
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  createDossier(): void {
+
+    this.dossier = this.dossierForm.value;
+
+    this.dossierService.addDossier(this.dossier).subscribe(
+      response => {
+        this.Tab = response;
+
+        // Annexing dossier to patient
+
+        this.dossierService.attachPatient(this.patient.username, this.Tab.id).subscribe(
+          result => {
+            this.toast.success(" Votre dossier à été créer !", "Nouveau dossier");
+            this.ngOnInit();
+
+            // redirecting to user profile
+            this.route.navigate([`pat/dashboard`]);
+          },
+          error => {
+            this.toast.error("Une erreur est survenu lors de la creation de votre Dossier","" + error.type);
+          });
+      },
+      (error: HttpErrorResponse) => {
+        this.toast.error("Une erreur est survenue : " + error.message);
+      });
+  }
 
 }

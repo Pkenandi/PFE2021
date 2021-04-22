@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as medecin from 'src/app/Models/Medecin/medecin';
-import { UserService } from 'src/app/Services/user.service';
-import { MedecinService } from 'src/app/Services/medecin.service';
+import { UserService } from 'src/app/Services/userService/user.service';
+import { MedecinService } from 'src/app/Services/medecinService/medecin.service';
 import {ToastrService} from "ngx-toastr";
 
 @Component({

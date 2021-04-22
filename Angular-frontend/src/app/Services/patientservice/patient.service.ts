@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { basedUrl, mainUrl } from 'src/environments/environment';
-import { Patient } from '../Models/Patient/patient';
-import { UserService } from './user.service';
+import { Patient } from '../../Models/Patient/patient';
+import { UserService } from '../userService/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,7 @@ showDossier = false;
   constructor(
     private _service: UserService,
     private _http: HttpClient) { }
+
 
   Login(username, password): Observable<any> {
     return this._service.loginPatient(username, password);
