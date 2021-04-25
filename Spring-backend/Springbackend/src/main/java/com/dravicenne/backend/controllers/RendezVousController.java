@@ -33,9 +33,11 @@ public class RendezVousController {
         return new ResponseEntity<>(rendezVousList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getByStatus/{status}")
-    public ResponseEntity<List<RendezVous>> findByStatus(@PathVariable final String status){
-        List<RendezVous> rendezVous = this.rendezVousService.findByStatus(status);
+    @GetMapping(value = "/getByStatus/{status}/patient/{username}")
+    public ResponseEntity<List<RendezVous>> findByStatus(
+            @PathVariable final String status,
+            @PathVariable final String username){
+        List<RendezVous> rendezVous = this.rendezVousService.findByStatus(status, username);
         return new ResponseEntity<>(rendezVous, HttpStatus.OK);
     }
 
@@ -59,5 +61,12 @@ public class RendezVousController {
         RendezVous rendezVousToEdit = this.rendezVousService.editRendezVous(id, rendezVous);
 
         return new ResponseEntity<>(rendezVousToEdit, HttpStatus.OK);
+    }
+
+    @PutMapping("/cancel/{status}/{username}/{id}")
+    public void Cancel(@PathVariable final String status,
+                       @PathVariable final String username,
+                       @PathVariable final Long id){
+        this.rendezVousService.Cancel(status, username, id);
     }
 }

@@ -43,22 +43,20 @@ public class UserController {
         String bodyEmail = patient.getEmail();
         String bodyUsername = patient.getUsername();
 
-        if(bodyEmail != null && !"".equals(bodyEmail))
-        {
+        if (bodyEmail != null && !"".equals(bodyEmail)) {
             User userEmail = this.userService.findUserByEmail(bodyEmail);
             Patient patientUsername = this.userService.findPatientByUsername(bodyUsername);
 
             if (userEmail != null)
-                return new ResponseEntity<String>("Email " + userEmail +" already taken", HttpStatus.CONFLICT);
-            else if(patientUsername != null)
-                return new ResponseEntity<String>(" Username " + bodyUsername +" already taken", HttpStatus.CONFLICT);
+                return new ResponseEntity<String>("Email " + userEmail + " already taken", HttpStatus.CONFLICT);
+            else if (patientUsername != null)
+                return new ResponseEntity<String>(" Username " + bodyUsername + " already taken", HttpStatus.CONFLICT);
             else {
                 this.userService.SaveUser(patient);
                 return new ResponseEntity<String>("User registered successfully ", HttpStatus.OK);
             }
 
-        }else
-        {
+        } else {
             throw new Exception(" empty field ");
         }
     }
@@ -68,22 +66,20 @@ public class UserController {
         String bodyEmail = medecin.getEmail();
         String bodyCin = medecin.getCin();
 
-        if(bodyEmail != null && !"".equals(bodyEmail))
-        {
+        if (bodyEmail != null && !"".equals(bodyEmail)) {
             User userEmail = this.userService.findUserByEmail(bodyEmail);
             Medecin medecinCin = this.userService.findMedecinByCin(bodyCin);
 
             if (userEmail != null)
-            return new ResponseEntity<String>("Email " + userEmail +" already taken", HttpStatus.CONFLICT);
-            else if(medecinCin != null)
-            return new ResponseEntity<String>(" Cin " + bodyCin +" already taken", HttpStatus.CONFLICT);
+                return new ResponseEntity<String>("Email " + userEmail + " already taken", HttpStatus.CONFLICT);
+            else if (medecinCin != null)
+                return new ResponseEntity<String>(" Cin " + bodyCin + " already taken", HttpStatus.CONFLICT);
             else {
                 this.userService.SaveUser(medecin);
                 return new ResponseEntity<String>("User registered successfully !/", HttpStatus.OK);
             }
 
-        } else
-        {
+        } else {
             throw new Exception(" empty field ");
         }
     }
@@ -95,25 +91,19 @@ public class UserController {
         String bodyPassword = patient.getPassword();
         String token;
 
-        if( bodyPassword != null && bodyUsername != null)
-        {
+        if (bodyPassword != null && bodyUsername != null) {
             Patient logData = this.userService.findPatientByUsername(bodyUsername);
-            if (logData != null)
-            {
-                if(logData.getUsername().equals(bodyUsername) && logData.getPassword().equals(bodyPassword))
-                {
+            if (logData != null) {
+                if (logData.getUsername().equals(bodyUsername) && logData.getPassword().equals(bodyPassword)) {
                     token = getJWTToken();
                     logData.setToken(token);
                     return logData;
-                }else
-                {
+                } else {
                     throw new Exception(" User not found");
                 }
-            }
-            else
+            } else
                 throw new Exception(" User not found ");
-        }else
-        {
+        } else {
             throw new Exception(" Empty field !");
         }
     }
@@ -123,25 +113,22 @@ public class UserController {
         String bodyCin = medecin.getCin();
         String bodyPassword = medecin.getPassword();
 
-        if( bodyPassword != null && bodyCin != null)
-        {
-            Medecin logData = this.userService.findMedecinByCinAndPassword(bodyCin,bodyPassword);
+        if (bodyPassword != null && bodyCin != null) {
+            Medecin logData = this.userService.findMedecinByCinAndPassword(bodyCin, bodyPassword);
             if (logData != null)
 
                 return logData;
             else
                 throw new Exception(" User not found ");
-        }else
-        {
+        } else {
             throw new Exception(" Empty field !");
         }
     }
-    
-    
+
     //Get values from Users
+
     @GetMapping(value = "/all")
-    public List<User> getUsers()
-    {
+    public List<User> getUsers() {
         return this.userService.getAllUser();
     }
 
@@ -160,23 +147,22 @@ public class UserController {
     }
 
     @GetMapping(path = "/medecin/{cin}")
-    public Medecin getMedecinByCin(@PathVariable("cin") String cin)
-    {
+    public Medecin getMedecinByCin(@PathVariable("cin") String cin) {
         return this.userService.findMedecinByCin(cin);
     }
 
     @GetMapping(path = "/patient/all")
     public ResponseEntity<List<Patient>> getAllPatient() {
-       List<Patient> patient = this.userService.findAllPatients();
+        List<Patient> patient = this.userService.findAllPatients();
 
-       return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(patient, HttpStatus.OK);
     }
 
     @GetMapping(path = "/medecin/all")
-    public List<Medecin> getAllMedecin()
-    {
+    public List<Medecin> getAllMedecin() {
         return this.userService.findAllMedecins();
     }
+
     @GetMapping(path = "/medecin/findByNom/{nom}")
     public List<Medecin> findMedecinByNom(@PathVariable("nom") String nom) {
         return this.userService.findMedecinByNom(nom);
@@ -187,9 +173,9 @@ public class UserController {
         return this.userService.findMedecinBySpecialite(specialite);
     }
 
-    
+
     // Update values 
-    
+
     @PutMapping(value = "/patient/update/{username}")
     public ResponseEntity<Patient> updatePatient(@RequestBody final Patient patient,
                                                  @PathVariable final String username) throws Exception {
@@ -210,56 +196,53 @@ public class UserController {
 
     // Operations through relationships
 
-    @PostMapping(value = "/patient/{username}/rendezvous/{rdvId}/add")
+    @GetMapping(value = "/patient/{username}/rendezvous/{rdvId}/add")
     public ResponseEntity<Patient> addRdvOfPatient(@PathVariable final String username,
-                                                   @PathVariable final Long rdvId){
-        if(!this.dossierService.hasDossierMedical(username)){
-            throw new NotFoundException(" Please create a dossier medical before looking for a rendezVous !");
-        }
-        else{
-            Patient patient = this.userService.addRendezVous(username,rdvId);
-            return new ResponseEntity<>(patient, HttpStatus.OK);
-        }
+                                                   @PathVariable final Long rdvId) {
+
+        Patient patient = this.userService.addRendezVous(username, rdvId);
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+
     }
 
     @GetMapping(value = "/patient/{username}/rendezvous")
-    public ResponseEntity<Patient> getPatientWithRdv(@PathVariable final String username){
-                Patient patient = this.userService.findPatientWithRdv(username);
+    public ResponseEntity<Patient> getPatientWithRdv(@PathVariable final String username) {
+        Patient patient = this.userService.findPatientWithRdv(username);
 
-                if(patient != null){
-                    return new ResponseEntity<>(patient, HttpStatus.OK);
-                }
+        if (patient != null) {
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        }
 
-                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping(value = "/medecin/{cin}/rendezvous/{rdvId}/assign")
+    @GetMapping(value = "/medecin/{cin}/rendezvous/{rdvId}/assign")
     public ResponseEntity<Medecin> assignRdvToMedecin(@PathVariable final String cin,
-                                                      @PathVariable final  Long rdvId){
-        Medecin medecin = this.userService.connectToRendezVous(cin,rdvId);
+                                                      @PathVariable final Long rdvId) {
+        Medecin medecin = this.userService.connectToRendezVous(cin, rdvId);
 
         return new ResponseEntity<>(medecin, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/patient/{username}/rendezvous/{rdvId}/remove")
     public ResponseEntity<Patient> deleteRdvOfPatient(@PathVariable final String username,
-                                                      @PathVariable final Long rdvId){
-        Patient patient = this.userService.deleteRendezVous(username,rdvId);
+                                                      @PathVariable final Long rdvId) {
+        Patient patient = this.userService.deleteRendezVous(username, rdvId);
         return new ResponseEntity<>(patient, HttpStatus.OK);
     }
 
     @GetMapping(value = "/patient/{username}/dossier/{id}/attach")
     public ResponseEntity<Patient> attachPatientToDossier(@PathVariable final String username,
-                                                          @PathVariable final Long id){
-        Patient patient = this.userService.addDossierMedical(username,id);
+                                                          @PathVariable final Long id) {
+        Patient patient = this.userService.addDossierMedical(username, id);
 
         return new ResponseEntity<>(patient, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/patient/{username}/dossier/{id}/detach")
     public ResponseEntity<Patient> detachPatientToDossier(@PathVariable final String username,
-                                                          @PathVariable final Long id){
-        Patient patient = this.userService.deleteDossierMedical(username,id);
+                                                          @PathVariable final Long id) {
+        Patient patient = this.userService.deleteDossierMedical(username, id);
 
         return new ResponseEntity<>(patient, HttpStatus.OK);
     }

@@ -13,7 +13,6 @@ import java.util.Objects;
 @Data
 public class RendezVousDto {
     private Long id;
-    private Integer numero;
     private LocalDate date;
     private String heure;
     private String status;
@@ -25,7 +24,6 @@ public class RendezVousDto {
 
         rendezVousDto.setId(rendezVous.getId());
         rendezVousDto.setDate(rendezVous.getDate());
-        rendezVousDto.setNumero(rendezVous.getNumero());
         rendezVousDto.setStatus(rendezVous.getStatus());
         if(Objects.nonNull(rendezVous.getPatient()) && Objects.nonNull(rendezVous.getMedecin())){
             rendezVousDto.setMedecinDto(PlainMedecinDto.from(rendezVous.getMedecin()));

@@ -22,8 +22,6 @@ public class RendezVous implements Serializable {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
-    private Integer numero;
     private LocalDate date;
     private String heure;
     @Column(nullable = true)
@@ -34,7 +32,6 @@ public class RendezVous implements Serializable {
     private Patient patient;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn( name = "medecin_Id")
     private Medecin medecin;
 
     public static RendezVous from(RendezVousDto rendezVousDto){
@@ -44,7 +41,6 @@ public class RendezVous implements Serializable {
         rendezVous.setHeure(rendezVousDto.getHeure());
         rendezVous.setDate(rendezVousDto.getDate());
         rendezVous.setStatus(rendezVousDto.getStatus());
-        rendezVous.setNumero(rendezVousDto.getNumero());
 
         return rendezVous;
     }
@@ -55,14 +51,6 @@ public class RendezVous implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getNumero() {
-        return numero;
-    }
-
-    public void setNumero(Integer numero) {
-        this.numero = numero;
     }
 
     public LocalDate getDate() {

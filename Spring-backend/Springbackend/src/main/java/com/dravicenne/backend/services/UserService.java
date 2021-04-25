@@ -99,24 +99,6 @@ public class UserService {
             return medecin;
         }
     }
-    public void acceptRendezVous(Long rdvId, RendezVous rendezVous) {
-        RendezVous rendezVousToAlter = this.rendezVousService.findById(rdvId);
-
-        if(Objects.nonNull(rendezVousToAlter.getMedecin())){
-            throw new NotFoundException(" Rendez-vous not found ");
-        }else{
-            this.rendezVousService.alterRendezVous(rdvId,rendezVousToAlter);
-        }
-    }
-    public void rejectRendezVous(Long rdvId, RendezVous rendezVous){
-        RendezVous rendezVousToAlter = this.rendezVousService.findById(rdvId);
-
-        if(Objects.nonNull(rendezVousToAlter.getMedecin())){
-            throw new NotFoundException(" Rendez-vous not found ");
-        }else{
-            this.rendezVousService.alterRendezVous(rdvId,rendezVousToAlter);
-        }
-    }
 
     // Patients
 

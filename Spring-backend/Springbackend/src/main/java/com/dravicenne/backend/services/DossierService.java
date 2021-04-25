@@ -60,4 +60,8 @@ public class DossierService {
         return this.dossierMedicalRepository.findByPatientUsername(username);
     }
 
+    public DossierMedical findWithPatient(String username){
+        return this.dossierMedicalRepository.findWithPatient(username);
+    }
+
 }

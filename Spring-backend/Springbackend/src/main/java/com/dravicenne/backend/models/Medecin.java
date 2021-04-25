@@ -22,13 +22,14 @@ public class Medecin extends User implements Serializable {
     @Column(nullable = false)
     private String specialite;
 
-    @OneToOne( cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn( name = "agenda_Id")
     private Agenda agenda;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn( name = "rdv_Id")
+    @JoinColumn( name = "med_Id")
     private List<RendezVous> rendezVous = new ArrayList<>();
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -85,6 +86,7 @@ public class Medecin extends User implements Serializable {
         this.specialite = specialite;
     }
 
+    @JsonManagedReference(value = "medecin_agenda")
     public Agenda getAgenda() {
         return agenda;
     }

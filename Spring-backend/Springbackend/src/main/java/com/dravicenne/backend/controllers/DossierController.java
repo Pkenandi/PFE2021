@@ -37,7 +37,7 @@ public class DossierController {
         return new ResponseEntity<>(dossierMedical, HttpStatus.OK);
     }
 
-    @PutMapping(value = "update/{id}")
+    @PutMapping(value = "/update/{id}")
     public ResponseEntity<DossierMedical> editDossierMedical(@RequestBody final DossierMedical dossierMedical,
                                                              @PathVariable final Long id){
         DossierMedical dossierToEdit = this.dossierService.editDossierMedical(dossierMedical, id);
@@ -45,10 +45,21 @@ public class DossierController {
         return new ResponseEntity<>(dossierToEdit, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<DossierMedical> deleteDossierMedical(@PathVariable final Long id){
         DossierMedical dossierToDelete = this.dossierService.deleteDossierMedical(id);
 
         return new ResponseEntity<>(dossierToDelete, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/patient/{username}")
+    public ResponseEntity<DossierMedical> findWithPatient(@PathVariable final String username){
+        DossierMedical dossierMedical = this.dossierService.findWithPatient(username);
+
+        if(dossierMedical == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }else{
+            return new ResponseEntity<>(dossierMedical, HttpStatus.OK);
+        }
     }
 }

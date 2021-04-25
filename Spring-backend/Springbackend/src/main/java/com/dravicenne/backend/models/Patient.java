@@ -17,8 +17,6 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Table(name = "Patient")
 public class Patient extends User implements Serializable {
@@ -49,6 +47,20 @@ public class Patient extends User implements Serializable {
     @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "dossier_Id")
     private DossierMedical dossierMedical;
+
+    // Constructors
+
+    public Patient() {
+    }
+
+    public Patient(String username, String groupeSang, LocalDate dateNaiss, List<RendezVous> rendezVousList, List<Consultation> consultations, DossierMedical dossierMedical) {
+        this.username = username;
+        this.groupeSang = groupeSang;
+        this.dateNaiss = dateNaiss;
+        this.rendezVousList = rendezVousList;
+        this.consultations = consultations;
+        this.dossierMedical = dossierMedical;
+    }
 
     //Methods
     public void addRendezVous(RendezVous rendezVous) {
@@ -95,12 +107,11 @@ public class Patient extends User implements Serializable {
         this.groupeSang = groupeSang;
     }
 
-    public Integer getAge() {
-        return age;
+    public Integer getAge() { return Period.between(this.dateNaiss, LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {
-        this.age = Period.between(LocalDate.now(), dateNaiss).getYears();
+        this.age = age;
     }
 
     public LocalDate getDateNaiss() {

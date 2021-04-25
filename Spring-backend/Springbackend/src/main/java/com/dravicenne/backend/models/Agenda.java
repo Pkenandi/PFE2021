@@ -1,6 +1,8 @@
 package com.dravicenne.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @ToString
@@ -19,9 +23,12 @@ public class Agenda implements Serializable {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate date;
-    private String heureDebut;
-    private String heureFin;
+    private String titre;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "agenda_id")
+    private List<Tache> taches = new ArrayList<>();
 
     @OneToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "medecin_Id")
@@ -35,28 +42,21 @@ public class Agenda implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getTitre() {
+        return titre;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 
-    public String getHeureDebut() {
-        return heureDebut;
+    @JsonManagedReference(value = "agenda_tache")
+    public List<Tache> getTaches() {
+        return taches;
     }
 
-    public void setHeureDebut(String heureDebut) {
-        this.heureDebut = heureDebut;
-    }
-
-    public String getHeureFin() {
-        return heureFin;
-    }
-
-    public void setHeureFin(String heureFin) {
-        this.heureFin = heureFin;
+    public void setTaches(List<Tache> taches) {
+        this.taches = taches;
     }
 
     @JsonBackReference(value = "medecin_agenda")
@@ -66,5 +66,13 @@ public class Agenda implements Serializable {
 
     public void setMedecin(Medecin medecin) {
         this.medecin = medecin;
+    }
+
+    public void createTask(Tache tache){
+        this.taches.add(tache);
+    }
+
+    public void removeTask(Tache tache){
+        this.taches.remove(tache);
     }
 }

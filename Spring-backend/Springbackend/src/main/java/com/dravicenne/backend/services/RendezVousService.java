@@ -32,8 +32,8 @@ public class RendezVousService {
                 );
     }
 
-    public List<RendezVous> findByStatus(String state){
-        return this.rendezVousRepository.findByStatus(state);
+    public List<RendezVous> findByStatus(String state, String username){
+        return this.rendezVousRepository.RdvAttente(state, username);
     }
 
     public RendezVous deleteRendezVous(Long id){
@@ -48,22 +48,14 @@ public class RendezVousService {
 
         rendezVousToEdit.setStatus(rendezVous.getStatus());
         rendezVousToEdit.setDate(rendezVous.getDate());
-        rendezVousToEdit.setNumero(rendezVous.getNumero());
         rendezVousToEdit.setHeure(rendezVous.getHeure());
 
         return this.rendezVousRepository.save(rendezVousToEdit);
 
     }
 
-    public RendezVous alterRendezVous(Long id, RendezVous rendezVous){
-        RendezVous rendezVousToEdit = this.findById(id);
-
-        rendezVousToEdit.setStatus(rendezVous.getStatus());
-        rendezVousToEdit.setDate(rendezVous.getDate());
-        rendezVousToEdit.setNumero(rendezVous.getNumero());
-        rendezVousToEdit.setHeure(rendezVous.getHeure());
-
-        return this.rendezVousRepository.save(rendezVousToEdit);
+    public void Cancel(String status, String username, Long id){
+        this.rendezVousRepository.Cancel(status, username, id);
     }
 
     // Get value attached with patient
