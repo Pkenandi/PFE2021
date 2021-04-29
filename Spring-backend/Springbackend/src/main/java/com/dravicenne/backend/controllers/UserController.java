@@ -1,6 +1,8 @@
 package com.dravicenne.backend.controllers;
 
 import com.dravicenne.backend.models.DossierMedical;
+import com.dravicenne.backend.models.dto.MedecinDto;
+import com.dravicenne.backend.models.dto.PatientDto;
 import com.dravicenne.backend.models.exception.NotFoundException;
 import com.dravicenne.backend.models.login.LoginMedecin;
 import com.dravicenne.backend.models.login.LoginPatient;
@@ -39,9 +41,9 @@ public class UserController {
 
     //Register Api's for Users
     @PostMapping(value = "/patient/register")
-    public ResponseEntity<String> register(@RequestBody Patient patient) throws Exception {
-        String bodyEmail = patient.getEmail();
-        String bodyUsername = patient.getUsername();
+    public ResponseEntity<String> register(@RequestBody PatientDto patientDto) throws Exception {
+        String bodyEmail = patientDto.getEmail();
+        String bodyUsername = patientDto.getUsername();
 
         if (bodyEmail != null && !"".equals(bodyEmail)) {
             User userEmail = this.userService.findUserByEmail(bodyEmail);
@@ -52,8 +54,8 @@ public class UserController {
             else if (patientUsername != null)
                 return new ResponseEntity<String>(" Username " + bodyUsername + " already taken", HttpStatus.CONFLICT);
             else {
-                this.userService.SaveUser(patient);
-                return new ResponseEntity<String>("User registered successfully ", HttpStatus.OK);
+                this.userService.SaveUser(patientDto);
+                return new ResponseEntity<>("User registered successfully ", HttpStatus.OK);
             }
 
         } else {
@@ -62,9 +64,9 @@ public class UserController {
     }
 
     @PostMapping(value = "/medecin/register")
-    public ResponseEntity<String> register(@RequestBody Medecin medecin) throws Exception {
-        String bodyEmail = medecin.getEmail();
-        String bodyCin = medecin.getCin();
+    public ResponseEntity<String> register(@RequestBody MedecinDto medecinDto) throws Exception {
+        String bodyEmail = medecinDto.getEmail();
+        String bodyCin = medecinDto.getCin();
 
         if (bodyEmail != null && !"".equals(bodyEmail)) {
             User userEmail = this.userService.findUserByEmail(bodyEmail);
@@ -75,7 +77,7 @@ public class UserController {
             else if (medecinCin != null)
                 return new ResponseEntity<String>(" Cin " + bodyCin + " already taken", HttpStatus.CONFLICT);
             else {
-                this.userService.SaveUser(medecin);
+                this.userService.SaveUser(medecinDto);
                 return new ResponseEntity<String>("User registered successfully !/", HttpStatus.OK);
             }
 
@@ -86,7 +88,7 @@ public class UserController {
 
     //Login Api's for Users
     @PostMapping(value = "/patient/login")
-    public Patient PatientLogin(@RequestBody LoginPatient patient) throws Exception {
+    public PatientDto PatientLogin(@RequestBody LoginPatient patient) throws Exception {
         String bodyUsername = patient.getUsername();
         String bodyPassword = patient.getPassword();
         String token;
@@ -97,7 +99,7 @@ public class UserController {
                 if (logData.getUsername().equals(bodyUsername) && logData.getPassword().equals(bodyPassword)) {
                     token = getJWTToken();
                     logData.setToken(token);
-                    return logData;
+                    return PatientDto.from(logData);
                 } else {
                     throw new Exception(" User not found");
                 }
@@ -109,7 +111,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/medecin/login")
-    public Medecin MedecinLogin(@RequestBody LoginMedecin medecin) throws Exception {
+    public MedecinDto MedecinLogin(@RequestBody LoginMedecin medecin) throws Exception {
         String bodyCin = medecin.getCin();
         String bodyPassword = medecin.getPassword();
 
@@ -117,7 +119,7 @@ public class UserController {
             Medecin logData = this.userService.findMedecinByCinAndPassword(bodyCin, bodyPassword);
             if (logData != null)
 
-                return logData;
+                return MedecinDto.from(logData);
             else
                 throw new Exception(" User not found ");
         } else {
@@ -133,118 +135,131 @@ public class UserController {
     }
 
     @GetMapping(path = "/patient/{username}")
-    public ResponseEntity<Patient> getPatientByUsername(@PathVariable("username") String username) {
+    public ResponseEntity<PatientDto> getPatientByUsername(@PathVariable("username") String username) {
         Patient patient = this.userService.findPatientByUsername(username);
 
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/patient/{username}")
-    public ResponseEntity<Patient> DeletePatientByUsername(@PathVariable("username") String username) {
+    public ResponseEntity<PatientDto> DeletePatientByUsername(@PathVariable("username") String username) {
         Patient patient = this.userService.deletePatientByUsername(username);
 
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
     }
 
     @GetMapping(path = "/medecin/{cin}")
-    public Medecin getMedecinByCin(@PathVariable("cin") String cin) {
-        return this.userService.findMedecinByCin(cin);
+    public MedecinDto getMedecinByCin(@PathVariable("cin") String cin) {
+        Medecin medecin = this.userService.findMedecinByCin(cin);
+        return MedecinDto.from(medecin);
     }
 
     @GetMapping(path = "/patient/all")
-    public ResponseEntity<List<Patient>> getAllPatient() {
-        List<Patient> patient = this.userService.findAllPatients();
+    public ResponseEntity<List<PatientDto>> getAllPatient() {
+        List<Patient> patients = this.userService.findAllPatients();
+        List<PatientDto> patientDtos = patients.stream().map(PatientDto::from).collect(Collectors.toList());
 
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(patientDtos, HttpStatus.OK);
     }
 
     @GetMapping(path = "/medecin/all")
-    public List<Medecin> getAllMedecin() {
-        return this.userService.findAllMedecins();
+    public List<MedecinDto> getAllMedecin() {
+        List<Medecin> medecins = this.userService.findAllMedecins();
+        return medecins.stream().map(MedecinDto::from).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/medecin/findByNom/{nom}")
-    public List<Medecin> findMedecinByNom(@PathVariable("nom") String nom) {
-        return this.userService.findMedecinByNom(nom);
+    public List<MedecinDto> findMedecinByNom(@PathVariable("nom") String nom) {
+        List<Medecin> medecins = this.userService.findMedecinByNom(nom);
+        return medecins.stream().map(MedecinDto::from).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/medecin/findBySpecialite/{specialite}")
-    public List<Medecin> findMedecinBySpecialite(@PathVariable("specialite") String specialite) {
-        return this.userService.findMedecinBySpecialite(specialite);
+    public List<MedecinDto> findMedecinBySpecialite(@PathVariable("specialite") String specialite) {
+        List<Medecin> medecins = this.userService.findMedecinBySpecialite(specialite);
+        return medecins.stream().map(MedecinDto::from).collect(Collectors.toList());
     }
 
 
     // Update values 
 
     @PutMapping(value = "/patient/update/{username}")
-    public ResponseEntity<Patient> updatePatient(@RequestBody final Patient patient,
-                                                 @PathVariable final String username) throws Exception {
-        Patient newPatient = this.userService.updatePatient(patient, username);
+    public ResponseEntity<PatientDto> updatePatient(@RequestBody final PatientDto patient,
+                                                    @PathVariable final String username) throws Exception {
+        Patient newPatient = this.userService.updatePatient(Patient.from(patient), username);
 
-        return new ResponseEntity<Patient>(newPatient, HttpStatus.OK);
+        return new ResponseEntity<>(PatientDto.from(newPatient), HttpStatus.OK);
     }
 
     @PutMapping(value = "/medecin/update/{cin}")
-    public ResponseEntity<Medecin> updateMedecin(
-            @RequestBody final Medecin medecin,
+    public ResponseEntity<MedecinDto> updateMedecin(
+            @RequestBody final MedecinDto medecin,
             @PathVariable final String cin
     ) throws Exception {
-        Medecin newMedecin = this.userService.updateMedecin(medecin, cin);
+        Medecin newMedecin = this.userService.updateMedecin(Medecin.from(medecin), cin);
 
-        return new ResponseEntity<>(newMedecin, HttpStatus.OK);
+        return new ResponseEntity<>(MedecinDto.from(newMedecin), HttpStatus.OK);
     }
 
     // Operations through relationships
 
     @GetMapping(value = "/patient/{username}/rendezvous/{rdvId}/add")
-    public ResponseEntity<Patient> addRdvOfPatient(@PathVariable final String username,
-                                                   @PathVariable final Long rdvId) {
+    public ResponseEntity<PatientDto> addRdvOfPatient(@PathVariable final String username,
+                                                      @PathVariable final Long rdvId) {
 
         Patient patient = this.userService.addRendezVous(username, rdvId);
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
 
     }
 
     @GetMapping(value = "/patient/{username}/rendezvous")
-    public ResponseEntity<Patient> getPatientWithRdv(@PathVariable final String username) {
+    public ResponseEntity<PatientDto> getPatientWithRdv(@PathVariable final String username) {
         Patient patient = this.userService.findPatientWithRdv(username);
 
         if (patient != null) {
-            return new ResponseEntity<>(patient, HttpStatus.OK);
+            return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/medecin/{cin}/rendezvous/{rdvId}/assign")
-    public ResponseEntity<Medecin> assignRdvToMedecin(@PathVariable final String cin,
-                                                      @PathVariable final Long rdvId) {
+    public ResponseEntity<MedecinDto> assignRdvToMedecin(@PathVariable final String cin,
+                                                         @PathVariable final Long rdvId) {
         Medecin medecin = this.userService.connectToRendezVous(cin, rdvId);
 
-        return new ResponseEntity<>(medecin, HttpStatus.OK);
+        return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/patient/{username}/rendezvous/{rdvId}/remove")
-    public ResponseEntity<Patient> deleteRdvOfPatient(@PathVariable final String username,
-                                                      @PathVariable final Long rdvId) {
+    public ResponseEntity<PatientDto> deleteRdvOfPatient(@PathVariable final String username,
+                                                         @PathVariable final Long rdvId) {
         Patient patient = this.userService.deleteRendezVous(username, rdvId);
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
     }
 
     @GetMapping(value = "/patient/{username}/dossier/{id}/attach")
-    public ResponseEntity<Patient> attachPatientToDossier(@PathVariable final String username,
-                                                          @PathVariable final Long id) {
+    public ResponseEntity<PatientDto> attachPatientToDossier(@PathVariable final String username,
+                                                             @PathVariable final Long id) {
         Patient patient = this.userService.addDossierMedical(username, id);
 
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/patient/{username}/dossier/{id}/detach")
-    public ResponseEntity<Patient> detachPatientToDossier(@PathVariable final String username,
-                                                          @PathVariable final Long id) {
+    public ResponseEntity<PatientDto> detachPatientToDossier(@PathVariable final String username,
+                                                             @PathVariable final Long id) {
         Patient patient = this.userService.deleteDossierMedical(username, id);
 
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/agenda/{id}/{cin}")
+    public ResponseEntity<MedecinDto> addAgenda(@PathVariable final Long id,
+                                                @PathVariable final String cin) {
+        Medecin medecin = this.userService.addAgenda(cin, id);
+
+        return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
     }
 
 }

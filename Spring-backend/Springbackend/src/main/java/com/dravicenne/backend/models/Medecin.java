@@ -1,8 +1,11 @@
 package com.dravicenne.backend.models;
 
 import com.dravicenne.backend.models.dto.MedecinDto;
+import com.dravicenne.backend.models.dto.PlainMedecinDto;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +19,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "Medecin")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cin")
 public class Medecin extends User implements Serializable {
     @Column(nullable = false, unique = true)
     private String cin;
@@ -70,6 +74,23 @@ public class Medecin extends User implements Serializable {
         return medecin;
     }
 
+    public static  Medecin ToPlainMedecin(PlainMedecinDto plainMedecinDto){
+        Medecin medecin = new Medecin();
+
+        medecin.setNom(plainMedecinDto.getNom());
+        medecin.setPrenom(plainMedecinDto.getPrenom());
+        medecin.setVille(plainMedecinDto.getVille());
+        medecin.setEmail(plainMedecinDto.getEmail());
+        medecin.setPhone(plainMedecinDto.getPhone());
+        medecin.setSpecialite(plainMedecinDto.getSpecialite());
+        medecin.setId(plainMedecinDto.getId());
+        medecin.setPassword(plainMedecinDto.getPassword());
+        medecin.setCpassword(plainMedecinDto.getCpassword());
+        medecin.setCin(plainMedecinDto.getCin());
+
+        return medecin;
+    }
+
     public String getCin() {
         return cin;
     }
@@ -86,7 +107,7 @@ public class Medecin extends User implements Serializable {
         this.specialite = specialite;
     }
 
-    @JsonManagedReference(value = "medecin_agenda")
+    //@JsonManagedReference(value = "medecin_agenda")
     public Agenda getAgenda() {
         return agenda;
     }
@@ -95,7 +116,7 @@ public class Medecin extends User implements Serializable {
         this.agenda = agenda;
     }
 
-    @JsonManagedReference(value = "medecin_rendezVous")
+    //@JsonManagedReference(value = "medecin_rendezVous")
     public List<RendezVous> getRendezVous() {
         return rendezVous;
     }
@@ -104,7 +125,7 @@ public class Medecin extends User implements Serializable {
         this.rendezVous = rendezVous;
     }
 
-    @JsonManagedReference(value = "medecin_consultation")
+    //@JsonManagedReference(value = "medecin_consultation")
     public List<Consultation> getConsultation() {
         return consultation;
     }
@@ -113,7 +134,7 @@ public class Medecin extends User implements Serializable {
         this.consultation = consultation;
     }
 
-    @JsonManagedReference(value = "medecin_dossierMedical")
+    //@JsonManagedReference(value = "medecin_dossierMedical")
     public List<DossierMedical> getDossierMedicals() {
         return dossierMedicals;
     }

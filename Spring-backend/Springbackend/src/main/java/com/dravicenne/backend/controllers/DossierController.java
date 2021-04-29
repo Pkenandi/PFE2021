@@ -1,6 +1,7 @@
 package com.dravicenne.backend.controllers;
 
 import com.dravicenne.backend.models.DossierMedical;
+import com.dravicenne.backend.models.dto.DossierDto;
 import com.dravicenne.backend.services.DossierService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping( path = "dossier")
@@ -19,47 +21,49 @@ public class DossierController {
     private final DossierService dossierService;
 
     @GetMapping
-    public ResponseEntity<List<DossierMedical>> findAll(){
+    public ResponseEntity<List<DossierDto>> findAll(){
         List<DossierMedical> dossierMedicals = this.dossierService.findAll();
+        List<DossierDto> dossierDtos = dossierMedicals.stream().map(DossierDto::from).collect(Collectors.toList());
 
-        return new ResponseEntity<>(dossierMedicals, HttpStatus.OK);
+        return new ResponseEntity<>(dossierDtos, HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DossierMedical createDossier(@RequestBody DossierMedical dossierMedical){
-        return this.dossierService.createDossier(dossierMedical);
+    public DossierDto createDossier(@RequestBody DossierDto dossierMedical){
+        DossierMedical dossierMedical1 = this.dossierService.createDossier(DossierMedical.from(dossierMedical));
+        return DossierDto.from(dossierMedical1);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<DossierMedical> findById(@PathVariable final Long id){
+    public ResponseEntity<DossierDto> findById(@PathVariable final Long id){
         DossierMedical dossierMedical = this.dossierService.findById(id);
 
-        return new ResponseEntity<>(dossierMedical, HttpStatus.OK);
+        return new ResponseEntity<>(DossierDto.from(dossierMedical), HttpStatus.OK);
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<DossierMedical> editDossierMedical(@RequestBody final DossierMedical dossierMedical,
+    public ResponseEntity<DossierDto> editDossierMedical(@RequestBody final DossierDto dossierMedical,
                                                              @PathVariable final Long id){
-        DossierMedical dossierToEdit = this.dossierService.editDossierMedical(dossierMedical, id);
+        DossierMedical dossierToEdit = this.dossierService.editDossierMedical(DossierMedical.from(dossierMedical), id);
 
-        return new ResponseEntity<>(dossierToEdit, HttpStatus.OK);
+        return new ResponseEntity<>(DossierDto.from(dossierToEdit), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<DossierMedical> deleteDossierMedical(@PathVariable final Long id){
+    public ResponseEntity<DossierDto> deleteDossierMedical(@PathVariable final Long id){
         DossierMedical dossierToDelete = this.dossierService.deleteDossierMedical(id);
 
-        return new ResponseEntity<>(dossierToDelete, HttpStatus.OK);
+        return new ResponseEntity<>(DossierDto.from(dossierToDelete), HttpStatus.OK);
     }
 
     @GetMapping(value = "/patient/{username}")
-    public ResponseEntity<DossierMedical> findWithPatient(@PathVariable final String username){
+    public ResponseEntity<DossierDto> findWithPatient(@PathVariable final String username){
         DossierMedical dossierMedical = this.dossierService.findWithPatient(username);
 
         if(dossierMedical == null){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }else{
-            return new ResponseEntity<>(dossierMedical, HttpStatus.OK);
+            return new ResponseEntity<>(DossierDto.from(dossierMedical), HttpStatus.OK);
         }
     }
 }

@@ -1,8 +1,13 @@
 package com.dravicenne.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,12 +15,18 @@ import java.io.Serializable;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@ResponseBody
 @ToString
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Tache implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String heure;
     private String tache;
     private String description;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tache")
     private Agenda agenda;
@@ -52,6 +63,7 @@ public class Tache implements Serializable {
         this.description = description;
     }
 
+    //@JsonBackReference(value = "agenda_tache")
     public Agenda getAgenda() {
         return agenda;
     }

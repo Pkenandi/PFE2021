@@ -1,6 +1,8 @@
 package com.dravicenne.backend.models.dto;
 
 import com.dravicenne.backend.models.DossierMedical;
+import com.dravicenne.backend.models.Medecin;
+import com.dravicenne.backend.models.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,8 @@ public class DossierDto {
     private String observation;
     private String prescription;
     private PlainPatientDto plainPatientDto;
+    private PlainMedecinDto plainMedecinDto;
+
 
     public static DossierDto from(DossierMedical dossierMedical){
         DossierDto dossierDto = new DossierDto();
@@ -26,6 +30,9 @@ public class DossierDto {
         dossierDto.setNumero(dossierMedical.getNumero());
         dossierDto.setObservation(dossierMedical.getObservation());
         dossierDto.setPrescription(dossierMedical.getPrescription());
+        if(Objects.nonNull(dossierMedical.getMedecin())){
+            dossierDto.setPlainMedecinDto(PlainMedecinDto.from(dossierMedical.getMedecin()));
+        }
         if(Objects.nonNull(dossierMedical.getPatient())){
             dossierDto.setPlainPatientDto(PlainPatientDto.from(dossierMedical.getPatient()));
         }

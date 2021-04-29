@@ -17,9 +17,17 @@ public class PlainMedecinDto extends User {
 
     public static PlainMedecinDto from(Medecin medecin){
         PlainMedecinDto medecinDto = new PlainMedecinDto();
+
         medecinDto.setCin(medecin.getCin());
         medecinDto.setSpecialite(medecin.getSpecialite());
         medecinDto.setNom(medecin.getNom());
+        medecinDto.setPrenom(medecin.getPrenom());
+        medecinDto.setVille(medecin.getVille());
+        medecinDto.setCin(medecinDto.getCin());
+        medecinDto.setEmail(medecin.getEmail());
+        medecinDto.setId(medecin.getId());
+        medecinDto.setPassword(medecin.getPassword());
+        medecinDto.setCpassword(medecin.getCpassword());
 
         return medecinDto;
     }

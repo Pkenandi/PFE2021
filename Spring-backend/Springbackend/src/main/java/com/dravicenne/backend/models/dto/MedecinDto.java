@@ -1,7 +1,10 @@
 package com.dravicenne.backend.models.dto;
 
+import com.dravicenne.backend.models.Agenda;
 import com.dravicenne.backend.models.Medecin;
+import com.dravicenne.backend.models.Specialites;
 import com.dravicenne.backend.models.User;
+import com.dravicenne.backend.models.plaindto.PlainDossierDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +22,9 @@ import java.util.stream.Collectors;
 public class MedecinDto extends User {
     private String cin;
     private String specialite;
-    private List<RendezVousDto> rendezVousList = new ArrayList<>();
+    private List<DossierDto> plainDossierDtos = new ArrayList<>();
+    private List<Specialites> specialitesList = new ArrayList<>();
+    private Agenda agenda;
 
     public static MedecinDto from (Medecin medecin){
         MedecinDto medecinDto = new MedecinDto();
@@ -34,7 +39,9 @@ public class MedecinDto extends User {
         medecinDto.setCpassword(medecin.getCpassword());
         medecinDto.setPassword(medecin.getPassword());
         medecinDto.setPhone(medecin.getPhone());
-        medecinDto.setRendezVousList(medecin.getRendezVous().stream().map(RendezVousDto::from).collect(Collectors.toList()));
+        medecinDto.setPlainDossierDtos(medecin.getDossierMedicals().stream().map(DossierDto::from).collect(Collectors.toList()));
+        medecinDto.setSpecialitesList(medecin.getSpecialites());
+        medecinDto.setAgenda(medecin.getAgenda());
 
         return medecinDto;
     }

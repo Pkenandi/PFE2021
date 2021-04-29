@@ -16,18 +16,19 @@ public class RendezVousDto {
     private LocalDate date;
     private String heure;
     private String status;
-    private PlainPatientDto patientDto;
-    private PlainMedecinDto medecinDto;
+    private PlainPatientDto plainPatientDto;
+    private PlainMedecinDto plainMedecinDto;
 
     public static RendezVousDto from(RendezVous rendezVous){
         RendezVousDto rendezVousDto = new RendezVousDto();
 
         rendezVousDto.setId(rendezVous.getId());
         rendezVousDto.setDate(rendezVous.getDate());
+        rendezVousDto.setHeure(rendezVous.getHeure());
         rendezVousDto.setStatus(rendezVous.getStatus());
-        if(Objects.nonNull(rendezVous.getPatient()) && Objects.nonNull(rendezVous.getMedecin())){
-            rendezVousDto.setMedecinDto(PlainMedecinDto.from(rendezVous.getMedecin()));
-            rendezVousDto.setPatientDto(PlainPatientDto.from(rendezVous.getPatient()));
+        if(Objects.nonNull(rendezVous.getMedecin()) && Objects.nonNull(rendezVous.getPatient())){
+            rendezVousDto.setPlainMedecinDto(PlainMedecinDto.from(rendezVous.getMedecin()));
+            rendezVousDto.setPlainPatientDto(PlainPatientDto.from(rendezVous.getPatient()));
         }
 
         return rendezVousDto;

@@ -2,6 +2,7 @@ package com.dravicenne.backend.services;
 
 import com.dravicenne.backend.models.DossierMedical;
 import com.dravicenne.backend.models.Patient;
+import com.dravicenne.backend.models.dto.DossierDto;
 import com.dravicenne.backend.models.exception.NotFoundException;
 import com.dravicenne.backend.repositories.DossierMedicalRepository;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,6 @@ public class DossierService {
     }
 
     public List<DossierMedical> findAll(){
-
         return this.dossierMedicalRepository.findAll();
     }
 

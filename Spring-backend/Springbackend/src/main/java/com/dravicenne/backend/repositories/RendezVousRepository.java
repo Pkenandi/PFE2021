@@ -14,11 +14,18 @@ import java.util.List;
 @Repository
 public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
     List<RendezVous> findByStatus(String state);
+
     @Query("Select rdv from RendezVous rdv where rdv.status=?1 and rdv.patient.username=?2")
     List<RendezVous> RdvAttente(String status, String username);
 
+    @Query("Select rdv from RendezVous rdv where rdv.status=?1 and rdv.medecin.cin=?2")
+    List<RendezVous> RdvMedecin(String status, String cin);
+
+    @Query("Select rdv from RendezVous rdv where rdv.status=?1 and rdv.medecin.cin=?2")
+    List<RendezVous> rdvWithMedecin(String status, String cin);
+
     @Transactional
     @Modifying
-    @Query("update RendezVous r set r.status=?1 where r.patient.username = ?2 and r.id = ?3")
-    void Cancel(String status, String username, Long id);
+    @Query(value = "UPDATE rendez_vous SET status = :status WHERE id = :id", nativeQuery = true)
+    void Cancel(@Param(value = "status") String status, @Param(value = "id") Long id);
 }

@@ -6,10 +6,12 @@ import com.dravicenne.backend.repositories.TacheRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Transactional
 public class TacheService {
     private final TacheRepository tacheRepository;
 

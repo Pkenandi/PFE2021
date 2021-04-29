@@ -4,6 +4,7 @@ import com.dravicenne.backend.models.Tache;
 import com.dravicenne.backend.services.TacheService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +12,14 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/tache")
+@ResponseBody
+@RequestMapping(path = "/tache")
 public class TacheController {
     private final TacheService tacheService;
 
-    @PostMapping
-    public ResponseEntity<Tache> create(final Tache tache){
-        Tache created = this.tacheService.createTache(tache);
-
-        return new ResponseEntity<>(created, HttpStatus.OK);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Tache create(@RequestBody final Tache tache){
+       return this.tacheService.createTache(tache);
     }
 
     @GetMapping
@@ -29,21 +29,21 @@ public class TacheController {
         return new ResponseEntity<>(tacheList, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Tache> getById(@PathVariable final Long id){
         Tache tache = this.tacheService.getById(id);
 
         return new ResponseEntity<>(tache, HttpStatus.OK);
     }
 
-    @PutMapping("edit/{id}")
+    @PutMapping(value = "edit/{id}")
     public ResponseEntity<Tache> Edit(Tache tache,@PathVariable final Long id){
         Tache tacheToEdit = this.tacheService.editTache(tache, id);
 
         return new ResponseEntity<>(tacheToEdit, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping(value = "delete/{id}")
     public ResponseEntity<Tache> delete(Tache tache,@PathVariable final Long id){
         Tache tacheToDelete = this.tacheService.deleteTache(tache, id);
 

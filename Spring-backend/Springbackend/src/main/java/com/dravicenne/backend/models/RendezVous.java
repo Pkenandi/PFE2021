@@ -1,9 +1,11 @@
 package com.dravicenne.backend.models;
 
 import com.dravicenne.backend.enumeration.State;
+import com.dravicenne.backend.models.dto.MedecinDto;
+import com.dravicenne.backend.models.dto.PatientDto;
 import com.dravicenne.backend.models.dto.RendezVousDto;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.dravicenne.backend.models.plaindto.PlainRendezVousDto;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class RendezVous implements Serializable {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
@@ -27,11 +30,14 @@ public class RendezVous implements Serializable {
     @Column(nullable = true)
     private String status;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn( name = "patient_Id")
     private Patient patient;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medecin_id")
     private Medecin medecin;
 
     public static RendezVous from(RendezVousDto rendezVousDto){
@@ -41,6 +47,17 @@ public class RendezVous implements Serializable {
         rendezVous.setHeure(rendezVousDto.getHeure());
         rendezVous.setDate(rendezVousDto.getDate());
         rendezVous.setStatus(rendezVousDto.getStatus());
+
+        return rendezVous;
+    }
+
+    public static RendezVous ToPlainRendezVous(PlainRendezVousDto plainRendezVousDto){
+        RendezVous rendezVous = new RendezVous();
+
+        rendezVous.setDate(plainRendezVousDto.getDate());
+        rendezVous.setHeure(plainRendezVousDto.getHeure());
+        rendezVous.setId(plainRendezVousDto.getId());
+        rendezVous.setStatus(plainRendezVousDto.getStatus());
 
         return rendezVous;
     }
@@ -77,7 +94,7 @@ public class RendezVous implements Serializable {
         this.status = status;
     }
 
-    @JsonBackReference(value = "patient_rendezVous")
+    //@JsonBackReference(value = "patient_rendezVous")
     public Patient getPatient() {
         return patient;
     }
@@ -86,7 +103,7 @@ public class RendezVous implements Serializable {
         this.patient = patient;
     }
 
-    @JsonBackReference(value = "medecin_rendezVous")
+    //@JsonBackReference(value = "medecin_rendezVous")
     public Medecin getMedecin() {
         return medecin;
     }

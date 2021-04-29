@@ -1,8 +1,6 @@
 package com.dravicenne.backend.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Agenda")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Agenda implements Serializable {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
@@ -50,7 +49,7 @@ public class Agenda implements Serializable {
         this.titre = titre;
     }
 
-    @JsonManagedReference(value = "agenda_tache")
+    //@JsonManagedReference(value = "agenda_tache")
     public List<Tache> getTaches() {
         return taches;
     }
@@ -59,7 +58,7 @@ public class Agenda implements Serializable {
         this.taches = taches;
     }
 
-    @JsonBackReference(value = "medecin_agenda")
+    //@JsonBackReference(value = "medecin_agenda")
     public Medecin getMedecin() {
         return medecin;
     }

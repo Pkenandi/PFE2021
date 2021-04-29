@@ -1,6 +1,8 @@
 package com.dravicenne.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Table(name = "Specialites")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Specialites implements Serializable {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)

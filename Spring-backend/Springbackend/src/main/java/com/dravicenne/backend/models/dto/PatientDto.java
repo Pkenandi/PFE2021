@@ -1,6 +1,8 @@
 package com.dravicenne.backend.models.dto;
 
+import com.dravicenne.backend.models.DossierMedical;
 import com.dravicenne.backend.models.Patient;
+import com.dravicenne.backend.models.RendezVous;
 import com.dravicenne.backend.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = true)
@@ -22,10 +25,12 @@ public class PatientDto extends User {
     private String groupeSang;
     private Integer age;
     private LocalDate dateNaiss;
-    protected List<RendezVousDto> rendezVousList = new ArrayList<>();
+    private List<RendezVousDto> rendezVousDtos = new ArrayList<>();
+    private DossierDto dossierDto;
 
     public static PatientDto from(Patient patient){
         PatientDto patientDto = new PatientDto();
+
         patientDto.setId(patient.getId());
         patientDto.setNom(patient.getNom());
         patientDto.setPrenom(patient.getPrenom());
@@ -38,9 +43,11 @@ public class PatientDto extends User {
         patientDto.setPhone(patient.getPhone());
         patientDto.setPassword(patient.getPassword());
         patientDto.setCpassword(patient.getCpassword());
-        patientDto.setRendezVousList(patient.getRendezVousList().stream()
-                .map(RendezVousDto::from)
-                .collect(Collectors.toList()));
+        patientDto.setToken(patient.getToken());
+        patientDto.setRendezVousDtos(patient.getRendezVousList().stream().map(RendezVousDto::from).collect(Collectors.toList()));
+        if(Objects.nonNull(patient.getDossierMedical())){
+            patientDto.setDossierDto(DossierDto.from(patient.getDossierMedical()));
+        }
 
         return patientDto;
     }

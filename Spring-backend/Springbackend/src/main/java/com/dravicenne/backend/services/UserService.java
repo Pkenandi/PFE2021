@@ -1,8 +1,11 @@
 package com.dravicenne.backend.services;
 
 import com.dravicenne.backend.models.*;
+import com.dravicenne.backend.models.dto.*;
 import com.dravicenne.backend.models.exception.NotFoundException;
 import com.dravicenne.backend.models.exception.RdvAlreadyTaken;
+import com.dravicenne.backend.models.plaindto.PlainDossierDto;
+import com.dravicenne.backend.models.plaindto.PlainRendezVousDto;
 import com.dravicenne.backend.repositories.MedecinRepository;
 import com.dravicenne.backend.repositories.PatientRepository;
 import com.dravicenne.backend.repositories.UserRepository;
@@ -28,6 +31,7 @@ public class UserService {
     private final PatientRepository patientRepository;
     private final RendezVousService rendezVousService;
     private final DossierService dossierService;
+    private final AgendaService agendaService;
 
     // Users
 
@@ -54,8 +58,8 @@ public class UserService {
 
     // Medecins
 
-    public List<Medecin> findAllMedecins()
-    {
+    public List<Medecin> findAllMedecins() {
+
         return this.medecinRepository.findAll();
     }
     public Medecin findMedecinByCinAndPassword(String cin, String password) {
@@ -66,6 +70,7 @@ public class UserService {
     }
     public List<Medecin> findMedecinByNom(String nom){
         return this.medecinRepository.findMedecinByNom(nom);
+
     }
     public Medecin updateMedecin(Medecin medecin, String cin){
         Medecin medToUpdate = this.medecinRepository.findMedecinBycin(cin);
@@ -86,7 +91,8 @@ public class UserService {
         return null;
     }
     public List<Medecin> findMedecinBySpecialite(String specialite) {
-        return this.medecinRepository.findMedecinBySpecialite(specialite);
+       return this.medecinRepository.findMedecinBySpecialite(specialite);
+
     }
     public Medecin connectToRendezVous(String cin, Long rdvId){
         Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
@@ -96,6 +102,20 @@ public class UserService {
             throw new RdvAlreadyTaken(rdvId, rendezVous.getMedecin().getCin());
         }else{
             medecin.connectToRendezVous(rendezVous);
+            rendezVous.setMedecin(medecin);
+            return medecin;
+        }
+    }
+    public Medecin addAgenda(String cin, Long id){
+        Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
+        Agenda agenda = this.agendaService.findById(id);
+
+        if(Objects.nonNull(agenda.getMedecin())){
+            throw new NotFoundException(" Agenda already taken ");
+        }else{
+            medecin.setAgenda(agenda);
+            agenda.setMedecin(Medecin.ToPlainMedecin(PlainMedecinDto.from(medecin)));
+
             return medecin;
         }
     }
@@ -108,9 +128,8 @@ public class UserService {
     public Patient findPatientByUsernameAndPassword(String username, String password) {
         return this.patientRepository.findPatientByUsernameAndPassword(username,password);
     }
-    public List<Patient> findAllPatients()
-    {
-        return new ArrayList<>(this.patientRepository.findAll());
+    public List<Patient> findAllPatients() {
+        return this.patientRepository.findAll();
     }
     public Patient updatePatient(Patient patient, String username) {
         Patient newPatient = this.patientRepository.findPatientByUsername(username);

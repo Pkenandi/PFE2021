@@ -1,20 +1,24 @@
 package com.dravicenne.backend.models;
 
 import com.dravicenne.backend.models.dto.DossierDto;
+import com.dravicenne.backend.models.dto.MedecinDto;
+import com.dravicenne.backend.models.dto.PatientDto;
+import com.dravicenne.backend.models.dto.PlainPatientDto;
+import com.dravicenne.backend.models.plaindto.PlainDossierDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class DossierMedical implements Serializable {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -26,11 +30,14 @@ public class DossierMedical implements Serializable {
 
     // Relationships
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn( name = "patient_Id")
+    @JsonBackReference(value = "dossier_patient")
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "medecin_Id")
     private Medecin medecin;
 
@@ -42,6 +49,18 @@ public class DossierMedical implements Serializable {
         dossierMedical.setNumero(dossierDto.getNumero());
         dossierMedical.setObservation(dossierDto.getObservation());
         dossierMedical.setPrescription(dossierDto.getPrescription());
+
+        return dossierMedical;
+    }
+
+    public static DossierMedical ToPlainDossier(PlainDossierDto plainDossierDto){
+        DossierMedical dossierMedical = new DossierMedical();
+
+        dossierMedical.setAntecedent(plainDossierDto.getAntecedent());
+        dossierMedical.setNumero(plainDossierDto.getNumero());
+        dossierMedical.setObservation(plainDossierDto.getObservation());
+        dossierMedical.setPrescription(plainDossierDto.getPrescription());
+        dossierMedical.setId(plainDossierDto.getId());
 
         return dossierMedical;
     }
@@ -86,7 +105,7 @@ public class DossierMedical implements Serializable {
         this.prescription = prescription;
     }
 
-    @JsonBackReference(value = "patient_dossierMedical")
+    //@JsonBackReference(value = "patient_dossierMedical")
     public Patient getPatient() {
         return patient;
     }
@@ -95,7 +114,7 @@ public class DossierMedical implements Serializable {
         this.patient = patient;
     }
 
-    @JsonBackReference(value = "medecin_dossierMedical")
+    //@JsonBackReference(value = "medecin_dossierMedical")
     public Medecin getMedecin() {
         return medecin;
     }

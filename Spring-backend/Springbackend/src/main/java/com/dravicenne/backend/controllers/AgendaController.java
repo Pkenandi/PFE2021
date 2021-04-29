@@ -11,6 +11,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@ResponseBody
 @RequestMapping(path = "/agenda")
 public class AgendaController {
     private final AgendaService agendaService;
@@ -22,19 +23,19 @@ public class AgendaController {
     }
 
     @PostMapping
-    public ResponseEntity<Agenda> createAgenda(final Agenda agenda){
+    public ResponseEntity<Agenda> createAgenda(@RequestBody final Agenda agenda){
         Agenda agendaCreated = this.agendaService.createAgenda(agenda);
         return new ResponseEntity<>(agendaCreated, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Agenda> getOne(@PathVariable Long id){
         Agenda agenda = this.agendaService.findById(id);
 
         return new ResponseEntity<>(agenda, HttpStatus.OK);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping(value = "/edit/{id}")
     public ResponseEntity<Agenda> Edit(Agenda agenda, @PathVariable Long id){
         Agenda agendaToEdit = this.agendaService.findById(id);
         if(agendaToEdit == null){
@@ -47,7 +48,7 @@ public class AgendaController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Agenda> delete(Agenda agenda, @PathVariable Long id){
         Agenda agendaToEdit = this.agendaService.findById(id);
         if(agendaToEdit == null){
@@ -59,14 +60,14 @@ public class AgendaController {
         }
     }
 
-    @GetMapping("add/{agenda_id}/{tache_id}")
+    @GetMapping(value = "add/{agenda_id}/{tache_id}")
     public ResponseEntity<Agenda> createTask(@PathVariable Long agenda_id,@PathVariable Long tache_id){
         Agenda agenda = this.agendaService.addTask(agenda_id,tache_id);
 
         return new ResponseEntity<>(agenda, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{agenda_id}/{tache_id}")
+    @DeleteMapping(value = "delete/{agenda_id}/{tache_id}")
     public ResponseEntity<Agenda> deleteTask(@PathVariable Long agenda_id,@PathVariable Long tache_id) {
         Agenda agenda = this.agendaService.removeTask(agenda_id, tache_id);
 

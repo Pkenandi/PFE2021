@@ -36,6 +36,10 @@ public class RendezVousService {
         return this.rendezVousRepository.RdvAttente(state, username);
     }
 
+    public List<RendezVous> findWithMedecin(String status, String cin){
+        return this.rendezVousRepository.RdvMedecin(status, cin);
+    }
+
     public RendezVous deleteRendezVous(Long id){
         RendezVous rendezVous = this.findById(id);
         this.rendezVousRepository.delete(rendezVous);
@@ -54,8 +58,8 @@ public class RendezVousService {
 
     }
 
-    public void Cancel(String status, String username, Long id){
-        this.rendezVousRepository.Cancel(status, username, id);
+    public void Cancel(String status, Long id){
+        this.rendezVousRepository.Cancel(status, id);
     }
 
     // Get value attached with patient

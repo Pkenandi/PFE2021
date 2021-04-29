@@ -1,11 +1,9 @@
 package com.dravicenne.backend.models;
 
-import com.dravicenne.backend.enumeration.UserRole;
+import com.dravicenne.backend.models.dto.DossierDto;
 import com.dravicenne.backend.models.dto.PatientDto;
 import com.dravicenne.backend.models.dto.PlainPatientDto;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,11 +12,13 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @ToString
 @Table(name = "Patient")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
 public class Patient extends User implements Serializable {
 
     @Column(unique = true, nullable = false)
@@ -46,6 +46,7 @@ public class Patient extends User implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "dossier_Id")
+    @JsonManagedReference(value = "dossier_patient")
     private DossierMedical dossierMedical;
 
     // Constructors
@@ -76,8 +77,14 @@ public class Patient extends User implements Serializable {
     public void removeConsultation(Consultation consultation){
         this.consultations.remove(consultation);
     }
+    public void addDossier(DossierMedical dossierMedical){
+        this.setDossierMedical(dossierMedical);
+    }
+    public void removeDossier(){
+        this.setDossierMedical(null);
+    }
 
-    public static Patient from(PlainPatientDto patientDto){
+    public static Patient ToPlainPatient(PlainPatientDto patientDto){
         Patient patient = new Patient();
 
         patient.setNom(patientDto.getNom());
@@ -87,6 +94,31 @@ public class Patient extends User implements Serializable {
         patient.setGroupeSang(patientDto.getGroupeSang());
         patient.setEmail(patientDto.getEmail());
         patient.setPhone(patientDto.getPhone());
+        patient.setPassword(patientDto.getPassword());
+        patient.setCpassword(patientDto.getCpassword());
+        patient.setDateNaiss(patientDto.getDateNaiss());
+        patient.setId(patientDto.getId());
+
+        return patient;
+    }
+
+    public static Patient from(PatientDto patientDto){
+        Patient patient = new Patient();
+
+        patient.setToken(patientDto.getToken());
+        patient.setUsername(patientDto.getUsername());
+        patient.setNom(patientDto.getNom());
+        patient.setPrenom(patientDto.getPrenom());
+        patient.setGroupeSang(patientDto.getGroupeSang());
+        patient.setAge(patientDto.getAge());
+        patient.setDateNaiss(patientDto.getDateNaiss());
+        patient.setVille(patientDto.getVille());
+        patient.setId(patientDto.getId());
+        patient.setPhone(patientDto.getPhone());
+        patient.setPassword(patientDto.getPassword());
+        patient.setCpassword(patientDto.getCpassword());
+        patient.setDossierMedical(DossierMedical.from(patientDto.getDossierDto()));
+        patient.setRendezVousList(patientDto.getRendezVousDtos().stream().map(RendezVous::from).collect(Collectors.toList()));
 
         return patient;
     }
@@ -122,7 +154,7 @@ public class Patient extends User implements Serializable {
         this.dateNaiss = dateNaiss;
     }
 
-    @JsonManagedReference(value = "patient_rendezVous")
+    //@JsonManagedReference(value = "patient_rendezVous")
     public List<RendezVous> getRendezVousList() {
         return rendezVousList;
     }
@@ -131,7 +163,7 @@ public class Patient extends User implements Serializable {
         this.rendezVousList = rendezVousList;
     }
 
-    @JsonManagedReference(value = "patient_consultation")
+    //@JsonManagedReference(value = "patient_consultation")
     public List<Consultation> getConsultations() {
         return consultations;
     }
@@ -140,7 +172,7 @@ public class Patient extends User implements Serializable {
         this.consultations = consultations;
     }
 
-    @JsonManagedReference(value = "patient_dossierMedical")
+    //@JsonManagedReference(value = "patient_dossierMedical")
     public DossierMedical getDossierMedical() {
         return dossierMedical;
     }
