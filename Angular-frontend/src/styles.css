@@ -6,11 +6,12 @@
 body, html {
   height: 100%;
   font-family: "Times New Roman", Times, serif;
+  overflow-x: hidden;
 }
 
 .bg {
   /* The image used */
-  background-color:  	 	#FFFAFA;
+  background-color:  	 	#FFFFFF;
 
   /* Full height */
   height: 100%;

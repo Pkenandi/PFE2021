@@ -10,21 +10,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end">
-        <li class="nav-item dropdown" style="margin-left: 550px; margin-right: -120px">
-          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button"
-             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Services
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item text-dark" href="#">Télémedecine</a>
-            <a class="dropdown-item text-dark" href="#">Téléexpertise</a>
-            <a class="dropdown-item text-dark" href="#">Téléconsultation</a>
-          </div>
-        </li>
 
         <li class="nav-item" *ngIf="!_service.isLoggedIn">
-          <a class="nav-link btn btn-myaccount text-light" routerLink="mon-compte"
-             style="font-weight: bolder; margin-left: 140px; width: 130px;background-color: rgb(71, 148, 236); height: 40px;" (click)="setTitle('Mon compte')">
+          <a class="nav-link btn btn-info btn-sm" routerLink="mon-compte"
+             style="color: black; margin-left: 620px; width: 130px;background-color: rgb(103,169,241); height: 40px;" (click)="setTitle('Mon compte')">
             <img src="assets/images/user.png" alt=""> Mon compte </a>
         </li>
 
@@ -40,34 +29,35 @@
           </button>
           <div class="collapse navbar-collapse" id="navbar-list-4">
             <ul *ngIf="_service.isLoggedIn" class="navbar-nav ml-auto">
-              <li class="nav-item" style="margin-left: 150px">
-                <a routerLink="notification" class="nav-link" id="navbarDropdownMenuLink" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                <img src="assets/images/bell-solid.svg" width="20" height="20" class="rounded-circle" class="mb-4">
-
+              <li class="nav-item" *ngIf="patientService.log" style="margin-left: 600px">
+                <div class="account" routerLink="../pat/dashboard" (click)="setTitle('Dashboard')">
+                  <img src="assets/images/icons/profile.png" width="30" height="30" class="rounded-circle">
+                  <span> {{_service.Username}} </span> <img src="assets/images/icons/arrow.png" style="color: white" width="10" height="10">
+                </div>
               </li>
+              <li class="nav-item" *ngIf="medecinService.log" style="margin-left: 600px">
+                <div class="account" routerLink="../med/dashboard" (click)="setTitle('Dashboard')">
+                  <img src="assets/images/icons/profile.png" width="30" height="30" class="rounded-circle">
+                  <span> {{_service.Username}} </span> <img src="assets/images/icons/arrow.png" style="color: white" width="10" height="10">
+                </div>
+              </li>
+              <li class="nav-item w-25 h-25" *ngIf="medecinService.log || patientService.log" style="margin-top: 15px">
+                <button class="btn btn-sm btn-block text-light" id="menu-toggle"
+                        routerLink="../chat" (click)="setTitle('Chat')"> Chat
+                </button>
+              </li>
+
               <li class="nav-item">
-                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{_service.Username}}
-                  <img src="assets/images/profil.png" width="25" height="25" class="rounded-circle">
-                </a>
-
+               <div class="line">
+                 <img src="assets/images/icons/online.png"> En ligne
+               </div>
               </li>
-              <li class="nav-item w-25 h-25" *ngIf="medecinService.log">
-                <button class="btn btn-sm btn-block text-light" id="menu-toggle" routerLink="../med/dashboard">
-                  dashboard
-                </button>
-              </li>
-              <li class="nav-item w-25 h-25" *ngIf="patientService.log">
-                <button class="btn btn-sm btn-block text-light" id="menu-toggle"
-                        routerLink="../pat/dashboard" (click)="setTitle('Dashboard')">
-                  dashboard
-                </button>
-              </li>
-              <li class="nav-item w-25 h-25" *ngIf="medecinService.log || patientService.log">
-                <button class="btn btn-sm btn-block text-light" id="menu-toggle"
-                        routerLink="../chat" (click)="setTitle('Chat')">Chat space
-                </button>
+              <li class="nav-item" style="cursor: pointer">
+                <div class="mt-3" (click)="toggleBadgeVisibility()">
+                  <span [matBadgeHidden]="hidden" (click)="toggleBadgeVisibility()" matBadge="{{rdvService.p_notifications}}" matBadgeColor="warn" matBadgeOverlap="false" *ngIf="_service.isLoggedIn">
+                    <img src="assets/images/icons/bell.png" (click)="notifications()">
+                  </span>
+                </div>
               </li>
 
             </ul>

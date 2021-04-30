@@ -4,31 +4,36 @@
 <!------ Include the above in your HEAD tag ---------->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
-<div class="container row">
-  <div class="col-md-6 col-lg-6 mt-5">
-    <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
+<div class="container">
+  <div class="account">
+    <h3> Connexion - Patient </h3>
+    <hr style="height:4px;border-width:0;color:gray;background-color:whitesmoke; border-left: 140px solid yellowgreen">
   </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-6 mt-5">
+      <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
+    </div>
 
-  <div class="col-lg-6 col-md-6">
-    <div class="wrapper mt-5">
-      <div id="formContent">
-        <div>
-          <span style="margin-left: 10px"><i class="fas fa-user fa-5x"></i></span>
-          <h3> Connectez-vous </h3>
-          <small class="text-danger"> {{message}}</small>
+    <div class="col-lg-6 col-md-6">
+      <div class="wrapper mt-0">
+        <div id="formContent">
+          <div class="mb-3">
+            <span style="margin-left: 10px"><img src="assets/images/patient.png"></span>
+            <small class="text-danger"> {{message}}</small>
+          </div>
+
+          <form [formGroup]="patLogForm" (ngSubmit)="login()">
+            <input formControlName="username" type="text" id="login" name="username" placeholder="Nom d'utilisateur" required>
+            <input formControlName="password" type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>
+            <input [disabled]="!patLogForm.valid" type="submit" value="Login">
+            <a routerLink='../../pat/register'> Créer un compte </a>
+          </form>
+
+          <div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+          </div>
+
         </div>
-
-        <form [formGroup]="patLogForm" (ngSubmit)="login()">
-          <input formControlName="username" type="text" id="login" name="username" placeholder="Nom d'utilisateur" required>
-          <input formControlName="password" type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>
-          <input [disabled]="!patLogForm.valid" type="submit" value="Login">
-          <a routerLink='../../pat/register'> Créer un compte </a>
-        </form>
-
-        <div id="formFooter">
-          <a class="underlineHover" href="#">Forgot Password?</a>
-        </div>
-
       </div>
     </div>
   </div>

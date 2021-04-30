@@ -4,23 +4,19 @@
         <hr style="height:2px;border-width:0;color:gray;background-color:whitesmoke; border-left: 90px solid #0000A0">
     </div>
     <div class="row">
-      <div class="col-md-6 col-lg-6 mt-5">
-        <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
-      </div>
-
       <div class="col-lg-6 col-md-6">
         <mat-tab-group mat-align-tabs="center">
           <mat-tab label="Connexion" align="center">
-           <div class="text-center msg mt-3">
-             <strong style="color: darkred">Vous avez deja un compte ?</strong> <br>
-             <span> Veillez vous connectez. </span>
-           </div>
+            <div class="text-center msg mt-3">
+              <strong style="color: darkred">Vous avez deja un compte ?</strong> <br>
+              <span> Veillez vous connectez. </span>
+            </div>
             <div class="col text-center">
               <div id="logContainer">
                 <div class="row text-secondary">
                   <div id="box1" class="col-10 mb-2 ml-3 text-left btn btn-lg"
                        routerLink="../pat/login"
-                      (click)="setTitle('Connexion')">
+                       (click)="setTitle('Connexion')">
                     <p> <span> Connectez-vous en tant que Patient </span> <br> Votre rendez-vous vous attend.</p>
                   </div>
                   <div id="box2" class="col-10 text-left mb-2 ml-3 btn btn-lg"
@@ -53,5 +49,11 @@
           </mat-tab>
         </mat-tab-group>
       </div>
+
+      <div class="col-md-6 col-lg-6 mt-5">
+        <img src="assets/images/welcome.png" style="width: 100%">
+      </div>
+
+
     </div>
 </div>

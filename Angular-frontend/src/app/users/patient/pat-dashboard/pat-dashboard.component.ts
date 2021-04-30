@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery'
 import {PatientService} from 'src/app/Services/patientservice/patient.service';
 import {UserService} from 'src/app/Services/userService/user.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-pat-dashboard',
@@ -12,7 +13,7 @@ export class PatDashboardComponent implements OnInit {
 
   dropdown = document.getElementsByClassName("dropdown-btn");
 
-  constructor(public _service: UserService, public patientService: PatientService) {
+  constructor(public _service: UserService, public patientService: PatientService, private title: Title) {
   }
 
   ngOnInit(): void {
@@ -39,6 +40,10 @@ export class PatDashboardComponent implements OnInit {
 
   setShowMedValue(): void {
     this.patientService.showMed = this.patientService.showMed !== true;
+  }
+
+  setTitle(title): void {
+    this.title.setTitle(title + ' - DrAvicenne ');
   }
 
 

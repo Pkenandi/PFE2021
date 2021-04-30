@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Demandes reçues ">
+      <div class="container">
+        <div *ngIf="!isInWait; else accpt">
+          <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
+            Vous n'avez aucune demande de rendez-vous actuellement </h2>
+        </div>
+      </div>
+
+      <ng-template #accpt>
+        <h2>Vos demandes reçues </h2>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Médecin</th>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let item of InWait">
+          <tr>
+            <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
+            <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
+            <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
+            <td>{{item?.heure}}</td>
+            <td>{{item?.status}}</td>
+            <td>
+              <img src="assets/images/icons/confirm.png" style="margin-right: 5px; cursor: pointer" (click)="Confirm(item?.id)">
+              <img src="assets/images/icons/x-button.png" style="cursor: pointer" (click)="Reject(item?.id)">
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Demandes confirmées">
+      <div class="container">
+        <div *ngIf="!isConfirmed; else conf">
+          <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
+            Vous n'avez confirmer aucun rendez-vous actuellement </h2>
+        </div>
+      </div>
+
+      <ng-template #conf>
+        <h2>Vos demandes confirmées </h2>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Médecin</th>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Status</th>
+            <th class="col-2">Envoyer mail ou message</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let item of Confirmed">
+          <tr>
+            <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
+            <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
+            <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
+            <td>{{item?.heure}}</td>
+            <td>{{item?.status}}</td>
+            <td>
+              <img src="assets/images/icons/gmail.png" style="margin-right: 15px; cursor: pointer" (click)="Mail()">
+              <img src="assets/images/icons/message.png" style="margin-right: 5px; cursor: pointer" (click)="Sms()">
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

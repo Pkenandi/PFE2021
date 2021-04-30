@@ -3,6 +3,21 @@
     color: red;
 }
 
+.card-horizontal {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.large{
+  width: 800px;
+}
+
+.style{
+  font-family: "Times New Roman", Times, serif;
+  font-size: 17px;
+  font-weight: bold;
+}
+
 .container-fluid{
   padding-right:0;
   padding-left:0;

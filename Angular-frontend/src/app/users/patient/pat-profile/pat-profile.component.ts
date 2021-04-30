@@ -53,8 +53,7 @@ export class PatProfileComponent implements OnInit {
     )
   }
 
-  UpdatePatient(): void
-  {
+  UpdatePatient(): void {
     this.UpdatedDetails = this.updateForm.value;
 
     this.patientService.updatePatient(this.UpdatedDetails , this.route.snapshot.params.username).subscribe(
@@ -68,6 +67,7 @@ export class PatProfileComponent implements OnInit {
           + "-" + this.date.getMonth()
           + "-" + this.date.getFullYear(),
           "Modification");
+        this.ngOnInit();
       },
       (error: HttpErrorResponse) => {
         this.toaster.error(

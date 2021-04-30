@@ -21,19 +21,19 @@
   </div>
 </div>
 
-<div class="container mx-auto" style="margin-bottom: 50px; margin-top: 40px">
+<div class="container" style="margin-bottom: 50px; margin-top: 40px">
   <div class="row">
-    <div class="col-md-12 mr-2">
+    <div class="col-md-12" >
       <carousel [images]="images" autoplay="true" autoplayInterval="2500" overflowCellsLimit="1" dots="true"
-                arrows="true" arrowsTheme="dark" borderRadius="15px" transitionDuration="1000" loop="true" width=1100
-                height=300 cellsToShow=3 class="car">
+                arrows="true" arrowsTheme="dark" borderRadius="15px" transitionDuration="1000" loop="true" width=1200
+                height=250 cellsToShow=3 class="car">
 
       </carousel>
     </div>
   </div>
 </div>
 
-<div class="container-fluid mt-3 mb-4">
+<div class="container mt-3 mb-4">
   <div class="text-center words">
     <p> Pourquoi prendre rendez-vous avec DrAvicenne.com ? </p>
     <span> Avec Nous, vous prenez votre rendez-vous en ligne avec votre médecin autrement</span>
@@ -58,10 +58,106 @@
   </div>
 </div>
 
-<div class="container-fluid" style="background-color: #e4dfee">
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-12 mt-3">
+      <section class="pt-1">
+        <div class="container words">
+          <h2 style="font-family: 'Arial Black', sans-serif"> 5 Conseils Médicaux pour être en bonne santé </h2>
+        </div>
+        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[1].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{Data[1].title}}</h4>
+                    <p class="large style" >
+                      {{Data[1].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[2].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{Data[2].title}}</h4>
+                    <p class="style large">
+                      {{Data[2].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[3].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{Data[3].title}}</h4>
+                    <p class="style large">
+                      {{Data[3].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[4].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{Data[4].title}}</h4>
+                    <p class="style large">
+                      {{Data[4].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[5].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ Data[5].title}}</h4>
+                    <p class="style large">
+                      {{ Data[5].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="background-color: #e4dfee">
   <div class="mb-3">
     <div class="row ">
-      <div class="col-lg-5 col-md-12 col-sm-12 mx-auto text-center mt-3">
+      <div class="col-lg-6 col-md-12 col-sm-12 mx-auto text-center mt-3">
         <p style="margin-top: 15px">
           <span style="font-size: x-large;">
                   Besoin d'un conseil médical ? <br>
@@ -76,7 +172,7 @@
         </p>
 
       </div>
-      <div class="col-lg-4 col-md-12 col-sm-12 mt-3 mx-auto">
+      <div class="col-lg-6 col-md-12 col-sm-12 mt-3 mx-auto">
                 <span style="font-size: x-large;">
                 Questions recemment posées
               </span>
@@ -84,7 +180,7 @@
           <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <div class="card shadow mt-3" style="width: 20rem;" >
+                <div class="card shadow mt-3" style="width: 20rem;">
                   <div class="card-body">
                     <span style="font-weight: bold; color: red"> Question :</span> <br>
                     <hr style="width: 10px">
@@ -102,7 +198,7 @@
               </div>
 
               <div class="carousel-item">
-                <div class="card shadow mt-3" style="width: 20rem;" >
+                <div class="card shadow mt-3" style="width: 20rem;">
                   <div class="card-body">
                     <span style="font-weight: bold; color: red"> Question :</span> <br>
                     <hr style="width: 10px">
@@ -120,7 +216,7 @@
               </div>
 
               <div class="carousel-item">
-                <div class="card shadow mt-3" style="width: 20rem;" >
+                <div class="card shadow mt-3" style="width: 20rem;">
                   <div class="card-body">
                     <span style="font-weight: bold; color: red"> Question :</span> <br>
                     <hr style="width: 10px">
@@ -138,7 +234,7 @@
               </div>
 
               <div class="carousel-item">
-                <div class="card shadow mt-3" style="width: 20rem;" >
+                <div class="card shadow mt-3" style="width: 20rem;">
                   <div class="card-body">
                     <span style="font-weight: bold; color: red"> Question :</span> <br>
                     <hr style="width: 10px">
@@ -156,7 +252,7 @@
               </div>
 
               <div class="carousel-item">
-                <div class="card shadow mt-3" style="width: 20rem;" >
+                <div class="card shadow mt-3" style="width: 20rem;">
                   <div class="card-body">
                     <span style="font-weight: bold; color: red"> Question :</span> <br>
                     <hr style="width: 10px">
@@ -174,7 +270,7 @@
               </div>
 
               <div class="carousel-item">
-                <div class="card shadow mt-3" style="width: 20rem;" >
+                <div class="card shadow mt-3" style="width: 20rem;">
                   <div class="card-body">
                     <span style="font-weight: bold; color: red"> Question :</span> <br>
                     <hr style="width: 10px">
@@ -192,7 +288,7 @@
               </div>
 
               <div class="carousel-item">
-                <div class="card shadow mt-3" style="width: 20rem;" >
+                <div class="card shadow mt-3" style="width: 20rem;">
                   <div class="card-body">
                     <span style="font-weight: bold; color: red"> Question :</span> <br>
                     <hr style="width: 10px">
@@ -210,7 +306,7 @@
               </div>
 
               <div class="carousel-item">
-                <div class="card shadow mt-3" style="width: 20rem;" >
+                <div class="card shadow mt-3" style="width: 20rem;">
                   <div class="card-body">
                     <span style="font-weight: bold; color: red"> Question :</span> <br>
                     <hr style="width: 10px">
@@ -230,17 +326,6 @@
             </div>
           </div>
         </section>
-      </div>
-      <div class="col-lg-3 mt-5 justify-content-center mb-4">
-        <div class="conseil text-center">
-         <p class="text-center mt-2 p-1"> 5 Conseils Médicaux pour vivre plus longtemps dans la vie </p>
-          <img src="assets/images/healthcare.png" style="margin-left: 10px">
-          <h4><span># </span> Faire 30 minutes d'activité sportive par jour. </h4>
-          <h4><span># </span> Dormir 7 à 8 heures par nuit. </h4>
-          <h4><span># </span> Manger des fruits et des légumes. </h4>
-          <h4><span># </span> Ne pas fumer. </h4>
-          <h4><span># </span> Contrôler son poids et éviter les excès. </h4>
-        </div>
       </div>
     </div>
   </div>

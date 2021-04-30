@@ -48,6 +48,8 @@ import { ListRendezvousComponent } from './users/patient/list-rendezvous/list-re
 import { MatTabsModule } from "@angular/material/tabs";
 import { FormDossierComponent } from './users/patient/form-dossier/form-dossier.component';
 import { AgendaComponent } from './users/medecin/agenda/agenda.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatDialogModule} from "@angular/material/dialog";
 import {
   ScheduleModule,
   RecurrenceEditorModule,
@@ -62,6 +64,18 @@ import {
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { ProfileMedComponent } from './users/patient/profile-med/profile-med.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatInputModule} from "@angular/material/input";
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
+import {MatIconModule} from '@angular/material/icon'
+import {MatNativeDateModule, MatOptionModule} from "@angular/material/core";
+import { ListRendezVousComponent } from './users/medecin/list-rendez-vous/list-rendez-vous.component';
+import { PatNotifComponent } from './users/patient/pat-notif/pat-notif.component';
+import { MailComponent } from './users/medecin/messagerie/mail/mail.component';
+import { SmsComponent } from './users/medecin/messagerie/sms/sms.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatCard, MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -93,6 +107,10 @@ import { ProfileMedComponent } from './users/patient/profile-med/profile-med.com
     FormDossierComponent,
     AgendaComponent,
     ProfileMedComponent,
+    ListRendezVousComponent,
+    PatNotifComponent,
+    MailComponent,
+    SmsComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,12 +128,24 @@ import { ProfileMedComponent } from './users/patient/profile-med/profile-med.com
     MatButtonModule,
     MatGridListModule,
     MatTabsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatBadgeModule,
     ToastrModule.forRoot(),
     ScheduleModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory}),
+    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
     CommonModule,
     NgbModalModule,
-    FlatpickrModule.forRoot()
+    FlatpickrModule.forRoot(),
+    MatInputModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatCardModule,
+    NgxMaterialTimepickerModule,
+    MatCardModule
   ],
   exports: [
     HeaderComponent,
@@ -126,7 +156,18 @@ import { ProfileMedComponent } from './users/patient/profile-med/profile-med.com
     MedRegisterComponent,
     PatRegisterComponent,
     PatLoginComponent,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgxMaterialTimepickerModule,
+    MatBadgeModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatCardModule,
   ],
 
   providers: [
@@ -137,9 +178,11 @@ import { ProfileMedComponent } from './users/patient/profile-med/profile-med.com
     WeekService,
     MonthService,
     WorkWeekService,
-    MonthAgendaService
+    MonthAgendaService,
+    MatNativeDateModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PatNotifComponent,SmsComponent,MailComponent]
 })
 export class AppModule {
 }

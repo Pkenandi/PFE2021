@@ -1,0 +1,24 @@
+.block{
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  color: white;
+}
+
+span{
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  font-size: large;
+}
+
+span .wait{
+  color: blue;
+}
+
+span .confirm{
+  color: green;
+}
+
+p{
+  font-size: large;
+}

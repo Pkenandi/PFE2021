@@ -6,6 +6,7 @@ import { Medecin } from 'src/app/Models/Medecin/medecin';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidationService } from 'src/app/Services/validations/custom-validation.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-med-register',
@@ -15,13 +16,13 @@ import { CustomValidationService } from 'src/app/Services/validations/custom-val
 export class MedRegisterComponent implements OnInit {
 
   regMedForm = new FormGroup({
-    nom: new FormControl('', [Validators.required]),
-    prenom: new FormControl('', [Validators.required]),
+    nom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
+    prenom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
     specialite: new FormControl('', [Validators.required]),
-    ville: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
-    cin: new FormControl('', [Validators.required]),
+    ville: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    phone: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    cin: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
     password: new FormControl('', [Validators.required]),
     cpassword: new FormControl('', [Validators.required])
   },
@@ -34,19 +35,23 @@ export class MedRegisterComponent implements OnInit {
   constructor(
     private service: UserService,
     private _router: Router,
-    private _validator: CustomValidationService ) { }
+    private _validator: CustomValidationService,
+    private toast: ToastrService) { }
 
   ngOnInit(): void {
   }
 
+  get regValue(){
+    return this.regMedForm.controls;
+  }
   // tslint:disable-next-line: typedef
-  registerMedecin()
-  {
+  registerMedecin() {
     this.medecins = this.regMedForm.value;
     console.log('Medecin :', this.medecins);
     this.service.registerMedecin(this.regMedForm.value).subscribe(() => {
       this.service.isAuthenticated = true;
       this.regMedForm.reset({});
+      this.toast.info("Bienvenue dans la grande famille Dr ","Bienvenue !");
       this._router.navigate(['../med/login']);
     }, (error: HttpErrorResponse) => {
       console.log(error.message);

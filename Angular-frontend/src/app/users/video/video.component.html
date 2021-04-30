@@ -1,17 +1,24 @@
-<mat-grid-list cols="2" class="mt-5" rowHeight="2:1">
-  <mat-grid-tile>
-    <p class="video-description"> Ecran local </p>
-    <video #local_video [autoplay]="true" [muted]="true"> </video>
-  </mat-grid-tile>
+<div class="container">
+  <div class="account">
+    <h3> Télé-Consulation </h3>
+    <hr style="height:4px;border-width:0;color:gray;background-color:whitesmoke; border-left: 120px solid #a432cd">
+  </div>
+  <mat-grid-list cols="2" class="mt-5" rowHeight="2:1">
+    <mat-grid-tile>
+      <p class="video-description"> Ecran local </p>
+      <video #local_video [autoplay]="true" [muted]="true"> </video>
+    </mat-grid-tile>
 
-  <mat-grid-tile class="ml-3">
-    <p class="video-description"> Ecran visiteur </p>
-    <video #received_video [autoplay]="true"> </video>
-  </mat-grid-tile>
-</mat-grid-list>
-<div class="mx-auto align-content-center spaceTop">
-  <button id="first" mat-raised-button class="btn-danger btn-sm mr-3" (click)="startLocalVideo()">Lancer l'ecran local</button>
-  <button mat-raised-button class="btn-primary btn-sm mr-3" (click)="pauseLocalVideo()">Couper l'ecran local</button>
-  <button mat-raised-button class="btn-danger btn-sm mr-3" (click)="call()">Appeler</button>
-  <button mat-raised-button class="btn-primary btn-sm" (click)="hangUp()">Couper l'appel</button>
+    <mat-grid-tile class="ml-3">
+      <p class="video-description"> Ecran visiteur </p>
+      <video #received_video [autoplay]="true"> </video>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div class="mx-auto align-content-center spaceTop">
+    <button id="first" mat-raised-button class="btn-danger btn-sm mr-3" (click)="startLocalVideo()">Lancer l'ecran local</button>
+    <button mat-raised-button class="btn-primary btn-sm mr-3" (click)="pauseLocalVideo()">Couper l'ecran local</button>
+    <button mat-raised-button class="btn-danger btn-sm mr-3" (click)="call()">Appeler</button>
+    <button mat-raised-button class="btn-primary btn-sm" (click)="hangUp()">Couper l'appel</button>
+  </div>
+
 </div>

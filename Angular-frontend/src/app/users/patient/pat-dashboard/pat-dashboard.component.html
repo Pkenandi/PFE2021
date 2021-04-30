@@ -9,7 +9,7 @@
         <div class="sidebar-heading text-center mt-2 mb-2 shadow">Bienvenue <br> <span id="Dr">{{patientService.name}} {{patientService.lastName}}</span> </div>
         <div class="list-group list-group-flush nav nav-tabs">
           <a routerLink="../../patient/{{patientService?.patient.username}}" class=" nav-link btn list-group-item list-group-item-action bg-light">
-            <img src="assets/images/profile.png"> Profile
+            <img src="assets/images/profile.png" (click)="setTitle('Profile')"> Profile
           </a>
 
             <a routerLink="../../pat/logout" class=" nav-link btn list-group-item list-group-item-action bg-light">
@@ -18,19 +18,17 @@
         </div>
     </div>
 
-    <!-- /#sidebar-wrapper -->
-    <!-- Page Content -->
     <div id="page-content-wrapper">
       <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#Med" data-toggle="tab">Trouver un médecin</a>
+            <a class="nav-link active" aria-current="page" href="#Med" data-toggle="tab" (click)="setTitle('Trouver un médecin')">Trouver un médecin</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#Rdv" data-toggle="tab">Mes Rendez-vous</a>
+            <a class="nav-link" href="#Rdv" data-toggle="tab" (click)="setTitle('Rendez-vous')">Mes Rendez-vous</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#Dm" data-toggle="tab">Mon dossier medical</a>
+            <a class="nav-link" href="#Dm" data-toggle="tab" (click)="setTitle('Dossier Médical')">Mon dossier medical</a>
           </li>
         </ul>
       </nav>
@@ -49,4 +47,5 @@
       </div>
     </div>
     <!-- /#page-content-wrapper -->
+
 </div>

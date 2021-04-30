@@ -21,6 +21,10 @@ import {MedLogoutComponent} from "./users/medecin/med-logout/med-logout.componen
 import {ListRendezvousComponent} from "./users/patient/list-rendezvous/list-rendezvous.component";
 import {AgendaComponent} from "./users/medecin/agenda/agenda.component";
 import {ProfileMedComponent} from "./users/patient/profile-med/profile-med.component";
+import {ShowDossierContenteComponent} from "./users/patient/show-dossier-contente/show-dossier-contente.component";
+import {ListRendezVousComponent} from "./users/medecin/list-rendez-vous/list-rendez-vous.component";
+import {MailComponent} from "./users/medecin/messagerie/mail/mail.component";
+import {SmsComponent} from "./users/medecin/messagerie/sms/sms.component";
 
 
 const routes: Routes = [
@@ -99,9 +103,12 @@ const routes: Routes = [
     component: ListRendezvousComponent
   },
   {
+    path: 'med/listRdv',
+    component: ListRendezVousComponent
+  },
+  {
     path: 'notification',
     component: NotificationComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'chat',
@@ -110,6 +117,14 @@ const routes: Routes = [
   {
     path: 'consultation',
     component: VideoComponent
+  },
+  {
+    path: 'mail',
+    component: MailComponent,
+  },
+  {
+    path: 'sms',
+    component: SmsComponent
   },
   {
     path: '',

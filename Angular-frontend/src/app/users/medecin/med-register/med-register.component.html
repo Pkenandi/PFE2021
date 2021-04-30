@@ -7,8 +7,11 @@
 
 
 <div class="container">
+  <div class="account">
+    <h3> Inscription - Médecin </h3>
+    <hr style="height:4px;border-width:0;color:gray;background-color:whitesmoke; border-left: 145px solid darkred">
+  </div>
   <div class="row">
-
     <div class="col-lg-6 col-md-6 mt-5">
       <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
     </div>
@@ -17,76 +20,139 @@
       <div class="card bg-light mx-auto mt-3">
         <article class="card-body mx-auto bg-light" style="width: 400px;">
             <span style="margin-left: 150px;">
-              <i class="fas fa-user-md fa-5x mb-4"></i></span>
+              <img src="assets/images/doctor.png" class="mb-3"></span>
           <form [formGroup]="regMedForm" (ngSubmit)="registerMedecin()">
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
               </div>
-              <input formControlName="nom" name="nom" class="form-control" placeholder="Nom ..." type="text">
+              <input formControlName="nom" name="nom" class="form-control" placeholder="Nom ..." type="text"
+                     [ngClass]="{'is-invalid': regValue.nom.errors && regValue.nom.touched}">
+              <div *ngIf="regValue.nom.errors" class="invalid-feedback">
+                <span *ngIf="regValue.nom.touched"> Au moins 5 caracteres, au plus 8 caracteres </span>
+              </div>
             </div>
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="far fa-user"></i> </span>
               </div>
-              <input formControlName="prenom" name="prenom" class="form-control" placeholder="Prenom ..." type="text">
+              <input formControlName="prenom" name="prenom" class="form-control" placeholder="Prenom ..." type="text"
+                     [ngClass]="{'is-invalid': regValue.prenom.errors && regValue.prenom.touched}">
+              <div *ngIf="regValue.prenom.errors" class="invalid-feedback">
+                <span *ngIf="regValue.prenom.touched"> Au moins 5 caracteres, au plus 8 caracteres </span>
+              </div>
             </div>
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fas fa-user-md"></i> </span>
               </div>
-              <input formControlName="cin" name="cin" class="form-control" placeholder="CIN ..." type="text">
+              <input formControlName="cin" name="cin" class="form-control" placeholder="CIN ..." type="text"
+                     [ngClass]="{'is-invalid': regValue.cin.errors && regValue.cin.touched}">
+              <div *ngIf="regValue.cin.errors" class="invalid-feedback">
+                <span *ngIf="regValue.nom.touched"> Au moins 5 caracteres, au plus 8 caracteres </span>
+              </div>
             </div>
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="far fa-user"></i> </span>
               </div>
-              <input formControlName="specialite" name="specialite" class="form-control" placeholder="Specialité ..." type="text">
+              <select formControlName="specialite" name="specialite" class="form-select form-control"
+                      aria-label="Default select example" [ngClass]="{'is-invalid': regValue.specialite.errors && regValue.specialite.touched}">>
+                <option value="" disabled selected> Specialité</option>
+                <option value="anesthésiologie"> Anesthésiologie</option>
+                <option value="andrologie"> Andrologie</option>
+                <option value="immunologie"> Immunologie</option>
+                <option value="Chirurgie"> Chirurgie</option>
+                <option value="chirurgie pédiatrique"> Chirurgie pédiatrique</option>
+                <option value="chirurgie maxillo-faciale"> Chirurgie maxillo-faciale</option>
+                <option value="gynécologie"> Gynécologie</option>
+                <option value="dermatologie"> Dermatologie</option>
+                <option value="neurochirurgie"> Neurochirurgie</option>
+                <option value="Néphrologie"> Néphrologie</option>
+                <option value="Nutrition et maladies nutritionnelles"> Nutrition et maladies nutritionnelles</option>
+                <option value="hématologie"> Hématologie</option>
+                <option value="hépatologie"> Hépatologie</option>
+                <option value="infectiologie"> Infectiologie</option>
+                <option value="ophtalmologie"> Ophtalmologie</option>
+                <option value="pédiatrie"> Pédiatrie</option>
+                <option value="psychiatrie"> Psychiatrie</option>
+                <option value="Pédopsychiatrie"> Pédopsychiatrie</option>
+                <option value="radiothérapie"> Radiothérapie</option>
+                <option value="obstétrique"> Obstétrique</option>
+                <option value="Gastro-entérologie"> Gastro-entérologie</option>
+                <option value="urologie"> Urologie</option>
+                <option value="Imagerie médicale"> Imagerie médicale</option>
+                <option value="Radiothérapie carcinologique"> Radiothérapie carcinologique</option>
+                <option value="Réanimation médicale"> Réanimation médicale</option>
+                <option value="médecine générale"> Médecine générale</option>
+                <option value="médecine interne"> Médecine interne</option>
+                <option value="médecine interne"> Médecine interne</option>
+                <option value="Médecine d'urgence"> Médecine d'urgence</option>
+              </select>
+
+              <div *ngIf="regValue.specialite.errors" class="invalid-feedback">
+                <span *ngIf="regValue.specialite.touched"> Champ Obligatoire </span>
+              </div>
             </div>
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
               </div>
-              <input formControlName="email" name="email" class="form-control" placeholder="Adresse mail" type="email">
+              <input formControlName="email" name="email" class="form-control" placeholder="Adresse mail" type="email"
+                     [ngClass]="{'is-invalid': regValue.email.errors && regValue.email.touched}">
+              <div *ngIf="regValue.email.errors" class="invalid-feedback">
+                <span *ngIf="regValue.email.touched"> Email Invalide </span>
+              </div>
             </div>
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
               </div>
-              <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ... " type="text">
+              <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ... " type="text"
+                     [ngClass]="{'is-invalid': regValue.ville.errors && regValue.ville.touched}">
+              <div *ngIf="regValue.ville.errors" class="invalid-feedback">
+                <span *ngIf="regValue.ville.touched"> Au moins 3 caracteres</span>
+              </div>
             </div>
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
               </div>
-              <input formControlName="phone" name="phone" class="form-control" placeholder="Phone number" type="text">
+              <input formControlName="phone" name="phone" class="form-control" placeholder="Phone" type="text"
+                     [ngClass]="{'is-invalid': regValue.phone.errors && regValue.phone.touched}">
+              <div *ngIf="regValue.phone.errors" class="invalid-feedback">
+                <span *ngIf="regValue.phone.touched"> Au moins 5 caracteres </span>
+              </div>
             </div>
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
               </div>
-              <input formControlName="password" name="password" class="form-control" placeholder="password" type="password">
+              <input formControlName="password" name="password" class="form-control" placeholder="password"
+                     type="password">
             </div>
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
               </div>
-              <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Confirmation" type="password">
+              <input formControlName="cpassword" name="cpassword" class="form-control" placeholder="Confirmation" type="password"
+                     [ngClass]="{'is-invalid':regMedForm.get('cpassword').errors && regMedForm.get('cpassword').touched}" required>
+              <div class="invalid-feedback" *ngIf="regMedForm.get('cpassword').hasError('passwordMismatch')"> Mot de passe de confirmation different du mot de passe </div>
             </div>
 
             <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block btn-sm"> Soumettre  </button>
+              <button type="submit" class="btn btn-primary btn-block btn-sm" [disabled]="regMedForm.invalid"> Soumettre</button>
             </div>
             <!-- form-group// -->
-            <p class="text-center"> Vous avez un compte ? <a routerLink="../../med/login">Connectez-vous</a> </p>
+            <p class="text-center"> Vous avez un compte ? <a routerLink="../../med/login">Connectez-vous</a></p>
           </form>
         </article>
       </div>

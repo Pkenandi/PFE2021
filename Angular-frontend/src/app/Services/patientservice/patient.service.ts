@@ -45,4 +45,8 @@ showDossier = false;
   updatePatient(patientDetails, username): Observable<any> {
     return this._http.put<any>(`${basedUrl}patient/update/${username}`, patientDetails);
   }
+
+  addRendezVous(username: string, id: number): Observable<any>{
+    return this._http.get<any>(`${basedUrl}/patient/${username}/rendezvous/${id}/add`);
+  }
 }

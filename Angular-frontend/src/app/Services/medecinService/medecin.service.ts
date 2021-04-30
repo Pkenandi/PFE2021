@@ -19,6 +19,7 @@ export class MedecinService {
 
   log = false;
   Cin: string;
+  ville: string;
   medecins: Medecin[];
   medecin: Medecin;
 
@@ -44,6 +45,10 @@ export class MedecinService {
 
   Login(cin, password): Observable<any>{
     return this.userService.loginMedecin(cin, password);
+  }
+
+  attachToRendezVous(cin: string, id: number): Observable<any>{
+    return this._http.get<any>(`${basedUrl}/medecin/${cin}/rendezvous/${id}/assign`);
   }
 
 }

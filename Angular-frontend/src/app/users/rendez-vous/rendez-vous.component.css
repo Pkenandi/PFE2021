@@ -1,10 +1,51 @@
-.myform{
+.myForm{
   border: dashed 1px black;
   padding: 50px;
 }
-form{
+
+.formData{
+  width: 500px;
+  border-radius: 3px;
+
+}
+.formData input{
+  width: 200px;
+  height: 50px;
+}
+.formData input[type=date], input[type=time]{
+  background-color: beige;
+  color: black;
+}
+button{
+  font-family: "Poppins", sans-serif;
+  width: 250px;
+}
+.content{
+  border: whitesmoke solid 1px;
+  border-radius: 5px;
+  padding: 10px 10px;
+  height: 265px;
+}
+
+.text{
   width: 300px;
-  margin-left: -28px;
+}
+
+.text h3{
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+}
+
+.words{
+  color: #222238;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+}
+
+h2{
+  font-weight: bold;
+  font-size: 15px;
 }
 
 .send-button{
@@ -14,6 +55,7 @@ form{
   color:#fff;
   padding: 8px 25px;
 }
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;

@@ -7,7 +7,7 @@
 .navbar {
     background: none;
     background: #16222A;
-    background: -webkit-linear-gradient(59deg, #3A6073, #16222A);
+    background: -webkit-linear-gradient(59deg, #47758d, #16222A);
     background: linear-gradient(59deg, #3A6073, #16222A);
 }
 
@@ -35,4 +35,27 @@
     display: block;
     transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;
+}
+
+.account{
+  border: black solid 1px;
+  border-radius: 18px;
+  background-color: black;
+  color: white;
+  width: 120px;
+  height: 35px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.account span{
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.line{
+  color: white;
+  width: 120px;
+  height: 30px;
+  margin-top: 18px;
 }

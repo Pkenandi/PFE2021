@@ -49,7 +49,6 @@ export class PatLoginComponent implements OnInit {
         this.userService.setIsAuthenticated(true);
         this.patientService.log = true;
         this.userService.isLoggedIn = true;
-        this.toast.success(" Bienvenue ! " + this.patient.nom, "Connexion");
         this._router.navigate(['../pat/dashboard']);
       },
       (error: HttpErrorResponse) => {

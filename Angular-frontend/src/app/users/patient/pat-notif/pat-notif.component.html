@@ -1,0 +1,19 @@
+<div class="container">
+  <div *ngIf="rdvService.p_notifications == 0; else show">
+    <h2 style="margin-top: 10px">
+      <img src="assets/images/icons/info.png" class="mr-2"> Vous n'avez aucune notification
+    </h2>
+  </div>
+  <ng-template #show>
+    <p><img src="assets/images/icons/x-button.png">
+      <Span class="text-danger ml-2">{{rdvService.pr_note}}</Span> rendez-vous Refusé(s). </p> <br>
+    <p><img src="assets/images/icons/yes.png"> <span style="color: green" class="ml-2">{{rdvService.pa_note}}</span>
+      rendez-vous Accepté(s) </p> <br>
+    <p><img src="assets/images/icons/wait.png"> <span style="color: blue" class="ml-2">{{rdvService.pw_note}}</span>
+      rendez-vous en Attente </p>
+  </ng-template>
+  <div mat-dialog-actions>
+    <button mat-button [matDialogClose] color="primary">Fermer</button>
+  </div>
+</div>
+

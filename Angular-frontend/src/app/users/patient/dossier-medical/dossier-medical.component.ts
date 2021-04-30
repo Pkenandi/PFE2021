@@ -18,7 +18,7 @@ export class DossierMedicalComponent implements OnInit {
 
   patient: Patient = this.patientService.patient;
   dossier: DossierMedical = null;
-  numero = this.getRandomInt(2000);
+  numero = this.getRandomInt(100000);
   exist: boolean = false;
   Tab: Tab = null;
 

@@ -5,18 +5,24 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
 <div class="container">
+  <div class="account">
+    <h3> Connexion - Médecin </h3>
+    <hr style="height:4px;border-width:0;color:gray;background-color:whitesmoke; border-left: 150px solid darkred">
+  </div>
   <div class="row">
     <div class="col-lg-6 col-md-6 mt-5">
       <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
     </div>
 
     <div class="col-lg-6 col-md-6">
-      <div class="wrapper mt-5">
+      <h1 class="mt-3 text-center"
+          style="font-weight: 50; font-weight: bold; color: #61141e">
+        Vous avez déja un compte ?  </h1>
+      <div class="wrapper mt-0">
         <div id="formContent">
-
           <div>
-            <span style="margin-left: 10px"><i class="fas fa-user-md fa-5x"></i></span>
-            <h3>Connectez-vous </h3>
+            <span style="margin-left: 10px"><img src="assets/images/doctor.png"></span>
+            <h3></h3>
           </div>
 
           <form [formGroup]="medLogForm" (ngSubmit)="login()">
@@ -24,11 +30,10 @@
             <input formControlName="cin" type="text" id="cin" name="cin" placeholder="CIN ...">
             <input formControlName="password" type="password" id="password" name="password" placeholder="Mot de passe ...">
             <input type="submit" value="Connect">
-            <a routerLink='../../med/register'> Soumettre </a>
+            <a routerLink='../../med/register'> Créer un compte </a>
           </form>
 
           <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
           </div>
 
         </div>

@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidationService } from 'src/app/Services/validations/custom-validation.service';
 import {ToastrService} from "ngx-toastr";
+import * as $ from "jquery";
 
 @Component({
   selector: 'app-pat-register',
@@ -15,15 +16,15 @@ import {ToastrService} from "ngx-toastr";
 export class PatRegisterComponent implements OnInit {
 
   regPatForm = new FormGroup({
-    nom: new FormControl('', [Validators.required]),
-    prenom: new FormControl('', [Validators.required]),
-    ville: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    groupeSang: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
+    nom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
+    prenom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
+    ville: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
+    email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(5)]),
+    groupeSang: new FormControl(""),
+    phone: new FormControl('', [Validators.required, Validators.minLength(5)]),
     dateNaiss: new FormControl('', [Validators.required]),
     username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required,Validators.minLength(6)]),
     cpassword: new FormControl('', [Validators.required])
   },
   {
@@ -42,9 +43,11 @@ export class PatRegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // tslint:disable-next-line:typedef
-  registerPatient()
-  {
+  get regControl(){
+    return this.regPatForm.controls;
+  }
+
+  registerPatient(): void {
 
     this.patients = this.regPatForm.value;
     console.log(this.patients);

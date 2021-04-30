@@ -30,7 +30,7 @@ export class MedLoginComponent implements OnInit {
     private toast: ToastrService) { }
 
   ngOnInit(): void {
-
+    this.medLogForm.reset({});
   }
 
   login(): void {
@@ -48,7 +48,6 @@ export class MedLoginComponent implements OnInit {
             this.medService.medecin = this.medecin;
             this.medService.log = true;
             this.service.isLoggedIn = true;
-            this.toast.success("Heureux de vous voir Dr " + this.medecin.nom)
             this._router.navigate(['../med/dashboard']);
           },
           error => {
