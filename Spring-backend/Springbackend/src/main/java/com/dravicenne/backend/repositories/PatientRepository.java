@@ -2,6 +2,7 @@ package com.dravicenne.backend.repositories;
 
 import com.dravicenne.backend.models.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

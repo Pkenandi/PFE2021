@@ -37,7 +37,7 @@ public class DossierMedical implements Serializable {
     private Patient patient;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "medecin_Id")
     private Medecin medecin;
 

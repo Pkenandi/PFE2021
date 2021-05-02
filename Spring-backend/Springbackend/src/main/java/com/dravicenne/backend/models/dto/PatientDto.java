@@ -31,24 +31,31 @@ public class PatientDto extends User {
     public static PatientDto from(Patient patient){
         PatientDto patientDto = new PatientDto();
 
-        patientDto.setId(patient.getId());
-        patientDto.setNom(patient.getNom());
-        patientDto.setPrenom(patient.getPrenom());
-        patientDto.setVille(patient.getVille());
-        patientDto.setUsername(patient.getUsername());
-        patientDto.setGroupeSang(patient.getGroupeSang());
-        patientDto.setAge(patient.getAge());
-        patientDto.setDateNaiss(patient.getDateNaiss());
-        patientDto.setEmail(patient.getEmail());
-        patientDto.setPhone(patient.getPhone());
-        patientDto.setPassword(patient.getPassword());
-        patientDto.setCpassword(patient.getCpassword());
-        patientDto.setToken(patient.getToken());
-        patientDto.setRendezVousDtos(patient.getRendezVousList().stream().map(RendezVousDto::from).collect(Collectors.toList()));
-        if(Objects.nonNull(patient.getDossierMedical())){
-            patientDto.setDossierDto(DossierDto.from(patient.getDossierMedical()));
-        }
+        if(Objects.isNull(patient)){
+            return null;
+        }else{
 
-        return patientDto;
+            patientDto.setId(patient.getId());
+            patientDto.setNom(patient.getNom());
+            patientDto.setPrenom(patient.getPrenom());
+            patientDto.setVille(patient.getVille());
+            patientDto.setUsername(patient.getUsername());
+            patientDto.setGroupeSang(patient.getGroupeSang());
+            patientDto.setAge(patient.getAge());
+            patientDto.setDateNaiss(patient.getDateNaiss());
+            patientDto.setEmail(patient.getEmail());
+            patientDto.setPhone(patient.getPhone());
+            patientDto.setPassword(patient.getPassword());
+            patientDto.setCpassword(patient.getCpassword());
+            patientDto.setToken(patient.getToken());
+            if(Objects.nonNull(patient.getRendezVousList())){
+                patientDto.setRendezVousDtos(patient.getRendezVousList().stream().map(RendezVousDto::from).collect(Collectors.toList()));
+            }
+            if(Objects.nonNull(patient.getDossierMedical())){
+                patientDto.setDossierDto(DossierDto.from(patient.getDossierMedical()));
+            }
+
+            return patientDto;
+        }
     }
 }

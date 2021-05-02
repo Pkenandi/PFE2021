@@ -1,5 +1,11 @@
 package com.dravicenne.backend.models;
 
+import com.dravicenne.backend.controllers.TacheController;
+import com.dravicenne.backend.models.dto.AgendaDto;
+import com.dravicenne.backend.models.dto.MedecinDto;
+import com.dravicenne.backend.models.dto.PlainMedecinDto;
+import com.dravicenne.backend.models.dto.TacheDto;
+import com.dravicenne.backend.models.plaindto.PlainAgendaDto;
 import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,16 +14,17 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Table(name = "Agenda")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Agenda implements Serializable {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
@@ -33,38 +40,28 @@ public class Agenda implements Serializable {
     @JoinColumn(name = "medecin_Id")
     private Medecin medecin;
 
-    public Long getId() {
-        return id;
+    // Methods
+
+    public static Agenda from(AgendaDto agendaDto){
+        Agenda agenda = new Agenda();
+
+        agenda.setId(agendaDto.getId());
+        agenda.setTitre(agendaDto.getTitre());
+        if(Objects.nonNull(agendaDto.getMedecinDto())){
+            agenda.setMedecin(Medecin.ToPlainMedecin(agendaDto.getMedecinDto()));
+        }
+//        agenda.setTaches(agendaDto.getTacheDtoList().stream().map(PlainTacheDto::from).collect(Collectors.toList()));
+
+        return agenda;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public static Agenda toPlainAgenda(PlainAgendaDto plainAgendaDto){
+        Agenda agenda = new Agenda();
 
-    public String getTitre() {
-        return titre;
-    }
+        agenda.setId(plainAgendaDto.getId());
+        agenda.setTitre(plainAgendaDto.getTitre());
 
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
-    //@JsonManagedReference(value = "agenda_tache")
-    public List<Tache> getTaches() {
-        return taches;
-    }
-
-    public void setTaches(List<Tache> taches) {
-        this.taches = taches;
-    }
-
-    //@JsonBackReference(value = "medecin_agenda")
-    public Medecin getMedecin() {
-        return medecin;
-    }
-
-    public void setMedecin(Medecin medecin) {
-        this.medecin = medecin;
+        return agenda;
     }
 
     public void createTask(Tache tache){
@@ -72,6 +69,6 @@ public class Agenda implements Serializable {
     }
 
     public void removeTask(Tache tache){
-        this.taches.remove(tache);
+        this.taches.add(tache);
     }
 }

@@ -64,4 +64,8 @@ public class DossierService {
         return this.dossierMedicalRepository.findWithPatient(username);
     }
 
+    public List<DossierMedical> findWithMedecin(String cin){
+        return this.dossierMedicalRepository.findWithMedecinAndPatient(cin);
+    }
+
 }

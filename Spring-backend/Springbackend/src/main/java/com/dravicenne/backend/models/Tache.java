@@ -1,9 +1,8 @@
 package com.dravicenne.backend.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.dravicenne.backend.models.dto.TacheDto;
+import com.dravicenne.backend.models.plaindto.PlainTacheDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -30,6 +29,28 @@ public class Tache implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_tache")
     private Agenda agenda;
+
+    public static Tache from(TacheDto tacheDto){
+        Tache tache = new Tache();
+
+        tache.setId(tacheDto.getId());
+        tache.setTache(tacheDto.getTache());
+        tache.setHeure(tacheDto.getHeure());
+        tache.setDescription(tacheDto.getDescription());
+
+        return tache;
+    }
+
+    public static Tache ToPlainTache(PlainTacheDto plainTacheDto){
+        Tache tache = new Tache();
+
+        tache.setId(plainTacheDto.getId());
+        tache.setTache(plainTacheDto.getTache());
+        tache.setDescription(plainTacheDto.getDescription());
+        tache.setHeure(plainTacheDto.getHeure());
+
+        return tache;
+    }
 
     public Long getId() {
         return id;

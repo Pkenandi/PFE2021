@@ -54,7 +54,7 @@ public class UserController {
             else if (patientUsername != null)
                 return new ResponseEntity<String>(" Username " + bodyUsername + " already taken", HttpStatus.CONFLICT);
             else {
-                this.userService.SaveUser(patientDto);
+                this.userService.SaveUser(Patient.from(patientDto));
                 return new ResponseEntity<>("User registered successfully ", HttpStatus.OK);
             }
 
@@ -77,7 +77,7 @@ public class UserController {
             else if (medecinCin != null)
                 return new ResponseEntity<String>(" Cin " + bodyCin + " already taken", HttpStatus.CONFLICT);
             else {
-                this.userService.SaveUser(medecinDto);
+                this.userService.SaveUser(Medecin.from(medecinDto));
                 return new ResponseEntity<String>("User registered successfully !/", HttpStatus.OK);
             }
 
@@ -246,6 +246,14 @@ public class UserController {
         return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/medecin/{cin}/dossier/{id}")
+    public ResponseEntity<MedecinDto> connectToDossier(@PathVariable final String cin,
+                                                       @PathVariable final Long id){
+        Medecin medecin = this.userService.connectToDossier(cin, id);
+
+        return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
+    }
+
     @DeleteMapping(value = "/patient/{username}/dossier/{id}/detach")
     public ResponseEntity<PatientDto> detachPatientToDossier(@PathVariable final String username,
                                                              @PathVariable final Long id) {
@@ -254,7 +262,7 @@ public class UserController {
         return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/agenda/{id}/{cin}")
+    @GetMapping(value = "/agenda/{id}/medecin/{cin}")
     public ResponseEntity<MedecinDto> addAgenda(@PathVariable final Long id,
                                                 @PathVariable final String cin) {
         Medecin medecin = this.userService.addAgenda(cin, id);

@@ -66,4 +66,16 @@ public class DossierController {
             return new ResponseEntity<>(DossierDto.from(dossierMedical), HttpStatus.OK);
         }
     }
+
+    @GetMapping(value = "/medecin/{cin}")
+    public ResponseEntity<List<DossierDto>> findWithMedecin(@PathVariable final String cin){
+        List<DossierMedical> dossierMedicalList = this.dossierService.findWithMedecin(cin);
+
+        if(dossierMedicalList.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }else{
+            List<DossierDto> dossierDtoList = dossierMedicalList.stream().map(DossierDto::from).collect(Collectors.toList());
+            return new ResponseEntity<>(dossierDtoList, HttpStatus.OK);
+        }
+    }
 }

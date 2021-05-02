@@ -2,10 +2,7 @@ package com.dravicenne.backend.models;
 
 import com.dravicenne.backend.models.dto.MedecinDto;
 import com.dravicenne.backend.models.dto.PlainMedecinDto;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -46,15 +43,27 @@ public class Medecin extends User implements Serializable {
     @JoinColumn(name = "dossier_Id")
     private List<DossierMedical> dossierMedicals = new ArrayList<>();
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @ManyToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "spec_Id")
+    @JsonIgnore
+    @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Specialites> specialites = new ArrayList<>();
 
 
     // Methods
     public void connectToRendezVous(RendezVous rendezVous){
         this.rendezVous.add(rendezVous);
+    }
+
+    public void connectToDossier(DossierMedical dossierMedical){
+        this.dossierMedicals.add(dossierMedical);
+    }
+
+    public void addSpecialite(Specialites specialites){
+        this.specialites.add(specialites);
+    }
+
+    public void removeSpecialite(Specialites specialites){
+        this.specialites.remove(specialites);
     }
 
     public static Medecin from(MedecinDto medecinDto){
@@ -107,7 +116,6 @@ public class Medecin extends User implements Serializable {
         this.specialite = specialite;
     }
 
-    //@JsonManagedReference(value = "medecin_agenda")
     public Agenda getAgenda() {
         return agenda;
     }
@@ -116,7 +124,6 @@ public class Medecin extends User implements Serializable {
         this.agenda = agenda;
     }
 
-    //@JsonManagedReference(value = "medecin_rendezVous")
     public List<RendezVous> getRendezVous() {
         return rendezVous;
     }
@@ -125,7 +132,6 @@ public class Medecin extends User implements Serializable {
         this.rendezVous = rendezVous;
     }
 
-    //@JsonManagedReference(value = "medecin_consultation")
     public List<Consultation> getConsultation() {
         return consultation;
     }
@@ -134,7 +140,6 @@ public class Medecin extends User implements Serializable {
         this.consultation = consultation;
     }
 
-    //@JsonManagedReference(value = "medecin_dossierMedical")
     public List<DossierMedical> getDossierMedicals() {
         return dossierMedicals;
     }

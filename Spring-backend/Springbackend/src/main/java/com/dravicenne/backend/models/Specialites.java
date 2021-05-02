@@ -1,8 +1,8 @@
 package com.dravicenne.backend.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.dravicenne.backend.models.dto.MedecinDto;
+import com.dravicenne.backend.models.dto.SpecialiteDto;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,44 +12,36 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Data
 @Table(name = "Specialites")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Specialites implements Serializable {
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     private Long id;
     private String specialite;
-
+    private String description;
+    
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medecin_Id")
+    @JoinTable(
+            name = "medecin_Specialite",
+            joinColumns = @JoinColumn(name = "specialite_id"),
+            inverseJoinColumns = @JoinColumn(name = "medecin_id")
+    )
     private List<Medecin> medecinList = new ArrayList<>();
 
-    public Long getId() {
-        return id;
+    public void addMedecin(Medecin medecin){
+        this.medecinList.add(medecin);
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void removeMedecin(Medecin medecin){
+        this.medecinList.remove(medecin);
     }
 
-    public String getSpecialite() {
-        return specialite;
-    }
 
-    public void setSpecialite(String specialite) {
-        this.specialite = specialite;
-    }
-
-    public List<Medecin> getMedecinList() {
-        return medecinList;
-    }
-
-    public void setMedecinList(List<Medecin> medecinList) {
-        this.medecinList = medecinList;
-    }
 }

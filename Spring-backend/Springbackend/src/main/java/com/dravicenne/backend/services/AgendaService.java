@@ -9,34 +9,36 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @AllArgsConstructor
 @Data
+@Transactional
 public class AgendaService {
     private final AgendaRepository agendaRepository;
     private final TacheService tacheService;
 
-    public Agenda createAgenda(Agenda agenda){
+    public Agenda createAgenda(Agenda agenda) {
         return this.agendaRepository.save(agenda);
     }
 
-    public List<Agenda> getAll(){
+    public List<Agenda> getAll() {
         return this.agendaRepository.findAll();
     }
 
-    public Agenda findById(Long id){
+    public Agenda findById(Long id) {
         return this.agendaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(" Agenda not found "));
     }
 
-    public Agenda editAgenda(Agenda agenda ,Long id){
+    public Agenda editAgenda(Agenda agenda, Long id) {
         Agenda agendaToEdit = this.findById(id);
-        if (agendaToEdit == null){
+        if (agendaToEdit == null) {
             return null;
-        }else{
+        } else {
             agendaToEdit.setTitre(agenda.getTitre());
             agendaToEdit.setId(agenda.getId());
 
@@ -44,40 +46,37 @@ public class AgendaService {
         }
     }
 
-    public Agenda deleteAgenda(Agenda agenda, Long id){
+    public Agenda deleteAgenda(Long id) {
         Agenda agendaToDelete = this.findById(id);
-        if (agendaToDelete == null){
+        if (agendaToDelete == null) {
             return null;
-        }else{
+        } else {
 
-            this.agendaRepository.delete(agenda);
+            this.agendaRepository.delete(agendaToDelete);
             return agendaToDelete;
         }
     }
 
-    public Agenda addTask(Long agenda_Id, Long tache_Id){
+    public Agenda addTask(Long agenda_Id, Long tache_Id) {
         Agenda agenda = this.findById(agenda_Id);
         Tache tache = this.tacheService.getById(tache_Id);
 
-        if(Objects.nonNull(tache.getAgenda())){
-            throw new NotFoundException(" Cette tache existe deja ");
-        }else{
-            agenda.createTask(tache);
-            tache.setAgenda(agenda);
-            return agenda;
-        }
+        agenda.createTask(tache);
+        tache.setAgenda(agenda);
+
+        return agenda;
+
     }
 
-    public Agenda removeTask(Long agenda_id, Long tache_id){
+    public Agenda removeTask(Long agenda_id, Long tache_id) {
         Agenda agenda = this.findById(agenda_id);
         Tache tache = this.tacheService.getById(tache_id);
 
-        if(!(Objects.nonNull(tache.getAgenda()))){
+        if (!(Objects.nonNull(tache.getAgenda()))) {
             agenda.removeTask(tache);
             tache.setAgenda(null);
             return agenda;
-        }else
-        {
+        } else {
             throw new NotFoundException(" Task Not found ");
         }
     }

@@ -103,8 +103,17 @@ public class UserService {
         }else{
             medecin.connectToRendezVous(rendezVous);
             rendezVous.setMedecin(medecin);
+
             return medecin;
         }
+    }
+    public Medecin connectToDossier(String cin, Long dossier_id){
+        Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
+        DossierMedical dossierMedical = this.dossierService.findById(dossier_id);
+            medecin.connectToDossier(dossierMedical);
+            dossierMedical.setMedecin(medecin);
+            return medecin;
+
     }
     public Medecin addAgenda(String cin, Long id){
         Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
@@ -114,11 +123,12 @@ public class UserService {
             throw new NotFoundException(" Agenda already taken ");
         }else{
             medecin.setAgenda(agenda);
-            agenda.setMedecin(Medecin.ToPlainMedecin(PlainMedecinDto.from(medecin)));
+            agenda.setMedecin(medecin);
 
             return medecin;
         }
     }
+
 
     // Patients
 
