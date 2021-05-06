@@ -22,7 +22,7 @@
         <article class="card-body mx-auto" style="width: 400px;">
           <span style="margin-left: 145px"><img src="assets/images/patient.png" class="mb-3"></span>
 
-          <form [formGroup]="regPatForm" (ngSubmit)="registerPatient()">
+          <form [formGroup]="regPatForm" (ngSubmit)="registerPatient()" autocomplete="off">
             <small class="alert-danger text-center"> {{ message }}</small>
             <div class="form-group input-group is-invalid">
               <div class="input-group-prepend">

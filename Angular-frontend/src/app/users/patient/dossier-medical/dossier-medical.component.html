@@ -63,7 +63,7 @@
         <div class="row">
           <div class="col-md-6 col-xl-6 col-sm-4 mx-auto" align="center">
             <div class="myform form shadow">
-              <form [formGroup]="dossierForm" (ngSubmit)="createDossier()">
+              <form [formGroup]="dossierForm" (ngSubmit)="createDossier()" autocomplete="off">
                 <div class="form-group">
                   <input type="text" name="name" class="form-control my-input" id="name"
                          placeholder="{{patientService.patient.nom}} {{patientService.patient.prenom}}" disabled>

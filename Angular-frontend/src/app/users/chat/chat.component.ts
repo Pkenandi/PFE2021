@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Chat } from 'src/app/Models/chat/chat';
 import { UserService } from 'src/app/Services/userService/user.service';
-import { WebSocketService } from 'src/app/Services/web/web-socket.service';
+import { WebSocketService } from 'src/app/Services/webrtcService/web-socket.service';
 
 @Component({
   selector: 'app-chat',

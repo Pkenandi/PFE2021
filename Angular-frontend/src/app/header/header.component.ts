@@ -6,6 +6,7 @@ import {Title} from "@angular/platform-browser";
 import {RendezVousService} from "../Services/rendezvous/rendez-vous.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {PatNotifComponent} from "../users/patient/pat-notif/pat-notif.component";
+import {MedNotifComponent} from "../users/medecin/med-notif/med-notif.component";
 
 @Component({
   selector: 'app-header',
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit {
     this.title.setTitle(title + ' - DrAvicenne');
   }
 
-  notifications(){
+  p_notifications(){
     const config = new MatDialogConfig();
     config.disableClose = true;
     config.autoFocus = true;
@@ -49,6 +50,16 @@ export class HeaderComponent implements OnInit {
     config.height = "50%"
     config.position = { right : `40px`, top : `100px`}
     this.dialog.open(PatNotifComponent,config);
+  }
+
+  m_notifications(){
+    const config = new MatDialogConfig();
+    config.disableClose = true;
+    config.autoFocus = true;
+    config.width = "20%";
+    config.height = "50%"
+    config.position = { right : `40px`, top : `100px`}
+    this.dialog.open(MedNotifComponent,config);
   }
 
   toggleBadgeVisibility() {

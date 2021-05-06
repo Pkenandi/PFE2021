@@ -1,0 +1,15 @@
+form{
+  width: 250px;
+  margin-left: 10px;
+}
+
+.form{
+  border: whitesmoke solid 1px;
+  padding: 10px 10px;
+  width: 290px;
+}
+
+label{
+  font-weight: bold;
+  font-family: "Arial Black", sans-serif
+}

@@ -21,7 +21,7 @@
         <article class="card-body mx-auto bg-light" style="width: 400px;">
             <span style="margin-left: 150px;">
               <img src="assets/images/doctor.png" class="mb-3"></span>
-          <form [formGroup]="regMedForm" (ngSubmit)="registerMedecin()">
+          <form [formGroup]="regMedForm" (ngSubmit)="registerMedecin()" autocomplete="off">
             <div class="form-group input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>

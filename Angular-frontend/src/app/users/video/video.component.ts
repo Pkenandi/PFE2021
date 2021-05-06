@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {DataService} from '../../Services/data/data.service';
+import {DataService} from '../../Services/dataService/data.service';
 import {UserService} from "../../Services/userService/user.service";
 import {Event} from "@angular/router";
 import {Message} from "../../Models/message/message";

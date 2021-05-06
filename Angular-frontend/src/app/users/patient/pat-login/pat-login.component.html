@@ -22,7 +22,7 @@
             <small class="text-danger"> {{message}}</small>
           </div>
 
-          <form [formGroup]="patLogForm" (ngSubmit)="login()">
+          <form [formGroup]="patLogForm" (ngSubmit)="login()" autocomplete="off">
             <input formControlName="username" type="text" id="login" name="username" placeholder="Nom d'utilisateur" required>
             <input formControlName="password" type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>
             <input [disabled]="!patLogForm.valid" type="submit" value="Login">

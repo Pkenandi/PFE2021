@@ -25,6 +25,8 @@ import {ShowDossierContenteComponent} from "./users/patient/show-dossier-content
 import {ListRendezVousComponent} from "./users/medecin/list-rendez-vous/list-rendez-vous.component";
 import {MailComponent} from "./users/medecin/messagerie/mail/mail.component";
 import {SmsComponent} from "./users/medecin/messagerie/sms/sms.component";
+import {ListDossierComponent} from "./users/medecin/list-dossier/list-dossier.component";
+import {TacheComponent} from "./users/medecin/tache/tache.component";
 
 
 const routes: Routes = [
@@ -119,12 +121,16 @@ const routes: Routes = [
     component: VideoComponent
   },
   {
-    path: 'mail',
-    component: MailComponent,
+    path: 'tache',
+    component: TacheComponent,
   },
   {
     path: 'sms',
     component: SmsComponent
+  },
+  {
+    path: 'list',
+    component: ListDossierComponent
   },
   {
     path: '',

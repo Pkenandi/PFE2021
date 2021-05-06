@@ -1,43 +1,20 @@
 import {
   Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef
+  ChangeDetectionStrategy
   , OnInit
 } from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours
-} from 'date-fns';
-import {Subject} from "rxjs";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView
-} from "angular-calendar";
-
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc88',
-    secondary: '#FDF1BA'
-  }
-};
+import { Subscription} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {AgendaService} from "../../../Services/agendaService/agenda.service";
+import {MedecinService} from "../../../Services/medecinService/medecin.service";
+import {Agenda} from "../../../Models/agenda/agenda";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Medecin} from "../../../Models/Medecin/medecin";
+import {ToastrService} from "ngx-toastr";
+import {Tache} from "../../../Models/tache/tache";
+import {TacheService} from "../../../Services/tacheService/tache.service";
+import {MatDialogConfig} from "@angular/material/dialog";
+import {TacheComponent} from "../tache/tache.component";
 
 @Component({
   selector: 'app-agenda',
@@ -47,152 +24,182 @@ const colors: any = {
 })
 export class AgendaComponent implements OnInit {
 
+  agendaForm = new FormGroup({
+    titre: new FormControl('')
+  });
+
+  taskForm = new FormGroup({
+    tache: new FormControl('', [Validators.required]),
+    heure: new FormControl('',[Validators.required]),
+    date: new FormControl('',[Validators.required]),
+    description: new FormControl('',[Validators.required])
+  });
+
+  editForm = new FormGroup({
+    titre: new FormControl('')
+  });
+
+  tache: Tache = null;
+  exist: boolean = false;
+  agenda: Agenda = null;
+  agendaMed: Agenda;
+  medAgenda: Medecin = null;
+  listTache: Tache[] = [];
+  agendaId: number;
+  agendaTitle: string;
+  clicked: boolean = false;
+  showEditForm: boolean = false;
+
+  constructor(public agendaService: AgendaService,
+              public medecinService: MedecinService,
+              public tacheService: TacheService,
+              public toast: ToastrService,
+              public dialog: MatDialog) {  }
+
   ngOnInit(): void {
+    this.check();
   }
 
-  @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any>;
+  // Methods
+  create(): void {
+    this.agenda = this.agendaForm.value;
+    this.agendaService.create(this.agenda)
+      .subscribe(
+        (response) => {
+          this.agenda = response;
+          console.log(this.agenda);
 
-  view: CalendarView = CalendarView.Month;
-
-  CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
-
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({event}: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({event}: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
-  refresh: Subject<any> = new Subject();
-
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
-
-  activeDayIsOpen: boolean = true;
-
-  constructor(private modal: NgbModal) {
+          // Attaching agenda to a medecin
+          this.medecinService.attachToAgenda(this.medecinService.medecin.cin,this.agenda.id)
+            .subscribe(
+              (medecin) => {
+                this.medAgenda = medecin;
+                this.ngOnInit();
+                this.toast.info(" Votre agenda est maintenant disponible !", "Création");
+              },
+              (errors) => {
+                console.log(errors);
+              }
+            )
+        }
+      )
   }
 
-  dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
+  check(): void {
+    this.agendaService.get(this.medecinService.medecin.cin)
+      .subscribe(
+        (response) => {
+          this.agendaMed = response;
+          console.log("Agenda with Medecin : ", this.agendaMed)
+          if (this.agendaMed != null){
+            this.exist = true;
+            // bind date to edit form
+            this.editForm = new FormGroup({
+              titre: new FormControl(response['titre'])
+            });
+            //end
+            this.tacheService.getAll(this.agendaMed.id)
+              .subscribe(
+                (listTache) => {
+                  this.listTache = listTache;
+                },
+                (error) => {
+                  console.log(" Erreur: ", error.message)
+                }
+              )
+          }else{
+            this.exist = false;
+          }
+        },
+        (error) => {
+          console.log(error.message);
+        }
+      )
+  }
+
+  getAgenda(): void {
+    this.agendaService.get(this.medecinService.medecin.cin)
+      .subscribe(
+        (response) =>{
+          this.agendaId = response['id'];
+          this.agendaTitle = response['titre'];
+        },
+        (error) =>{
+          console.log(" Erreur ");
+        }
+      )
+  }
+
+  edit(): void {
+    this.getAgenda();
+    this.agenda = this.editForm.value;
+    this.agendaService.edit(this.agenda,this.agendaId)
+      .subscribe(
+        (response) => {
+          this.showEditForm = false;
+          this.ngOnInit();
+        },
+        (error) => {
+          console.log(" Erreur ", error.message);
+        }
+      )
+  }
+
+  createTask() {
+    this.tache = this.taskForm.value;
+    this.tacheService.create(this.tache)
+      .subscribe(
+        (response) =>{
+          this.tache = response;
+          this.toast.success(" Tache créer avec succès !");
+          this.agendaService.addTasks(this.agendaMed.id,this.tache.id)
+            .subscribe(
+              (rep) => {
+                this.toast.success(" Tache ajouter avec succès !");
+                this.tacheService.getAll(this.agendaMed.id)
+                  .subscribe(
+                    (listTasks) =>{
+                      this.listTache = null;
+                      this.listTache = listTasks;
+                      this.ngOnInit();
+                    },
+                    (errors) => {
+                      console.log(" erreur ", errors.message);
+                    }
+                  )
+              },
+              (error) => {
+                this.toast.error(" Erreur lors de l'ajout de la tache !");
+              }
+            )
+        },
+        (error) => {
+          console.log(" Erreur ", error.message);
+          this.toast.error(" Error lors de la creation de la tache !");
+        }
+      )
+  }
+
+  onClick(): void {
+    if(this.clicked == true){
+      this.clicked = false;
+    }else {
+      this.clicked = true;
     }
   }
 
-  eventTimesChanged({
-                      event,
-                      newStart,
-                      newEnd,
-                    }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
+  showEdit(): void {
+    this.showEditForm = this.showEditForm != true;
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = {event, action};
-    this.modal.open(this.modalContent, {size: 'lg'});
+  hide(): void {
+    this.clicked = this.clicked == false;
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
+  Task(): void {
+    const config = new MatDialogConfig();
+    config.height = "73%";
+    config.width = "33%";
+    this.dialog.open(TacheComponent,config);
   }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
-  setView(view: CalendarView) {
-    this.view = view;
-  }
-
-  closeOpenMonthViewDay() {
-    this.activeDayIsOpen = false;
-  }
-
 }

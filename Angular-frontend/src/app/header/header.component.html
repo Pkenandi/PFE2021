@@ -32,13 +32,13 @@
               <li class="nav-item" *ngIf="patientService.log" style="margin-left: 600px">
                 <div class="account" routerLink="../pat/dashboard" (click)="setTitle('Dashboard')">
                   <img src="assets/images/icons/profile.png" width="30" height="30" class="rounded-circle">
-                  <span> {{_service.Username}} </span> <img src="assets/images/icons/arrow.png" style="color: white" width="10" height="10">
+                  <span> {{_service.Username}} </span> <i class="fas fa-caret-down ml-3" style="color: white"></i>
                 </div>
               </li>
               <li class="nav-item" *ngIf="medecinService.log" style="margin-left: 600px">
                 <div class="account" routerLink="../med/dashboard" (click)="setTitle('Dashboard')">
                   <img src="assets/images/icons/profile.png" width="30" height="30" class="rounded-circle">
-                  <span> {{_service.Username}} </span> <img src="assets/images/icons/arrow.png" style="color: white" width="10" height="10">
+                  <span> {{_service.Username}} </span> <i class="fas fa-caret-down ml-3" style="color: white"></i>
                 </div>
               </li>
               <li class="nav-item w-25 h-25" *ngIf="medecinService.log || patientService.log" style="margin-top: 15px">
@@ -52,14 +52,20 @@
                  <img src="assets/images/icons/online.png"> En ligne
                </div>
               </li>
-              <li class="nav-item" style="cursor: pointer">
+              <li class="nav-item" style="cursor: pointer" *ngIf="patientService.log">
                 <div class="mt-3" (click)="toggleBadgeVisibility()">
                   <span [matBadgeHidden]="hidden" (click)="toggleBadgeVisibility()" matBadge="{{rdvService.p_notifications}}" matBadgeColor="warn" matBadgeOverlap="false" *ngIf="_service.isLoggedIn">
-                    <img src="assets/images/icons/bell.png" (click)="notifications()">
+                    <img src="assets/images/icons/bell.png" (click)="p_notifications()">
                   </span>
                 </div>
               </li>
-
+              <li class="nav-item" style="cursor: pointer" *ngIf="medecinService.log">
+                <div class="mt-3" (click)="toggleBadgeVisibility()">
+                  <span [matBadgeHidden]="hidden" (click)="toggleBadgeVisibility()" matBadge="{{rdvService.m_notifications}}" matBadgeColor="warn" matBadgeOverlap="false" *ngIf="_service.isLoggedIn">
+                    <img src="assets/images/icons/bell.png" (click)="m_notifications()">
+                  </span>
+                </div>
+              </li>
             </ul>
           </div>
 

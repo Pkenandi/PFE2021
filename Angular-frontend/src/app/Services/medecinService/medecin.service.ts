@@ -51,4 +51,8 @@ export class MedecinService {
     return this._http.get<any>(`${basedUrl}/medecin/${cin}/rendezvous/${id}/assign`);
   }
 
+  attachToAgenda(cin: string, id: number): Observable<any>{
+    return this._http.get<any>(`${mainUrl}user/agenda/${id}/medecin/${cin}`);
+  }
+
 }

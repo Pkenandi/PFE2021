@@ -1,0 +1,34 @@
+<div class="container">
+ <div class="text-center">
+   <h2> Vous avez d'autres specialités additionnelles ? </h2>
+   <h4 style="color: red"> Ajoutez-les ici une à une </h4>
+ </div>
+  <div class="row">
+    <div class="col-md-6 col-sm-12 col-xl-6">
+      <img src="assets/images/medicals/Specialite.jpg" style="width: 100%">
+    </div>
+    <div class="col-md-6 col-sm-12 col-xl-6">
+      <div class="container">
+        <div class="form shadow">
+          <form [formGroup]="specialiteForm" (ngSubmit)="add()" autocomplete="off">
+            <div class="form-group">
+              <label> Autre spécialité </label>
+            </div>
+            <div class="form-group">
+              <input type="text" formControlName="specialite" name="specialite" class="form-control" placeholder="Cardiologie ou autre ">
+            </div>
+            <div class="form-group">
+              <label> Description </label>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" placeholder="" formControlName="description" name="description"> </textarea>
+            </div>
+            <div align="left">
+              <button class="btn btn-sm btn-primary" type="submit"> Ajouter <img src="assets/images/icons/plus.png" width="17" height="17"></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

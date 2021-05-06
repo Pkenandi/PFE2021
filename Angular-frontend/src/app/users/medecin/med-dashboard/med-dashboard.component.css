@@ -2,6 +2,9 @@ body {
   overflow-x: hidden;
 }
 
+.color{
+  background-color: lightpink;
+}
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
@@ -50,4 +53,8 @@ body {
   font-weight: bolder;
   font-size: 20px;
   font-style: oblique;
+}
+
+#wrapper{
+  overflow-x: hidden;
 }

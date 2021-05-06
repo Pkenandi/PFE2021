@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Tab } from 'src/app/Models/tab';
 import {HttpErrorResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
+import {MedecinService} from "../../../Services/medecinService/medecin.service";
 
 @Component({
   selector: 'app-dossier-medical',
@@ -29,6 +30,7 @@ export class DossierMedicalComponent implements OnInit {
 
   constructor(public patientService: PatientService,
               public dossierService: DossierMedicalService,
+              public medecinService: MedecinService,
               private route: Router,
               private toast: ToastrService) { }
 

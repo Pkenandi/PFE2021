@@ -16,9 +16,9 @@ import * as $ from "jquery";
 export class PatRegisterComponent implements OnInit {
 
   regPatForm = new FormGroup({
-    nom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
-    prenom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
-    ville: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
+    nom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+    prenom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
+    ville: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
     email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(5)]),
     groupeSang: new FormControl(""),
     phone: new FormControl('', [Validators.required, Validators.minLength(5)]),

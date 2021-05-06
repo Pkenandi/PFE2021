@@ -43,6 +43,7 @@ export class MedLoginComponent implements OnInit {
             this.medecin = response;
             this.medLogForm.reset({});
             this.medService.Cin = this.medecin.cin;
+            this.medService.ville = this.medecin.Ville;
             this.service.Username = this.medecin.nom;
             this.service.setIsAuthenticated(true);
             this.medService.medecin = this.medecin;

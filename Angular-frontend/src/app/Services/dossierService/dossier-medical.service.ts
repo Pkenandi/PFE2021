@@ -20,7 +20,15 @@ export class DossierMedicalService {
     return this.http.get(`${mainUrl}user/patient/${username}/dossier/${id}/attach`);
   }
 
+  attachMedecin(cin: string, id: number): Observable<any>{
+    return this.http.get(`${mainUrl}user/medecin/${cin}/dossier/${id}`);
+  }
+
   findWithPatient(username): Observable<DossierMedical>{
     return this.http.get<DossierMedical>(`${mainUrl}dossier/patient/${username}`);
+  }
+
+  findWithMedecin(cin: string): Observable<DossierMedical[]>{
+    return this.http.get<DossierMedical[]>(`${mainUrl}/dossier/medecin/${cin}`)
   }
 }

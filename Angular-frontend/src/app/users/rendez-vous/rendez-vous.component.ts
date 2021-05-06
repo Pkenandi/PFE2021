@@ -69,6 +69,14 @@ export class RendezVousComponent implements OnInit {
                         {
                           timeOut: 10000,
                         });
+
+                      // Give Medecin access to Dossier
+                      this.dossierService.attachMedecin(this.medecinService.medecin.cin,this.dossier.id)
+                        .subscribe(
+                          (medecin) => {
+                            this.medecin = medecin;
+                          }
+                        )
                       this.router.navigate(['../pat/dashboard']);
                     },
                     () => {
@@ -96,6 +104,5 @@ export class RendezVousComponent implements OnInit {
     );
 
   }
-
 
 }

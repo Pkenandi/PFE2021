@@ -1,6 +1,6 @@
 import { UserService } from 'src/app/Services/userService/user.service';
 import { Component, OnInit } from '@angular/core';
-import { WebSocketService } from './Services/web/web-socket.service';
+import { WebSocketService } from './Services/webrtcService/web-socket.service';
 
 @Component({
   selector: 'app-root',

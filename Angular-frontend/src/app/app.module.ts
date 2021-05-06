@@ -76,6 +76,11 @@ import { MailComponent } from './users/medecin/messagerie/mail/mail.component';
 import { SmsComponent } from './users/medecin/messagerie/sms/sms.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatCard, MatCardModule} from "@angular/material/card";
+import { MedNotifComponent } from './users/medecin/med-notif/med-notif.component';
+import { ListDossierComponent } from './users/medecin/list-dossier/list-dossier.component';
+import { ListRdvComponent } from './users/medecin/list-rdv/list-rdv.component';
+import { SpecialiteComponent } from './users/medecin/specialite/specialite.component';
+import { TacheComponent } from './users/medecin/tache/tache.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +116,11 @@ import {MatCard, MatCardModule} from "@angular/material/card";
     PatNotifComponent,
     MailComponent,
     SmsComponent,
+    MedNotifComponent,
+    ListDossierComponent,
+    ListRdvComponent,
+    SpecialiteComponent,
+    TacheComponent,
   ],
   imports: [
     BrowserModule,
@@ -182,7 +192,7 @@ import {MatCard, MatCardModule} from "@angular/material/card";
     MatNativeDateModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [PatNotifComponent,SmsComponent,MailComponent]
+  entryComponents: [PatNotifComponent,SmsComponent,MailComponent,MedNotifComponent,TacheComponent]
 })
 export class AppModule {
 }
