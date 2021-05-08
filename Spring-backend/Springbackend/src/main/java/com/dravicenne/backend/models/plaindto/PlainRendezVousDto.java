@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -20,11 +21,15 @@ public class PlainRendezVousDto {
     public static PlainRendezVousDto from(RendezVous rendezVous){
         PlainRendezVousDto plainRendezVousDto = new PlainRendezVousDto();
 
-        plainRendezVousDto.setId(rendezVous.getId());
-        plainRendezVousDto.setDate(rendezVous.getDate());
-        plainRendezVousDto.setHeure(rendezVous.getHeure());
-        plainRendezVousDto.setStatus(rendezVous.getStatus());
+        if(Objects.isNull(rendezVous)){
+            return null;
+        }else{
+            plainRendezVousDto.setId(rendezVous.getId());
+            plainRendezVousDto.setDate(rendezVous.getDate());
+            plainRendezVousDto.setHeure(rendezVous.getHeure());
+            plainRendezVousDto.setStatus(rendezVous.getStatus());
 
-        return plainRendezVousDto;
+            return plainRendezVousDto;
+        }
     }
 }

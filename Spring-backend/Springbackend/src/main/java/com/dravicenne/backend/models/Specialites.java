@@ -1,8 +1,6 @@
 package com.dravicenne.backend.models;
 
-import com.dravicenne.backend.models.dto.MedecinDto;
-import com.dravicenne.backend.models.dto.SpecialiteDto;
-import com.fasterxml.jackson.annotation.*;
+import com.dravicenne.backend.models.dto.SpecialitesDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
@@ -43,5 +42,17 @@ public class Specialites implements Serializable {
         this.medecinList.remove(medecin);
     }
 
+    public static Specialites from(SpecialitesDto specialitesDto){
+        Specialites specialites = new Specialites();
+        if(Objects.isNull(specialitesDto)){
+            return null;
+        }else{
+            specialites.setSpecialite(specialitesDto.getSpecialite());
+            specialites.setId(specialitesDto.getId());
+            specialites.setDescription(specialitesDto.getDescription());
+            specialites.setMedecinList(specialitesDto.getMedecinDtos().stream().map(Medecin::from).collect(Collectors.toList()));
 
+            return specialites;
+        }
+    }
 }

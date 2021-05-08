@@ -129,12 +129,22 @@ public class UserService {
         }
     }
 
+    public Medecin removeAgenda(String cin, Long id){
+        Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
+        Agenda agenda = this.agendaService.findById(id);
+
+        medecin.setAgenda(null);
+        this.agendaService.deleteAgenda(id);
+
+        return medecin;
+    }
 
     // Patients
 
     public Patient findPatientByUsername(String username) {
         return this.patientRepository.findPatientByUsername(username);
     }
+
     public Patient findPatientByUsernameAndPassword(String username, String password) {
         return this.patientRepository.findPatientByUsernameAndPassword(username,password);
     }

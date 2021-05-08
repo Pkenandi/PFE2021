@@ -8,11 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 @Data
+@Transactional
 public class SpecialiteService {
     private final SpecialiteRepository specialiteRepository;
     private final UserService userService;
@@ -79,5 +81,9 @@ public class SpecialiteService {
             return specialites;
         }
         return null;
+    }
+
+    public List<Specialites> findWithMedecin(String cin){
+        return this.specialiteRepository.findWithMedecin(cin);
     }
 }

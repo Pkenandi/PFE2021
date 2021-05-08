@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
@@ -16,7 +17,6 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "Medecin")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "cin")
 public class Medecin extends User implements Serializable {
     @Column(nullable = false, unique = true)
     private String cin;
@@ -69,35 +69,45 @@ public class Medecin extends User implements Serializable {
     public static Medecin from(MedecinDto medecinDto){
         Medecin medecin = new Medecin();
 
-        medecin.setId(medecinDto.getId());
-        medecin.setNom(medecinDto.getNom());
-        medecin.setPrenom(medecinDto.getPrenom());
-        medecin.setSpecialite(medecinDto.getSpecialite());
-        medecin.setVille(medecinDto.getVille());
-        medecin.setEmail(medecinDto.getEmail());
-        medecin.setCin(medecinDto.getCin());
-        medecin.setCpassword(medecinDto.getCpassword());
-        medecin.setPassword(medecinDto.getPassword());
-        medecin.setPhone(medecinDto.getPhone());
+        if(Objects.isNull(medecinDto)){
+            return null;
+        }else{
+            medecin.setId(medecinDto.getId());
+            medecin.setNom(medecinDto.getNom());
+            medecin.setPrenom(medecinDto.getPrenom());
+            medecin.setSpecialite(medecinDto.getSpecialite());
+            medecin.setVille(medecinDto.getVille());
+            medecin.setEmail(medecinDto.getEmail());
+            medecin.setCin(medecinDto.getCin());
+            medecin.setCpassword(medecinDto.getCpassword());
+            medecin.setPassword(medecinDto.getPassword());
+            medecin.setPhone(medecinDto.getPhone());
 
-        return medecin;
+            return medecin;
+        }
     }
 
     public static  Medecin ToPlainMedecin(PlainMedecinDto plainMedecinDto){
         Medecin medecin = new Medecin();
 
-        medecin.setNom(plainMedecinDto.getNom());
-        medecin.setPrenom(plainMedecinDto.getPrenom());
-        medecin.setVille(plainMedecinDto.getVille());
-        medecin.setEmail(plainMedecinDto.getEmail());
-        medecin.setPhone(plainMedecinDto.getPhone());
-        medecin.setSpecialite(plainMedecinDto.getSpecialite());
-        medecin.setId(plainMedecinDto.getId());
-        medecin.setPassword(plainMedecinDto.getPassword());
-        medecin.setCpassword(plainMedecinDto.getCpassword());
-        medecin.setCin(plainMedecinDto.getCin());
+        if (Objects.isNull(plainMedecinDto)){
+            return null;
+        }else{
+            medecin.setNom(plainMedecinDto.getNom());
+            medecin.setPrenom(plainMedecinDto.getPrenom());
+            medecin.setVille(plainMedecinDto.getVille());
+            medecin.setEmail(plainMedecinDto.getEmail());
+            medecin.setPhone(plainMedecinDto.getPhone());
+            medecin.setSpecialite(plainMedecinDto.getSpecialite());
+            medecin.setId(plainMedecinDto.getId());
+            medecin.setPassword(plainMedecinDto.getPassword());
+            medecin.setCpassword(plainMedecinDto.getCpassword());
+            medecin.setCin(plainMedecinDto.getCin());
 
-        return medecin;
+            return medecin;
+
+        }
+
     }
 
     public String getCin() {

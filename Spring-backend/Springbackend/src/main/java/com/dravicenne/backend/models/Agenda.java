@@ -27,8 +27,9 @@ import java.util.stream.Collectors;
 @Table(name = "Agenda")
 public class Agenda implements Serializable {
     @Id
-    @GeneratedValue ( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column( unique = true, nullable = false)
     private String titre;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -36,26 +37,28 @@ public class Agenda implements Serializable {
     @JoinColumn(name = "agenda_id")
     private List<Tache> taches = new ArrayList<>();
 
-    @OneToOne( cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medecin_Id")
     private Medecin medecin;
 
     // Methods
 
-    public static Agenda from(AgendaDto agendaDto){
+    public static Agenda from(AgendaDto agendaDto) {
         Agenda agenda = new Agenda();
 
-        agenda.setId(agendaDto.getId());
-        agenda.setTitre(agendaDto.getTitre());
-        if(Objects.nonNull(agendaDto.getMedecinDto())){
+        if (Objects.isNull(agendaDto)) {
+            return null;
+        } else {
+            agenda.setId(agendaDto.getId());
+            agenda.setTitre(agendaDto.getTitre());
             agenda.setMedecin(Medecin.ToPlainMedecin(agendaDto.getMedecinDto()));
-        }
-//        agenda.setTaches(agendaDto.getTacheDtoList().stream().map(PlainTacheDto::from).collect(Collectors.toList()));
+            agenda.setTaches(agendaDto.getTacheDtoList().stream().map(Tache::from).collect(Collectors.toList()));
 
-        return agenda;
+            return agenda;
+        }
     }
 
-    public static Agenda toPlainAgenda(PlainAgendaDto plainAgendaDto){
+    public static Agenda toPlainAgenda(PlainAgendaDto plainAgendaDto) {
         Agenda agenda = new Agenda();
 
         agenda.setId(plainAgendaDto.getId());
@@ -64,11 +67,12 @@ public class Agenda implements Serializable {
         return agenda;
     }
 
-    public void createTask(Tache tache){
+    public void createTask(Tache tache) {
         this.taches.add(tache);
     }
 
-    public void removeTask(Tache tache){
+    public void removeTask(Tache tache) {
         this.taches.add(tache);
     }
+
 }

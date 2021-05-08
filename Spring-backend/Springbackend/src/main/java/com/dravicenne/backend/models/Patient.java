@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @EqualsAndHashCode(callSuper = true)
@@ -105,22 +106,28 @@ public class Patient extends User implements Serializable {
     public static Patient from(PatientDto patientDto){
         Patient patient = new Patient();
 
-        patient.setToken(patientDto.getToken());
-        patient.setUsername(patientDto.getUsername());
-        patient.setNom(patientDto.getNom());
-        patient.setPrenom(patientDto.getPrenom());
-        patient.setGroupeSang(patientDto.getGroupeSang());
-        patient.setAge(patientDto.getAge());
-        patient.setDateNaiss(patientDto.getDateNaiss());
-        patient.setVille(patientDto.getVille());
-        patient.setId(patientDto.getId());
-        patient.setPhone(patientDto.getPhone());
-        patient.setPassword(patientDto.getPassword());
-        patient.setCpassword(patientDto.getCpassword());
-        patient.setDossierMedical(DossierMedical.from(patientDto.getDossierDto()));
-        patient.setRendezVousList(patientDto.getRendezVousDtos().stream().map(RendezVous::from).collect(Collectors.toList()));
+        if(Objects.isNull(patientDto)){
+            return null;
+        }else{
+            patient.setToken(patientDto.getToken());
+            patient.setUsername(patientDto.getUsername());
+            patient.setNom(patientDto.getNom());
+            patient.setPrenom(patientDto.getPrenom());
+            patient.setGroupeSang(patientDto.getGroupeSang());
+            patient.setAge(patientDto.getAge());
+            patient.setDateNaiss(patientDto.getDateNaiss());
+            patient.setVille(patientDto.getVille());
+            patient.setId(patientDto.getId());
+            patient.setPhone(patientDto.getPhone());
+            patient.setEmail(patientDto.getEmail());
+            patient.setPassword(patientDto.getPassword());
+            patient.setCpassword(patientDto.getCpassword());
+            patient.setDossierMedical(DossierMedical.from(patientDto.getDossierDto()));
+            patient.setRendezVousList(patientDto.getRendezVousDtos().stream().map(RendezVous::from).collect(Collectors.toList()));
 
-        return patient;
+            return patient;
+        }
+
     }
 
     public String getUsername() {
@@ -154,7 +161,6 @@ public class Patient extends User implements Serializable {
         this.dateNaiss = dateNaiss;
     }
 
-    //@JsonManagedReference(value = "patient_rendezVous")
     public List<RendezVous> getRendezVousList() {
         return rendezVousList;
     }
@@ -163,7 +169,6 @@ public class Patient extends User implements Serializable {
         this.rendezVousList = rendezVousList;
     }
 
-    //@JsonManagedReference(value = "patient_consultation")
     public List<Consultation> getConsultations() {
         return consultations;
     }
@@ -172,7 +177,6 @@ public class Patient extends User implements Serializable {
         this.consultations = consultations;
     }
 
-    //@JsonManagedReference(value = "patient_dossierMedical")
     public DossierMedical getDossierMedical() {
         return dossierMedical;
     }

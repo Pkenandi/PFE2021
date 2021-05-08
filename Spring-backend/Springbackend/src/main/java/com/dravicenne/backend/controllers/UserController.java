@@ -39,7 +39,7 @@ public class UserController {
         return base64Encoder.encodeToString(randomBytes);
     }
 
-    //Register Api's for Users
+    // Register
     @PostMapping(value = "/patient/register")
     public ResponseEntity<String> register(@RequestBody PatientDto patientDto) throws Exception {
         String bodyEmail = patientDto.getEmail();
@@ -86,7 +86,9 @@ public class UserController {
         }
     }
 
-    //Login Api's for Users
+    // Login
+
+
     @PostMapping(value = "/patient/login")
     public PatientDto PatientLogin(@RequestBody LoginPatient patient) throws Exception {
         String bodyUsername = patient.getUsername();
@@ -127,31 +129,11 @@ public class UserController {
         }
     }
 
-    //Get values from Users
+    // Get Collections
 
     @GetMapping(value = "/all")
     public List<User> getUsers() {
         return this.userService.getAllUser();
-    }
-
-    @GetMapping(path = "/patient/{username}")
-    public ResponseEntity<PatientDto> getPatientByUsername(@PathVariable("username") String username) {
-        Patient patient = this.userService.findPatientByUsername(username);
-
-        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
-    }
-
-    @DeleteMapping(path = "/patient/{username}")
-    public ResponseEntity<PatientDto> DeletePatientByUsername(@PathVariable("username") String username) {
-        Patient patient = this.userService.deletePatientByUsername(username);
-
-        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
-    }
-
-    @GetMapping(path = "/medecin/{cin}")
-    public MedecinDto getMedecinByCin(@PathVariable("cin") String cin) {
-        Medecin medecin = this.userService.findMedecinByCin(cin);
-        return MedecinDto.from(medecin);
     }
 
     @GetMapping(path = "/patient/all")
@@ -180,8 +162,32 @@ public class UserController {
         return medecins.stream().map(MedecinDto::from).collect(Collectors.toList());
     }
 
+    // Get One value
 
-    // Update values 
+    @GetMapping(path = "/patient/{username}")
+    public ResponseEntity<PatientDto> getPatientByUsername(@PathVariable("username") String username) {
+        Patient patient = this.userService.findPatientByUsername(username);
+
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/medecin/{cin}")
+    public MedecinDto getMedecinByCin(@PathVariable("cin") String cin) {
+        Medecin medecin = this.userService.findMedecinByCin(cin);
+        return MedecinDto.from(medecin);
+    }
+
+    // Delete
+
+    @DeleteMapping(path = "/patient/{username}")
+    public ResponseEntity<PatientDto> DeletePatientByUsername(@PathVariable("username") String username) {
+        Patient patient = this.userService.deletePatientByUsername(username);
+
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+    }
+
+
+    // Update
 
     @PutMapping(value = "/patient/update/{username}")
     public ResponseEntity<PatientDto> updatePatient(@RequestBody final PatientDto patient,
@@ -201,7 +207,7 @@ public class UserController {
         return new ResponseEntity<>(MedecinDto.from(newMedecin), HttpStatus.OK);
     }
 
-    // Operations through relationships
+    // Relationships
 
     @GetMapping(value = "/patient/{username}/rendezvous/{rdvId}/add")
     public ResponseEntity<PatientDto> addRdvOfPatient(@PathVariable final String username,
@@ -266,6 +272,14 @@ public class UserController {
     public ResponseEntity<MedecinDto> addAgenda(@PathVariable final Long id,
                                                 @PathVariable final String cin) {
         Medecin medecin = this.userService.addAgenda(cin, id);
+
+        return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/agenda/{id}/{cin}/delete")
+    public ResponseEntity<MedecinDto> removeAgenda(@PathVariable final Long id,
+                                                   @PathVariable final String cin){
+        Medecin medecin =  this.userService.removeAgenda(cin, id);
 
         return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
     }

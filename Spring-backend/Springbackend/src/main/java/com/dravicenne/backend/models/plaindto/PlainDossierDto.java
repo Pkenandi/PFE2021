@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,15 +19,19 @@ public class PlainDossierDto {
     private String prescription;
 
 
-    public static PlainDossierDto from(DossierMedical dossierMedical){
+    public static PlainDossierDto from(DossierMedical medical){
         PlainDossierDto plainDossierDto = new PlainDossierDto();
 
-        plainDossierDto.setAntecedent(dossierMedical.getAntecedent());
-        plainDossierDto.setId(dossierMedical.getId());
-        plainDossierDto.setNumero(dossierMedical.getNumero());
-        plainDossierDto.setObservation(dossierMedical.getObservation());
-        plainDossierDto.setPrescription(dossierMedical.getPrescription());
+        if(Objects.isNull(medical)){
+            return null;
+        }else{
+            plainDossierDto.setAntecedent(medical.getAntecedent());
+            plainDossierDto.setId(medical.getId());
+            plainDossierDto.setNumero(medical.getNumero());
+            plainDossierDto.setObservation(medical.getObservation());
+            plainDossierDto.setPrescription(medical.getPrescription());
 
-        return plainDossierDto;
+            return plainDossierDto;
+        }
     }
 }

@@ -34,15 +34,18 @@ public class AgendaService {
                 .orElseThrow(() -> new NotFoundException(" Agenda not found "));
     }
 
+    public Agenda findWithMedecin(String cin){
+        return this.agendaRepository.findWithMedecin(cin);
+    }
+
     public Agenda editAgenda(Agenda agenda, Long id) {
         Agenda agendaToEdit = this.findById(id);
         if (agendaToEdit == null) {
             return null;
         } else {
             agendaToEdit.setTitre(agenda.getTitre());
-            agendaToEdit.setId(agenda.getId());
 
-            return agendaToEdit;
+            return this.agendaRepository.save(agendaToEdit);
         }
     }
 

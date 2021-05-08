@@ -13,12 +13,12 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class DossierMedical implements Serializable {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -44,13 +44,17 @@ public class DossierMedical implements Serializable {
     public static DossierMedical from (DossierDto dossierDto){
         DossierMedical dossierMedical = new DossierMedical();
 
-        dossierMedical.setAntecedent(dossierDto.getAntecedent());
-        dossierMedical.setId(dossierDto.getId());
-        dossierMedical.setNumero(dossierDto.getNumero());
-        dossierMedical.setObservation(dossierDto.getObservation());
-        dossierMedical.setPrescription(dossierDto.getPrescription());
+        if(Objects.isNull(dossierDto)){
+            return null;
+        }else{
+            dossierMedical.setAntecedent(dossierDto.getAntecedent());
+            dossierMedical.setId(dossierDto.getId());
+            dossierMedical.setNumero(dossierDto.getNumero());
+            dossierMedical.setObservation(dossierDto.getObservation());
+            dossierMedical.setPrescription(dossierDto.getPrescription());
 
-        return dossierMedical;
+            return dossierMedical;
+        }
     }
 
     public static DossierMedical ToPlainDossier(PlainDossierDto plainDossierDto){

@@ -33,6 +33,14 @@ public class TacheController {
         return new ResponseEntity<>(tacheDtos, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/agenda/{id}")
+    public ResponseEntity<List<TacheDto>> findWithAgenda(@PathVariable final Long id){
+        List<Tache> tacheList = this.tacheService.findWithAgenda(id);
+        List<TacheDto> tacheDtoList = tacheList.stream().map(TacheDto::from).collect(Collectors.toList());
+
+        return new ResponseEntity<>(tacheDtoList, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<TacheDto> getById(@PathVariable final Long id){
         Tache tache = this.tacheService.getById(id);
@@ -49,9 +57,8 @@ public class TacheController {
     }
 
     @DeleteMapping(value = "delete/{id}")
-    public ResponseEntity<TacheDto> delete(@PathVariable final Long id,
-                                           @RequestBody TacheDto tache){
-        Tache tacheToDelete = this.tacheService.deleteTache(Tache.from(tache), id);
+    public ResponseEntity<TacheDto> delete(@PathVariable final Long id){
+        Tache tacheToDelete = this.tacheService.deleteTache(id);
 
         return new ResponseEntity<>(TacheDto.from(tacheToDelete), HttpStatus.OK);
     }

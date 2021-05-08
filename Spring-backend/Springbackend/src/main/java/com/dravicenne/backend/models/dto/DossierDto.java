@@ -22,21 +22,21 @@ public class DossierDto {
     private PlainMedecinDto plainMedecinDto;
 
 
-    public static DossierDto from(DossierMedical dossierMedical){
+    public static DossierDto from(DossierMedical dossierMedical) {
         DossierDto dossierDto = new DossierDto();
 
-        dossierDto.setAntecedent(dossierMedical.getAntecedent());
-        dossierDto.setId(dossierMedical.getId());
-        dossierDto.setNumero(dossierMedical.getNumero());
-        dossierDto.setObservation(dossierMedical.getObservation());
-        dossierDto.setPrescription(dossierMedical.getPrescription());
-        if(Objects.nonNull(dossierMedical.getMedecin())){
+        if (Objects.isNull(dossierMedical)) {
+            return null;
+        } else {
+            dossierDto.setAntecedent(dossierMedical.getAntecedent());
+            dossierDto.setId(dossierMedical.getId());
+            dossierDto.setNumero(dossierMedical.getNumero());
+            dossierDto.setObservation(dossierMedical.getObservation());
+            dossierDto.setPrescription(dossierMedical.getPrescription());
             dossierDto.setPlainMedecinDto(PlainMedecinDto.from(dossierMedical.getMedecin()));
-        }
-        if(Objects.nonNull(dossierMedical.getPatient())){
             dossierDto.setPlainPatientDto(PlainPatientDto.from(dossierMedical.getPatient()));
-        }
 
-        return dossierDto;
+            return dossierDto;
+        }
     }
 }

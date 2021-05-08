@@ -28,12 +28,12 @@ public class PatientDto extends User {
     private List<RendezVousDto> rendezVousDtos = new ArrayList<>();
     private DossierDto dossierDto;
 
-    public static PatientDto from(Patient patient){
+    public static PatientDto from(Patient patient) {
         PatientDto patientDto = new PatientDto();
 
-        if(Objects.isNull(patient)){
+        if (Objects.isNull(patient)) {
             return null;
-        }else{
+        } else {
 
             patientDto.setId(patient.getId());
             patientDto.setNom(patient.getNom());
@@ -48,12 +48,8 @@ public class PatientDto extends User {
             patientDto.setPassword(patient.getPassword());
             patientDto.setCpassword(patient.getCpassword());
             patientDto.setToken(patient.getToken());
-            if(Objects.nonNull(patient.getRendezVousList())){
-                patientDto.setRendezVousDtos(patient.getRendezVousList().stream().map(RendezVousDto::from).collect(Collectors.toList()));
-            }
-            if(Objects.nonNull(patient.getDossierMedical())){
-                patientDto.setDossierDto(DossierDto.from(patient.getDossierMedical()));
-            }
+            patientDto.setRendezVousDtos(patient.getRendezVousList().stream().map(RendezVousDto::from).collect(Collectors.toList()));
+            patientDto.setDossierDto(DossierDto.from(patient.getDossierMedical()));
 
             return patientDto;
         }

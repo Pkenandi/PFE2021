@@ -1,7 +1,7 @@
 package com.dravicenne.backend.controllers;
 
-import com.dravicenne.backend.models.Medecin;
 import com.dravicenne.backend.models.Specialites;
+import com.dravicenne.backend.models.dto.SpecialitesDto;
 import com.dravicenne.backend.services.SpecialiteService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -20,24 +21,33 @@ public class SpecialiteController {
     private final SpecialiteService specialiteService;
 
     @PostMapping
-    public ResponseEntity<Specialites> add(@RequestBody final Specialites specialites){
-        Specialites specialites1 = this.specialiteService.save(specialites);
+    public ResponseEntity<SpecialitesDto> add(@RequestBody final SpecialitesDto specialitesDto){
+        Specialites specialites1 = this.specialiteService.save(Specialites.from(specialitesDto));
 
-        return new ResponseEntity<>(specialites1, HttpStatus.OK);
+        return new ResponseEntity<>(SpecialitesDto.from(specialites1), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Specialites>> get(){
+    public ResponseEntity<List<SpecialitesDto>> get(){
         List<Specialites> specialites = this.specialiteService.findAll();
+        List<SpecialitesDto> specialitesDtos = specialites.stream().map(SpecialitesDto::from).collect(Collectors.toList());
 
-        return new ResponseEntity<>(specialites, HttpStatus.OK);
+        return new ResponseEntity<>(specialitesDtos, HttpStatus.OK);
     }
 
-//    @GetMapping(value = "/{id}/medecin/{cin}")
-//    public ResponseEntity<Specialites> addMedecin(@PathVariable final Long id,
-//                                                  @PathVariable final String cin){
-//        Specialites specialites = this.specialiteService.addMedecinAndSpecialite(cin, id);
-//
-//        return new ResponseEntity<>(specialites, HttpStatus.OK);
-//    }
+    @GetMapping(value = "/medecin/{cin}")
+    public ResponseEntity<List<SpecialitesDto>> findWithMedecin(@PathVariable final String cin){
+        List<Specialites> specialites = this.specialiteService.findWithMedecin(cin);
+        List<SpecialitesDto> specialitesDtoList = specialites.stream().map(SpecialitesDto::from).collect(Collectors.toList());
+
+        return new ResponseEntity<>(specialitesDtoList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}/medecin/{cin}")
+    public ResponseEntity<SpecialitesDto> addMedecin(@PathVariable final Long id,
+                                                  @PathVariable final String cin){
+        Specialites specialites = this.specialiteService.addMedecinAndSpecialite(cin, id);
+
+        return new ResponseEntity<>(SpecialitesDto.from(specialites), HttpStatus.OK);
+    }
 }

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,9 +18,12 @@ public class PlainAgendaDto {
     public static PlainAgendaDto from(Agenda agenda){
         PlainAgendaDto plainAgendaDto = new PlainAgendaDto();
 
-        plainAgendaDto.setId(agenda.getId());
-        plainAgendaDto.setTitre(agenda.getTitre());
-
-        return plainAgendaDto;
+        if(Objects.isNull(agenda)){
+            return null;
+        }else{
+            plainAgendaDto.setId(agenda.getId());
+            plainAgendaDto.setTitre(agenda.getTitre());
+            return plainAgendaDto;
+        }
     }
 }

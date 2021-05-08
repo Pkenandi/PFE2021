@@ -22,15 +22,18 @@ public class RendezVousDto {
     public static RendezVousDto from(RendezVous rendezVous){
         RendezVousDto rendezVousDto = new RendezVousDto();
 
-        rendezVousDto.setId(rendezVous.getId());
-        rendezVousDto.setDate(rendezVous.getDate());
-        rendezVousDto.setHeure(rendezVous.getHeure());
-        rendezVousDto.setStatus(rendezVous.getStatus());
-        if(Objects.nonNull(rendezVous.getMedecin()) && Objects.nonNull(rendezVous.getPatient())){
+        if(Objects.isNull(rendezVous)){
+            return null;
+        }else{
+            rendezVousDto.setId(rendezVous.getId());
+            rendezVousDto.setDate(rendezVous.getDate());
+            rendezVousDto.setHeure(rendezVous.getHeure());
+            rendezVousDto.setStatus(rendezVous.getStatus());
             rendezVousDto.setPlainMedecinDto(PlainMedecinDto.from(rendezVous.getMedecin()));
             rendezVousDto.setPlainPatientDto(PlainPatientDto.from(rendezVous.getPatient()));
-        }
 
-        return rendezVousDto;
+
+            return rendezVousDto;
+        }
     }
 }

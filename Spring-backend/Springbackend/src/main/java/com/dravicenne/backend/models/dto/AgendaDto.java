@@ -20,19 +20,19 @@ public class AgendaDto {
     private PlainMedecinDto medecinDto;
     private List<TacheDto> TacheDtoList = new ArrayList<>();
 
-    public static AgendaDto from(Agenda agenda){
+    public static AgendaDto from(Agenda agenda) {
         AgendaDto agendaDto = new AgendaDto();
 
-        agendaDto.setId(agenda.getId());
-        agendaDto.setTitre(agenda.getTitre());
-        if(Objects.nonNull(agenda.getMedecin())){
+        if (Objects.isNull(agenda)) {
+            return null;
+        } else {
+            agendaDto.setId(agenda.getId());
+            agendaDto.setTitre(agenda.getTitre());
             agendaDto.setMedecinDto(PlainMedecinDto.from(agenda.getMedecin()));
-        }
-        if(Objects.nonNull(agenda.getTaches())){
             agendaDto.setTacheDtoList(agenda.getTaches().stream().map(TacheDto::from).collect(Collectors.toList()));
-        }
 
-        return agendaDto;
+            return agendaDto;
+        }
     }
 
 }

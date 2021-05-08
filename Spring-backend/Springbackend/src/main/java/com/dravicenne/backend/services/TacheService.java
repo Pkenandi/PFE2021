@@ -30,27 +30,32 @@ public class TacheService {
                 );
     }
 
-    public Tache editTache(Tache tache, Long id){
+    public List<Tache> findWithAgenda(Long id){
+        return this.tacheRepository.findWithAgenda(id);
+    }
+
+    public Tache editTache(Tache tache, Long id)    {
         Tache tacheToEdit = this.getById(id);
 
         if( tacheToEdit == null){
             return null;
         }else{
             tacheToEdit.setTache(tache.getTache());
-            tacheToEdit.setHeure(tacheToEdit.getHeure());
+            tacheToEdit.setHeure(tache.getHeure());
+            tacheToEdit.setDate(tache.getDate());
             tacheToEdit.setId(tache.getId());
             tacheToEdit.setDescription(tache.getDescription());
             return tacheToEdit;
         }
     }
 
-    public Tache deleteTache(Tache tache, Long id){
+    public Tache deleteTache(Long id){
         Tache tacheToEdit = this.getById(id);
 
         if( tacheToEdit == null){
             return null;
         }else{
-            this.tacheRepository.delete(tache);
+            this.tacheRepository.delete(tacheToEdit);
             return tacheToEdit;
         }
     }

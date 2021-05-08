@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -39,17 +40,22 @@ public class AgendaController {
         return new ResponseEntity<>(AgendaDto.from(agenda), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/edit/{id}")
-    public ResponseEntity<AgendaDto> Edit(AgendaDto agenda, @PathVariable Long id){
-        Agenda agendaToEdit = this.agendaService.findById(id);
-        if(agendaToEdit == null){
-            return null;
+    @GetMapping(value = "/medecin/{cin}")
+    public ResponseEntity<AgendaDto> findWithMedecin(@PathVariable final String cin){
+        Agenda agenda = this.agendaService.findWithMedecin(cin);
+        if(Objects.isNull(agenda)){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }else{
-            agendaToEdit.setTitre(agenda.getTitre());
-            agendaToEdit.setId(agenda.getId());
-
-            return new ResponseEntity<>(AgendaDto.from(agendaToEdit), HttpStatus.OK);
+            return new ResponseEntity<>(AgendaDto.from(agenda), HttpStatus.OK);
         }
+    }
+
+    @PutMapping(value = "/edit/{id}")
+    public ResponseEntity<AgendaDto> Edit(@RequestBody final AgendaDto agenda, @PathVariable final Long id){
+        Agenda agendaToEdit = this.agendaService.editAgenda(Agenda.from(agenda),id);
+
+        return new ResponseEntity<>(AgendaDto.from(agendaToEdit), HttpStatus.OK);
+
     }
 
     @DeleteMapping(value = "/delete/{id}")
