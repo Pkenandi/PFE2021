@@ -97,8 +97,8 @@
               <hr class="my-4">
               <div class="row-cols-3">
                 <button type="button" id="submit" name="submit" class="btn btn-secondary btn-sm mr-3"
-                        routerLink="../../pat/dashboard"><i class="fas fa-arrow-circle-left"></i></button>
-                <button class="btn btn-block btn-sm btn-outline-danger shadow" routerLink="../../rendezVous"> Prendre Rendez-vous
+                        routerLink="../../pat/dashboard"><i class="fas fa-arrow-circle-left" (click)="reload()"></i></button>
+                <button class="btn btn-block btn-sm btn-outline-danger shadow" routerLink="../../rendezVous" (click)="reload()"> Prendre Rendez-vous
                 </button>
               </div>
             </form>

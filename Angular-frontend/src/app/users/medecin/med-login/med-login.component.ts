@@ -5,6 +5,7 @@ import * as medecin from 'src/app/Models/Medecin/medecin';
 import { UserService } from 'src/app/Services/userService/user.service';
 import { MedecinService } from 'src/app/Services/medecinService/medecin.service';
 import {ToastrService} from "ngx-toastr";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-med-login',
@@ -27,9 +28,11 @@ export class MedLoginComponent implements OnInit {
     private service: UserService,
     private medService: MedecinService,
     private _router: Router,
-    private toast: ToastrService) { }
+    private toast: ToastrService,
+    private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Login - DrAvicenne ");
     this.medLogForm.reset({});
   }
 
@@ -45,10 +48,12 @@ export class MedLoginComponent implements OnInit {
             this.medService.Cin = this.medecin.cin;
             this.medService.ville = this.medecin.Ville;
             this.service.Username = this.medecin.nom;
+            this.medService.nom = this.medecin.nom;
             this.service.setIsAuthenticated(true);
             this.medService.medecin = this.medecin;
             this.medService.log = true;
             this.service.isLoggedIn = true;
+            sessionStorage.setItem(this.medecin.nom,JSON.stringify(this.medecin));
             this._router.navigate(['../med/dashboard']);
           },
           error => {

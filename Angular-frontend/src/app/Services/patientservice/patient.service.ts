@@ -1,28 +1,39 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
 import { basedUrl, mainUrl } from 'src/environments/environment';
 import { Patient } from '../../Models/Patient/patient';
 import { UserService } from '../userService/user.service';
+import {stringify} from "@angular/compiler/src/util";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PatientService {
+export class PatientService implements OnInit{
 
 Username: any;
-name: any;
+name: string = "";
 lastName: any;
-patient: Patient;
 
 log = false;
 showMed = true;
-showDossier = false;
+patient: Patient = JSON.parse(sessionStorage.getItem("patient"));
 
   constructor(
     private _service: UserService,
     private _http: HttpClient) { }
 
+  ngOnInit(): void {
+    this.isAuth();
+  }
+
+  isAuth(): boolean {
+    if(this.patient != null){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   Login(username, password): Observable<any> {
     return this._service.loginPatient(username, password);
@@ -49,4 +60,5 @@ showDossier = false;
   addRendezVous(username: string, id: number): Observable<any>{
     return this._http.get<any>(`${basedUrl}/patient/${username}/rendezvous/${id}/add`);
   }
+
 }

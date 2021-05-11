@@ -5,6 +5,7 @@ import {MedecinService} from "../../../Services/medecinService/medecin.service";
 import {PatientService} from "../../../Services/patientservice/patient.service";
 import {DossierMedical} from "../../../Models/DossierMedical/dossier-medical";
 import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-list-dossier',
@@ -19,9 +20,11 @@ export class ListDossierComponent implements OnInit {
   constructor(public dossierService: DossierMedicalService,
               public rdvService: RendezVousService,
               public medecinService: MedecinService,
-              public patientService: PatientService) { }
+              public patientService: PatientService,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Liste dossier - DrAvicenne")
     this.getDossiers();
   }
 

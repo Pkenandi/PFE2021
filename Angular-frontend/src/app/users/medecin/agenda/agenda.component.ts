@@ -1,9 +1,8 @@
 import {
   Component,
   ChangeDetectionStrategy
-  , OnInit
+  , OnInit, Type
 } from '@angular/core';
-import { Subscription} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {AgendaService} from "../../../Services/agendaService/agenda.service";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
@@ -13,15 +12,30 @@ import {Medecin} from "../../../Models/Medecin/medecin";
 import {ToastrService} from "ngx-toastr";
 import {Tache} from "../../../Models/tache/tache";
 import {TacheService} from "../../../Services/tacheService/tache.service";
-import {MatDialogConfig} from "@angular/material/dialog";
-import {TacheComponent} from "../tache/tache.component";
+import {ModalDismissReasons, NgbModal, NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {DialogService} from "../../../Services/confirm/dialog.service";
+import {Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-agenda',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './agenda.component.html',
-  styleUrls: ['./agenda.component.css']
+  styleUrls: ['./agenda.component.css'],
+  styles: [`
+    .dark-modal .modal-content {
+      background-color: #292b2c;
+      color: white;
+    }
+    .dark-modal .close {
+      color: white;
+    }
+    .light-blue-backdrop {
+      background-color: #5cb3fd;
+    }
+  `]
 })
+
 export class AgendaComponent implements OnInit {
 
   agendaForm = new FormGroup({
@@ -39,6 +53,14 @@ export class AgendaComponent implements OnInit {
     titre: new FormControl('')
   });
 
+  editTaskForm = new FormGroup({
+    id: new FormControl(''),
+    tache: new FormControl(''),
+    description: new FormControl(''),
+    date: new FormControl(''),
+    heure: new FormControl(''),
+  })
+
   tache: Tache = null;
   exist: boolean = false;
   agenda: Agenda = null;
@@ -49,14 +71,23 @@ export class AgendaComponent implements OnInit {
   agendaTitle: string;
   clicked: boolean = false;
   showEditForm: boolean = false;
+  modal = true;
+  medecinInfo: Medecin;
+  agendaInfo: Agenda;
 
   constructor(public agendaService: AgendaService,
               public medecinService: MedecinService,
               public tacheService: TacheService,
               public toast: ToastrService,
-              public dialog: MatDialog) {  }
+              public dialog: MatDialog,
+              private modalService: NgbModal,
+              public confirmDialog: DialogService,
+              private router: Router,
+              private title: Title) {  }
 
   ngOnInit(): void {
+    this.title.setTitle(" Agenda - DrAvicenne")
+    this.medecinInfo = JSON.parse(sessionStorage.getItem(this.medecinService.nom))
     this.check();
   }
 
@@ -67,14 +98,12 @@ export class AgendaComponent implements OnInit {
       .subscribe(
         (response) => {
           this.agenda = response;
-          console.log(this.agenda);
-
           // Attaching agenda to a medecin
           this.medecinService.attachToAgenda(this.medecinService.medecin.cin,this.agenda.id)
             .subscribe(
-              (medecin) => {
-                this.medAgenda = medecin;
+              () => {
                 this.ngOnInit();
+                sessionStorage.setItem(this.agenda.titre,JSON.stringify(this.agenda));
                 this.toast.info(" Votre agenda est maintenant disponible !", "Création");
               },
               (errors) => {
@@ -85,30 +114,45 @@ export class AgendaComponent implements OnInit {
       )
   }
 
+  delete(): void{
+    this.getAgenda();
+    this.medecinService.deleteAgenda(this.medecinService.medecin.cin,this.agendaId)
+      .subscribe(
+        () => {
+            this.toast.show(" Agenda deleted !!", 'Suppression');
+            this.exist = false;
+            this.ngOnInit();
+        },
+        (errors) => {
+          console.log(errors.messages);
+        }
+      )
+  }
+
   check(): void {
     this.agendaService.get(this.medecinService.medecin.cin)
       .subscribe(
         (response) => {
           this.agendaMed = response;
-          console.log("Agenda with Medecin : ", this.agendaMed)
-          if (this.agendaMed != null){
-            this.exist = true;
-            // bind date to edit form
-            this.editForm = new FormGroup({
-              titre: new FormControl(response['titre'])
-            });
-            //end
+          if (Object.keys(this.agendaMed).length === 0 || Object.keys(this.agendaMed).length < 0){
+            this.exist = false;
+          }else {
             this.tacheService.getAll(this.agendaMed.id)
               .subscribe(
                 (listTache) => {
+                  this.listTache = null;
                   this.listTache = listTache;
                 },
                 (error) => {
                   console.log(" Erreur: ", error.message)
                 }
               )
-          }else{
-            this.exist = false;
+
+            this.editForm = new FormGroup({
+              titre: new FormControl(response['titre'])
+            });
+            //end
+            this.exist = true;
           }
         },
         (error) => {
@@ -137,6 +181,7 @@ export class AgendaComponent implements OnInit {
       .subscribe(
         (response) => {
           this.showEditForm = false;
+          this.agendaForm.reset({});
           this.ngOnInit();
         },
         (error) => {
@@ -145,28 +190,28 @@ export class AgendaComponent implements OnInit {
       )
   }
 
+  showEdit(): void {
+    this.showEditForm = this.showEditForm != true;
+  }
+
+  hide(): void {
+    this.clicked = this.clicked == false;
+  }
+
+  // Tasks Methods
+
   createTask() {
     this.tache = this.taskForm.value;
     this.tacheService.create(this.tache)
       .subscribe(
         (response) =>{
           this.tache = response;
-          this.toast.success(" Tache créer avec succès !");
           this.agendaService.addTasks(this.agendaMed.id,this.tache.id)
             .subscribe(
               (rep) => {
-                this.toast.success(" Tache ajouter avec succès !");
-                this.tacheService.getAll(this.agendaMed.id)
-                  .subscribe(
-                    (listTasks) =>{
-                      this.listTache = null;
-                      this.listTache = listTasks;
-                      this.ngOnInit();
-                    },
-                    (errors) => {
-                      console.log(" erreur ", errors.message);
-                    }
-                  )
+                this.toast.success(" Tache créer avec succès !");
+                this.getAllTask();
+                this.router.navigate(['../../med/dashboard']);
               },
               (error) => {
                 this.toast.error(" Erreur lors de l'ajout de la tache !");
@@ -180,26 +225,78 @@ export class AgendaComponent implements OnInit {
       )
   }
 
-  onClick(): void {
-    if(this.clicked == true){
-      this.clicked = false;
-    }else {
-      this.clicked = true;
+  editTask(): void {
+    this.tache = this.editTaskForm.value;
+    this.tacheService.edit(this.tache, this.tache.id)
+      .subscribe(
+        (response) => {
+          this.editTaskForm.reset({});
+          this.ngOnInit();
+        },
+        (error) => {
+          this.toast.error(error.message,'Erreur lors de la modification');
+        }
+      )
+  }
+
+  deleteTask(id: number): void {
+    this.tacheService.delete(id)
+      .subscribe(
+        () => {
+          this.toast.warning(" Tache supprimer ",'suppression');
+          this.ngOnInit();
+        },
+        (error) => {
+          this.toast.error(error.message, " Erreur lors de la suppression !!");
+        }
+      )
+  }
+
+  getAllTask(): void {
+    this.tacheService.getAll(this.agendaMed.id)
+      .subscribe(
+        (taches) => {
+          this.listTache = taches;
+        }
+      )
+  }
+
+  getTaskById(id: number): void {
+    this.tacheService.getOne(id)
+      .subscribe(
+        (response) => {
+          this.editTaskForm = new FormGroup({
+            id: new FormControl(response['id']),
+            tache: new FormControl(response['tache']),
+            description: new FormControl(response['description']),
+            date: new FormControl(response['date']),
+            heure: new FormControl(response["heure"]),
+          })
+        }
+      )
+  }
+
+  closeResult = '';
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: "sm"}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${AgendaComponent.getDismissReason(reason)}`;
+    });
+  }
+
+  private static getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
     }
   }
 
-  showEdit(): void {
-    this.showEditForm = this.showEditForm != true;
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true , size: "sm"});
   }
 
-  hide(): void {
-    this.clicked = this.clicked == false;
-  }
-
-  Task(): void {
-    const config = new MatDialogConfig();
-    config.height = "73%";
-    config.width = "33%";
-    this.dialog.open(TacheComponent,config);
-  }
 }

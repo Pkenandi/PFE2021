@@ -22,7 +22,7 @@ pre {
 }
 
 .taskForm{
-  width: 200px;
+  width: 100%
 }
 
 .taskForm input{
@@ -38,7 +38,7 @@ label{
 
 .myForm{
   border: 1px solid whitesmoke;
-  width: 350px;
+  width: 100%;
   padding: 20px ;
   border-radius: 8px;
 }
@@ -89,4 +89,9 @@ label{
 
 .edit{
   cursor: pointer;
+}
+
+.toast-custom {
+  top: 80px;
+  right: 0px;
 }

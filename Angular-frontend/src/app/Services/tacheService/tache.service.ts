@@ -11,7 +11,6 @@ export class TacheService {
 
   constructor(private http: HttpClient) { }
 
-  listTasks: Tache[] = [];
   subject = new Subject<any>();
 
   sendEvent(){
@@ -21,11 +20,24 @@ export class TacheService {
   getEvent(): Observable<any>{
     return this.subject.asObservable()
   }
+
   create(tache): Observable<Tache>{
     return this.http.post<Tache>(`${mainUrl}tache`,tache);
   }
 
+  edit(tache ,id): Observable<Tache>{
+    return this.http.put<Tache>(`${mainUrl}tache/edit/${id}`, tache);
+  }
+
+  delete(id: number): Observable<Tache>{
+    return this.http.delete<Tache>(`${mainUrl}tache/delete/${id}`);
+  }
+
   getAll(agenda_id):Observable<Tache[]>{
     return this.http.get<Tache[]>(`${mainUrl}tache/agenda/${agenda_id}`);
+  }
+
+  getOne(id: number): Observable<Tache>{
+    return this.http.get<Tache>(`${mainUrl}tache/${id}`);
   }
 }

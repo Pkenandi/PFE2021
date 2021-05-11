@@ -3,15 +3,15 @@ import {BrowserModule} from '@angular/platform-browser';
 import {IvyCarouselModule} from 'angular-responsive-carousel';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule} from "@angular/common";
-import { NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
+import { NgbModalModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { FlatpickrModule} from "angularx-flatpickr";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HeaderComponent} from './header/header.component';
-import {FooterComponent} from './footer/footer.component';
-import {HomeComponent} from './home/home.component';
-import {AccountComponent} from './account/account.component';
+import {HeaderComponent} from './components/header/header.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {HomeComponent} from './components/home/home.component';
+import {AccountComponent} from './components/account/account.component';
 import {MedLoginComponent} from './users/medecin/med-login/med-login.component';
 import {MedRegisterComponent} from './users/medecin/med-register/med-register.component';
 import {PatRegisterComponent} from './users/patient/pat-register/pat-register.component';
@@ -20,11 +20,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { PatDashboardComponent } from './users/patient/pat-dashboard/pat-dashboard.component';
 import { MedDashboardComponent } from './users/medecin/med-dashboard/med-dashboard.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import { CardComponent } from './card/card.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { CardComponent } from './components/card/card.component';
 import { LogoutComponent } from './users/logout/logout.component';
 import { DossierMedicalComponent } from './users/patient/dossier-medical/dossier-medical.component';
-import { RendezVousComponent } from './users/rendez-vous/rendez-vous.component';
+import { RendezVousComponent } from './components/rendez-vous/rendez-vous.component';
 import { ShowDossierContenteComponent } from './users/patient/show-dossier-contente/show-dossier-contente.component';
 import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.component';
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
@@ -35,8 +35,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NotificationComponent } from './notification/notification.component';
-import { ChatComponent } from './users/chat/chat.component';
-import { VideoComponent } from './users/video/video.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { VideoComponent } from './components/video/video.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
@@ -81,6 +81,7 @@ import { ListDossierComponent } from './users/medecin/list-dossier/list-dossier.
 import { ListRdvComponent } from './users/medecin/list-rdv/list-rdv.component';
 import { SpecialiteComponent } from './users/medecin/specialite/specialite.component';
 import { TacheComponent } from './users/medecin/tache/tache.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { TacheComponent } from './users/medecin/tache/tache.component';
     ListRdvComponent,
     SpecialiteComponent,
     TacheComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -155,7 +157,8 @@ import { TacheComponent } from './users/medecin/tache/tache.component';
     MatOptionModule,
     MatCardModule,
     NgxMaterialTimepickerModule,
-    MatCardModule
+    MatCardModule,
+    NgbModule
   ],
   exports: [
     HeaderComponent,
@@ -192,7 +195,7 @@ import { TacheComponent } from './users/medecin/tache/tache.component';
     MatNativeDateModule
   ],
   bootstrap: [AppComponent],
-  entryComponents: [PatNotifComponent,SmsComponent,MailComponent,MedNotifComponent,TacheComponent]
+  entryComponents: [PatNotifComponent,SmsComponent,MailComponent,MedNotifComponent,TacheComponent,ConfirmComponent]
 })
 export class AppModule {
 }

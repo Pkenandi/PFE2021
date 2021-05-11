@@ -6,13 +6,15 @@
 <div class="d-flex" id="wrapper">
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading text-center mt-2 mb-2 shadow">Bienvenue <br> <span id="Dr">{{patientService.name}} {{patientService.lastName}}</span> </div>
-        <div class="list-group list-group-flush nav nav-tabs">
-          <a routerLink="../../patient/{{patientService?.patient.username}}" class=" nav-link btn list-group-item list-group-item-action bg-light">
+        <div class="sidebar-heading text-center mt-2 mb-2 shadow">
+          <img src="assets/images/home/patient.png" alt=""> <br> <span id="Dr">{{patientInfo.nom}} {{patientInfo.prenom}}</span>
+        </div>
+        <div class="list-group list-group-flush nav nav-tabs" style="margin-top: 100px">
+          <a routerLink="../../patient/{{patientInfo.username}}" class=" nav-link btn list-group-item list-group-item-action bg-light">
             <img src="assets/images/profile.png" (click)="setTitle('Profile')"> Profile
           </a>
 
-            <a routerLink="../../pat/logout" class=" nav-link btn list-group-item list-group-item-action bg-light">
+            <a routerLink="../../pat/logout" class=" nav-link btn list-group-item list-group-item-action bg-light" (click)="reload()">
                 <img src="assets/images/logout.png" alt="logout"> Deconnexion
             </a>
         </div>

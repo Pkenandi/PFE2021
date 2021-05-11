@@ -19,12 +19,13 @@
         <div id="formContent">
           <div class="mb-3">
             <span style="margin-left: 10px"><img src="assets/images/patient.png"></span>
-            <small class="text-danger"> {{message}}</small>
+              <br>
+            <small class="text-danger"> {{message}} </small>
           </div>
 
           <form [formGroup]="patLogForm" (ngSubmit)="login()" autocomplete="off">
-            <input formControlName="username" type="text" id="login" name="username" placeholder="Nom d'utilisateur" required>
-            <input formControlName="password" type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" required>
+            <input formControlName="username" type="text" id="login" name="username" placeholder="Nom d'utilisateur" autofocus>
+            <input formControlName="password" type="password" id="password" class="form-control" name="password" placeholder="Mot de passe">
             <input [disabled]="!patLogForm.valid" type="submit" value="Login">
             <a routerLink='../../pat/register'> Créer un compte </a>
           </form>

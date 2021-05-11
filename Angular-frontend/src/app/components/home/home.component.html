@@ -1,0 +1,332 @@
+<div class="mt-2 container">
+  <div style="margin-bottom: -5rem; width: 30px" class="img bg-light clignote">
+    <img src="../../../assets/images/news.png">
+  </div>
+  <div class="marquee-rtl" style="margin-top: 3.5rem">
+    <p><span class="text-danger text"> || Covid-19 : </span>
+      protégez-vous en prenant quelques précautions simples,
+      comme maintenir une distance physique avec autrui,
+      porter un masque, bien ventiler les pièces,
+      éviter les rassemblements, vous laver les mains, et tousser dans votre coude replié ou un mouchoir.
+      Suivez les recommandations locales là où vous vivez et travaillez.
+      Faites tout cela !
+      <span class="text-danger text">  || Vaccins contre la Covid-19 : </span>
+      Les vaccins sont une nouvelle arme essentielle dans la lutte contre la COVID-19
+      et il est extrêmement encourageant de constater que beaucoup d’entre eux s’avèrent efficaces
+      et passent en phase de mise au point. Travaillant le plus vite possible,
+      des scientifiques du monde entier collaborent et innovent pour fournir des tests de dépistage,
+      des traitements et des vaccins qui, ensemble,
+      permettront de sauver des vies et de mettre fin à la pandémie.
+    </p>
+  </div>
+</div>
+
+<div class="container" style="margin-bottom: 50px; margin-top: 40px">
+  <div class="row">
+    <div class="col-md-12" >
+      <carousel [images]="images" autoplay="true" autoplayInterval="2500" overflowCellsLimit="1" dots="true"
+                arrows="true" arrowsTheme="dark" borderRadius="15px" transitionDuration="1000" loop="true" width=1200
+                height=250 cellsToShow=3 class="car">
+
+      </carousel>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3 mb-4">
+  <div class="text-center words">
+    <p> Pourquoi prendre rendez-vous avec DrAvicenne.com ? </p>
+    <span> Avec Nous, vous prenez votre rendez-vous en ligne avec votre médecin autrement</span>
+  </div>
+  <div class="container-fluid">
+    <div class="row mt-5 paragraph" align="center">
+      <div class="col-md-4 col-lg-4 col-sm-12">
+        <img src="https://cdn.med.tn/img/step1.svg" alt="Accédez rapidement à votre medecin">
+        <p> Accédez rapidement à votre médecin </p>
+      </div>
+
+      <div class="col-md-4 col-lg-4 col-sm-12 col-xl-4">
+        <img src="https://cdn.med.tn/img/step2.svg" alt="Prendre rendez-vous en ligne à tout moment">
+        <p> Prendre rendez-vous en ligne à tout moment </p>
+      </div>
+
+      <div class="col-md-4">
+        <img src="https://cdn.med.tn/img/step3.svg" alt="Prendre rendez-vous en ligne à tout moment">
+        <p> Recevez des SMS/Mail de rappel personnalisés </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-12 mt-3">
+      <section class="pt-1">
+        <div class="container words">
+          <h2 style="font-family: 'Arial Black', sans-serif"> 5 Conseils Médicaux pour être en bonne santé </h2>
+        </div>
+        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[1].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{Data[1].title}}</h4>
+                    <p class="large style" >
+                      {{Data[1].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[2].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{Data[2].title}}</h4>
+                    <p class="style large">
+                      {{Data[2].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[3].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{Data[3].title}}</h4>
+                    <p class="style large">
+                      {{Data[3].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[4].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{Data[4].title}}</h4>
+                    <p class="style large">
+                      {{Data[4].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="carousel-item">
+              <div class="card">
+                <div class="card-horizontal">
+                  <div class="img-square-wrapper">
+                    <img class="" src="{{Data[5].image}}" alt="Card image cap" width="250" height="180">
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">{{ Data[5].title}}</h4>
+                    <p class="style large">
+                      {{ Data[5].description}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="container" style="background-color: #e4dfee">
+  <div class="mb-3">
+    <div class="row ">
+      <div class="col-lg-6 col-md-12 col-sm-12 mx-auto text-center mt-3">
+        <p style="margin-top: 15px">
+          <span style="font-size: x-large;">
+                  Besoin d'un conseil médical ? <br>
+                 des questions à posées ?
+                </span>
+          <br> <br>
+          <small>Poser votre question ici </small>
+          <br>
+          <br>
+          <button class="btn btn-lg btn-outline-primary btn-sm"> Poser ma question</button>
+
+        </p>
+
+      </div>
+      <div class="col-lg-6 col-md-12 col-sm-12 mt-3 mx-auto">
+                <span style="font-size: x-large;">
+                Questions recemment posées
+              </span>
+        <section class="pt-1">
+          <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="card shadow mt-3" style="width: 20rem;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[0].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[0].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[1].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[1].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[2].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[2].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[3].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[3].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[4].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[4].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[5].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[5].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[6].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[6].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="card shadow mt-3" style="width: 20rem;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: red"> Question :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text"> {{Qr[7].question}} </p>
+                  </div>
+                  <hr style="border: skyblue solid 1px; border-width: thin; width: auto;">
+                  <div class="card-body">
+                    <span style="font-weight: bold; color: green"> Reponse :</span> <br>
+                    <hr style="width: 10px">
+                    <p class="card-text">
+                      {{Qr[7].answer}}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

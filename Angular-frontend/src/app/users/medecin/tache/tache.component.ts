@@ -6,6 +6,7 @@ import {AgendaService} from "../../../Services/agendaService/agenda.service";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
 import {Agenda} from "../../../Models/agenda/agenda";
 import {ToastrService} from "ngx-toastr";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-tache',
@@ -26,9 +27,11 @@ export class TacheComponent implements OnInit {
   constructor(private tacheService: TacheService,
               private agendaService: AgendaService,
               public medecinService: MedecinService,
-              private toast: ToastrService) { }
+              private toast: ToastrService,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Ajout tache - DrAvicenne");
     this.agendaService.get(this.medecinService.medecin.cin)
       .subscribe(
         (response) => {

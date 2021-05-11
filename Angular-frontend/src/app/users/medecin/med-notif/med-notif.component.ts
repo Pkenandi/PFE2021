@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Title} from "@angular/platform-browser";
+import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.service";
 
 @Component({
   selector: 'app-med-notif',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MedNotifComponent implements OnInit {
 
-  constructor() { }
+  constructor(private title: Title,
+              public rdvService: RendezVousService) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Notifications - DrAvicenne ")
   }
 
 }

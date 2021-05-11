@@ -2,11 +2,8 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
 } from '@angular/common/http';
-import { User } from '../../Models/User/user';
-import { Patient } from '../../Models/Patient/patient';
 import { Medecin } from '../../Models/Medecin/medecin';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 import {basedUrl, mainUrl} from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import {UserService} from "../userService/user.service";
@@ -20,10 +17,20 @@ export class MedecinService {
   log = false;
   Cin: string;
   ville: string;
+  nom: string = "";
   medecins: Medecin[];
-  medecin: Medecin;
 
   constructor(private _http: HttpClient, private userService: UserService) { }
+
+  medecin: Medecin = JSON.parse(sessionStorage.getItem("medecin"))
+
+  isAuth(): boolean {
+    if(this.medecin != null){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   getMedecins(): Observable<Medecin[]> {
     return this._http.get<Medecin[]>(`${basedUrl}medecin/all`);
@@ -53,6 +60,10 @@ export class MedecinService {
 
   attachToAgenda(cin: string, id: number): Observable<any>{
     return this._http.get<any>(`${mainUrl}user/agenda/${id}/medecin/${cin}`);
+  }
+
+  deleteAgenda(cin: String, id: number): Observable<any>{
+    return this._http.get<any>(`${mainUrl}user/agenda/${id}/${cin}/delete`);
   }
 
 }

@@ -14,6 +14,7 @@ export class MedLogoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.medecinService.logOut();
+    sessionStorage.removeItem(this.medecinService.medecin.nom);
     this.toaster.success("Vous êtes deconnectez !");
     this.router.navigate(['mon-compte']);
   }

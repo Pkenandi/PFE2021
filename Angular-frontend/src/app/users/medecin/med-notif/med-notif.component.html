@@ -1,1 +1,17 @@
-<p>med-notif works!</p>
+<div class="container">
+  <div *ngIf="rdvService.m_notifications == 0; else show">
+    <h2 style="margin-top: 10px">
+      <img src="assets/images/icons/info.png" class="mr-2"> Vous n'avez aucune notification
+    </h2>
+  </div>
+  <ng-template #show>
+    <p><img src="assets/images/icons/yes.png"> <span style="color: green" class="ml-2">{{rdvService.ma_note}}</span>
+      rendez-vous confirmé(s) </p> <br>
+    <p><img src="assets/images/icons/wait.png"> <span style="color: blue" class="ml-2">{{rdvService.mw_note}}</span>
+      rendez-vous en attente </p>
+  </ng-template>
+  <div mat-dialog-actions>
+    <button mat-button [matDialogClose] color="primary">Fermer</button>
+  </div>
+</div>
+

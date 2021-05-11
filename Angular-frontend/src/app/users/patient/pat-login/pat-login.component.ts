@@ -6,6 +6,7 @@ import { Patient } from 'src/app/Models/Patient/patient';
 import { PatientService } from 'src/app/Services/patientservice/patient.service';
 import { UserService } from 'src/app/Services/userService/user.service';
 import {ToastrService} from "ngx-toastr";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-pat-login',
@@ -28,9 +29,11 @@ export class PatLoginComponent implements OnInit {
     private userService: UserService,
     private patientService: PatientService,
     private _router: Router,
-    private toast: ToastrService) { }
+    private toast: ToastrService,
+    private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Login - DrAvicenne")
   }
 
   login(): void {
@@ -49,6 +52,7 @@ export class PatLoginComponent implements OnInit {
         this.userService.setIsAuthenticated(true);
         this.patientService.log = true;
         this.userService.isLoggedIn = true;
+        sessionStorage.setItem("patient",JSON.stringify(this.patient));
         this._router.navigate(['../pat/dashboard']);
       },
       (error: HttpErrorResponse) => {

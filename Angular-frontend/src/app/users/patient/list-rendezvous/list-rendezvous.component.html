@@ -4,99 +4,105 @@
       <div class="container">
         <div *ngIf="!isAccepted; else accpt">
           <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
-            Vous n'avez aucun rendez-vous Accepter pour le moment </h2>
+            Vous n'avez aucun rendez-vous Accepté pour le moment </h2>
         </div>
       </div>
       <ng-template #accpt>
-        <h2>Vos rendez-vous Accepter</h2>
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Patient</th>
-            <th>Médecin</th>
-            <th>Date</th>
-            <th>Heure</th>
-            <th>Status</th>
-          </tr>
-          </thead>
-          <tbody *ngFor="let item of accepted">
-          <tr>
-            <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
-            <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
-            <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
-            <td>{{item?.heure}}</td>
-            <td>{{item?.status}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="Attentent">
-        <div class="container">
-          <div *ngIf="!isInWait; else att">
-            <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
-              Vous n'avez aucun Rendez-vous en Attente</h2>
-          </div>
-          <ng-template #att>
-            <h2>Vos rendez-vous en Attente</h2>
-            <table class="table table-striped">
-              <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Médecin</th>
-                <th>Date</th>
-                <th>Heure</th>
-                <th>Status</th>
-                <th class="col-1">Annuler</th>
-              </tr>
-              </thead>
-              <tbody *ngFor="let item of inWait">
-              <tr>
-                <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
-                <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
-                <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
-                <td>{{item?.heure}}</td>
-                <td>{{item?.status }}</td>
-                <td>
-                  <img src="assets/images/icons/x-button.png" style="cursor:pointer;" (click)="cancelRdv('ANNULER',item?.id)">
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </ng-template>
-        </div>
-    </mat-tab>
-    <mat-tab label="Refusés">
-      <div class="container">
-        <div *ngIf="!isDenied; else den">
-          <h2><i class="fas fa-exclamation-triangle" style="color: red"></i>
-            Vous n'avez aucun rendez-vous Refuser</h2>
-        </div>
-        <ng-template #den>
-          <h2>Vos rendez-vous Refuser</h2>
+        <h2>Vos rendez-vous Acceptés</h2>
+        <div class="table-responsive">
           <table class="table table-striped">
             <thead>
             <tr>
               <th>Patient</th>
               <th>Médecin</th>
               <th>Date</th>
+              <th>Heure</th>
               <th>Status</th>
             </tr>
             </thead>
-            <tbody *ngFor="let item of denied">
+            <tbody *ngFor="let item of accepted">
             <tr>
               <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
               <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
-              <td>{{item?.date| date : 'MM-dd-yyyy'}}</td>
-              <td>{{item?.status}}</td>
-              <td class="col-1">
-                <img src="assets/images/icons/delete.png" style="cursor: pointer" (click)="deleteRdv(item?.id)">
-              </td>
+              <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
+              <td>{{item?.heure}}</td>
+              <td><img src="assets/images/icons/confirm.png" alt="Acceptés" title="confirmer"></td>
             </tr>
             </tbody>
           </table>
-        </ng-template>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Attente">
+        <div class="container">
+          <div *ngIf="!isInWait; else att">
+            <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
+              Vous n'avez aucun Rendez-vous en Attente</h2>
+          </div>
+        </div>
+          <ng-template #att>
+            <h2>Vos rendez-vous en Attente</h2>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Médecin</th>
+                  <th>Date</th>
+                  <th>Heure</th>
+                  <th>Status</th>
+                  <th>Annuler</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let item of inWait">
+                <tr>
+                  <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
+                  <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
+                  <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
+                  <td>{{item?.heure}}</td>
+                  <td><img src="assets/images/icons/wait.png" alt="attente" title="en attente"></td>
+                  <td>
+                    <img src="assets/images/icons/x-button.png" style="cursor:pointer;" (click)="cancelRdv('ANNULER',item?.id)">
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+    </mat-tab>
+    <mat-tab label="Refusés">
+      <div class="container">
+        <div *ngIf="!isDenied; else den">
+          <h2><i class="fas fa-exclamation-triangle" style="color: red"></i>
+            Vous n'avez aucun rendez-vous Refusé</h2>
+        </div>
       </div>
+        <ng-template #den>
+          <h2>Vos rendez-vous Refusés</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Médecin</th>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+              <tbody *ngFor="let item of denied">
+              <tr>
+                <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
+                <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
+                <td>{{item?.date| date : 'MM-dd-yyyy'}}</td>
+                <td><img src="assets/images/icons/x-button.png" alt=""></td>
+                <td>
+                  <img src="assets/images/icons/delete.png" style="cursor: pointer" (click)="deleteRdv(item?.id)">
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>

@@ -7,6 +7,7 @@ import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomValidationService } from 'src/app/Services/validations/custom-validation.service';
 import {ToastrService} from "ngx-toastr";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-med-register',
@@ -36,9 +37,11 @@ export class MedRegisterComponent implements OnInit {
     private service: UserService,
     private _router: Router,
     private _validator: CustomValidationService,
-    private toast: ToastrService) { }
+    private toast: ToastrService,
+    private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Register - DrAvicenne ")
   }
 
   get regValue(){

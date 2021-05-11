@@ -8,6 +8,7 @@ body {
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
+  background-color: floralwhite;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
@@ -17,8 +18,9 @@ body {
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
-  background-color: rgb(130, 183, 226);
+  background-color: lightpink;
   border-radius: 2px;
+  height: 100px;
 }
 
 #sidebar-wrapper .list-group {

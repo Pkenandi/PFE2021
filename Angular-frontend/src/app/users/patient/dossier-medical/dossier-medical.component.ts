@@ -9,6 +9,7 @@ import { Tab } from 'src/app/Models/tab';
 import {HttpErrorResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-dossier-medical',
@@ -17,9 +18,9 @@ import {MedecinService} from "../../../Services/medecinService/medecin.service";
 })
 export class DossierMedicalComponent implements OnInit {
 
-  patient: Patient = this.patientService.patient;
+  patient: Patient = JSON.parse(sessionStorage.getItem("patient"))
   dossier: DossierMedical = null;
-  numero = this.getRandomInt(100000);
+  numero = this.getRandomInt(1000000);
   exist: boolean = false;
   Tab: Tab = null;
 
@@ -32,18 +33,20 @@ export class DossierMedicalComponent implements OnInit {
               public dossierService: DossierMedicalService,
               public medecinService: MedecinService,
               private route: Router,
-              private toast: ToastrService) { }
+              private toast: ToastrService,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Dossier - DrAvicenne ")
     this.findWithPatient();
+
     this.dossierForm = new FormGroup({
       numero: new FormControl(this.numero),
-      // tslint:disable-next-line: quotemark
       antecedent: new FormControl(" Pas d'antecedent ")
     });
   }
 
-  findWithPatient(): void{
+  findWithPatient(): void {
     this.dossierService.findWithPatient(this.patient.username).subscribe(
       (response) => {
         this.dossier = response;

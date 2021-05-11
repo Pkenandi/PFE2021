@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {PatLoginComponent} from '../../users/patient/pat-login/pat-login.component';
 import {
   HttpClient,
   HttpHeaders,
@@ -25,13 +24,11 @@ export class UserService {
   constructor(private _http: HttpClient, private router: Router) {}
 
   // tslint:disable-next-line: typedef
-  setIsAuthenticated(value: boolean)
-  {
+  setIsAuthenticated(value: boolean) {
     this.isAuthenticated = value;
   }
 
-  getIsAuthenticated(): boolean
-  {
+  getIsAuthenticated(): boolean {
     return this.isAuthenticated;
   }
 
@@ -49,7 +46,6 @@ export class UserService {
 
 
   loginPatient(username: string, password: string): Observable<any> {
-
     return this._http.post(`${basedUrl}patient/login`, { username, password});
   }
 
@@ -57,8 +53,7 @@ export class UserService {
     return this._http.post(`${basedUrl}medecin/login`, { cin, password });
   }
 
-  logOut(): void
-  {
+  logOut(): void {
     this.setIsAuthenticated(false);
     this.isLoggedIn = false;
   }

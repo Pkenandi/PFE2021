@@ -1,8 +1,10 @@
 <div class="d-flex" id="wrapper">
     <!-- Sidebar -->
     <div class="border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading color text-center mt-2 mb-2 shadow">Bienvenue <br> <span id="Dr">Dr {{medecinService.medecin.prenom}} {{medecinService.medecin.nom}}</span> </div>
-        <div class="list-group list-group-flush">
+        <div class="sidebar-heading color text-center mt-2 mb-2 shadow">
+          <img src="assets/images/home/doctor.png" alt=""> <br> <span id="Dr">Dr {{medecinService.medecin.prenom}} {{medecinService.medecin.nom}}</span>
+        </div>
+        <div class="list-group list-group-flush bg-secondary" style="margin-top: 83px">
           <a routerLink="../../medecin/{{medecinService.Cin}}" class="list-group-item list-group-item-action bg-light">
             <img src="assets/images/profile.png">   Profile </a>
             <a routerLink="../../med/logout" class="list-group-item list-group-item-action bg-light">
@@ -22,9 +24,6 @@
             <a class="nav-link" href="#Rdv" data-toggle="tab">Mes Rendez-vous</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#Dm" data-toggle="tab">Dossiers Médicaux</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#Sp" data-toggle="tab">Spécialités <img src="assets/images/icons/plus.png" width="17" height="17"></a>
           </li>
         </ul>
@@ -36,9 +35,6 @@
           </div>
           <div id="Rdv" role="tabpanel" class="tab-pane">
             <app-list-rendez-vous> </app-list-rendez-vous>
-          </div>
-          <div id="Dm" role="tabpanel" class="tab-pane">
-            <app-list-dossier> </app-list-dossier>
           </div>
           <div id="Sp" role="tabpanel" class="tab-pane">
             <app-specialite> </app-specialite>

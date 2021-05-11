@@ -7,6 +7,7 @@ import {Medecin} from "../../../Models/Medecin/medecin";
 import {FormControl, FormGroup} from "@angular/forms";
 import {map} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-profile-med',
@@ -35,10 +36,12 @@ export class ProfileMedComponent implements OnInit {
     public medecinService: MedecinService,
     public patientService: PatientService,
     public userService: UserService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private title: Title
   ) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Profile medecin - DrAvicenne")
     this.sub = this.activatedRoute.params.subscribe(
       params => {
         this.cin = params['cin'];
@@ -50,6 +53,7 @@ export class ProfileMedComponent implements OnInit {
           result => {
             this.medecin = result;
             this.medecinService.medecin = this.medecin;
+
             this.medecinInfo = new FormGroup({
               nom: new FormControl(result['nom']),
               prenom: new FormControl(result['prenom']),
@@ -66,4 +70,11 @@ export class ProfileMedComponent implements OnInit {
     );
   }
 
+  reload(): void {
+    setTimeout(
+      () => {
+        location.reload();
+      }, 5
+    )
+  }
 }

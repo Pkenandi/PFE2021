@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="account">
+        <h3> Mon compte
+        </h3>
+        <hr style="height:2px;border-width:0;color:gray;background-color:whitesmoke; border-left: 90px solid #0000A0">
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6">
+        <mat-tab-group mat-align-tabs="center">
+          <mat-tab label="Connexion" align="center">
+            <div class="text-center msg mt-3">
+              <strong style="color: darkred">Vous avez deja un compte ?</strong> <br>
+              <span> Veillez vous connectez. </span>
+            </div>
+            <div class="col text-center">
+              <div id="logContainer">
+                <div class="row text-secondary">
+                  <div id="box1" class="col-10 mb-2 ml-3 text-left btn btn-lg"
+                       routerLink="../pat/login">
+                    <p> <span> Connectez-vous en tant que Patient </span> <br> Votre rendez-vous vous attend.</p>
+                  </div>
+                  <div id="box2" class="col-10 text-left mb-2 ml-3 btn btn-lg"
+                       routerLink="../med/login">
+                    <p><span>Connectez-vous en tant que Médecin</span> <br> vos patient vous attendent ! </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Inscription">
+            <div class="text-center msg mt-3">
+              <strong style="color: #0000A0">Vous êtes nouveau sur DrAvicenne ?</strong> <br>
+              <span style="color: #19aa96"> Inscrivez vous gratuitement</span>
+            </div>
+            <div id="regContainer" class="col text-center">
+              <div class="row">
+                <div id="box1" class="col-11 mb-2 ml-3 text-left btn btn-lg" routerLink="../pat/register">
+                  <p>
+                    <span>Vous êtes Patient ?</span> <br> Inscrivez-vous et prenez rendez-vous avec un<br> personel de santé.
+                  </p>
+                </div>
+                <div id="box2" class="col-11 text-left mb-2 ml-3 btn btn-lg" routerLink="../med/register">
+                  <p><span>Vous êtes médecin ?</span> <br> Partagez votre disponibilité en vous inscrivant et <br> prenez rendez-vous avec vos patients.</p>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+
+      <div class="col-md-6 col-lg-6 mt-5">
+        <img src="../../../assets/images/welcome.png" style="width: 100%">
+      </div>
+
+
+    </div>
+</div>

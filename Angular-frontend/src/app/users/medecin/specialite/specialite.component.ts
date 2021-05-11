@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {Specialite} from "../../../Models/spacialite/specialite";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-specialite',
@@ -16,9 +17,10 @@ export class SpecialiteComponent implements OnInit {
 
   specialite:Specialite = null;
 
-  constructor() { }
+  constructor(private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Specialite - DrAvicenne ")
   }
 
   add(): void{

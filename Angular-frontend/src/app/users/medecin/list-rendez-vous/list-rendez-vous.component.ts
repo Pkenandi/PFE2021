@@ -1,20 +1,66 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.service";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
 import {MatDialog, MatDialogRef, MatDialogConfig} from "@angular/material/dialog";
 import {MailComponent} from "../messagerie/mail/mail.component";
 import {SmsComponent} from "../messagerie/sms/sms.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {FormControl, FormGroup} from "@angular/forms";
+import {Mail} from "../../../Models/messagerie/mail/mail";
+import {PatientService} from "../../../Services/patientservice/patient.service";
+import {DossierMedical} from "../../../Models/DossierMedical/dossier-medical";
+import {DossierMedicalService} from "../../../Services/dossierService/dossier-medical.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-list-rendez-vous',
   templateUrl: './list-rendez-vous.component.html',
-  styleUrls: ['./list-rendez-vous.component.css']
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./list-rendez-vous.component.css'],
+  styles: [`
+    .dark-modal .modal-content {
+      background-color: #292b2c;
+      color: white;
+    }
+    .dark-modal .close {
+      color: white;
+    }
+
+    .myCustomModalClass .modal-dialog {
+      max-width: 475px;
+    }
+
+    .light-blue-backdrop {
+      background-color: #5cb3fd;
+    }
+  `]
 })
 export class ListRendezVousComponent implements OnInit {
 
   constructor(private rendezvousService: RendezVousService,
-              private medecinService: MedecinService,
-              public dialog: MatDialog) { }
+              public medecinService: MedecinService,
+              private patientService: PatientService,
+              public dialog: MatDialog,
+              private modalService: NgbModal,
+              private dossierService: DossierMedicalService,
+              private title: Title) { }
+
+  mailForm = new FormGroup({
+    dest: new FormControl(''),
+    from: new FormControl(''),
+    topic:new FormControl(''),
+    body: new FormControl('')
+  })
+
+  smsForm = new FormGroup({
+    nom: new FormControl(''),
+    numero: new FormControl(''),
+    message: new FormControl(''),
+  })
+
+
+  mail: Mail;
+  dossierMed: DossierMedical;
 
   InWait: [] = null;
   isInWait = false;
@@ -23,6 +69,7 @@ export class ListRendezVousComponent implements OnInit {
   isConfirmed = false;
 
   ngOnInit(): void {
+    this.title.setTitle(" Liste Rendez-vous - DrAvicenne")
     this.InWaitRdv();
     this.ConfirmedRdv();
   }
@@ -89,6 +136,47 @@ export class ListRendezVousComponent implements OnInit {
       )
   }
 
+  setPatient(username: string): void {
+    this.patientService.getByUsername(username)
+      .subscribe(
+        (response) => {
+          this.mailForm = new FormGroup({
+            dest: new FormControl(response['email']),
+            from: new FormControl(this.medecinService.medecin.email),
+            topic:new FormControl(''),
+            body: new FormControl('')
+          })
+        }
+      )
+  }
+
+  getDossier(username: string): void {
+    this.dossierService.findWithPatient(username)
+      .subscribe(
+        (response) => {
+          this.dossierMed= response;
+        }
+      )
+  }
+
+  setValues(username: string) : void {
+    this.patientService.getByUsername(username)
+      .subscribe(
+        (response) => {
+          this.smsForm = new FormGroup({
+            nom: new FormControl(response['nom']),
+            numero: new FormControl(response['phone']),
+            message: new FormControl(''),
+          })
+        }
+      )
+  }
+
+  sendMail(): void {
+    this.mail = this.mailForm.value;
+    console.log(this.mail);
+  }
+
   Sms(): void {
     const config = new MatDialogConfig();
     config.height = "40%";
@@ -102,6 +190,18 @@ export class ListRendezVousComponent implements OnInit {
       config.width = "55%";
       config.position = { top: `80px`}
       this.dialog.open(MailComponent,config);
+  }
+
+  openWindowCustomClass(mail) {
+    this.modalService.open(mail, { windowClass: 'dark-modal' , centered: true, size: "lg"});
+  }
+
+  openSmallModal(Sms){
+    this.modalService.open(Sms, { windowClass: 'dark-modal' , centered: true, size: "sm"});
+  }
+
+  openDossierModal(dossier){
+    this.modalService.open(dossier, {windowClass: "myCustomModalClass" , centered: true, size: "sm"});
   }
 }
 

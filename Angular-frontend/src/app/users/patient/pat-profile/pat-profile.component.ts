@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Patient } from 'src/app/Models/Patient/patient';
 import { PatientService } from 'src/app/Services/patientservice/patient.service';
 import {ToastrService} from "ngx-toastr";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-pat-profile',
@@ -27,13 +28,17 @@ export class PatProfileComponent implements OnInit {
     cpassword: new FormControl('')
   });
 
-  constructor(public patientService: PatientService, private route: ActivatedRoute, private toaster: ToastrService) { }
+  constructor(public patientService: PatientService,
+              private route: ActivatedRoute,
+              private toaster: ToastrService,
+              private title: Title) { }
 
-  profileInfo: Patient = this.patientService.patient;
+  profileInfo: Patient = JSON.parse(sessionStorage.getItem("patient"));
   UpdatedDetails: Patient;
   date = new Date();
 
   ngOnInit(): void {
+    this.title.setTitle(" Profile - DrAvicenne ")
     this.patientService.getByUsername(this.route.snapshot.params.username).subscribe(
       results => {
         this.updateForm = new FormGroup({
@@ -58,9 +63,9 @@ export class PatProfileComponent implements OnInit {
 
     this.patientService.updatePatient(this.UpdatedDetails , this.route.snapshot.params.username).subscribe(
       response => {
-        this.profileInfo = response;
+        sessionStorage.removeItem("patient");
         this.profileInfo = this.UpdatedDetails;
-        console.log(this.UpdatedDetails);
+        sessionStorage.setItem("patient",JSON.stringify(this.UpdatedDetails));
         this.toaster.success(
           "Vos informations ont étaient modifiées le \n"
           + this.date.getDate()
@@ -75,4 +80,5 @@ export class PatProfileComponent implements OnInit {
           " => " + error.type);
       });
   }
+
 }

@@ -8,7 +8,7 @@
     <div class="container">
       <div *ngIf="!exist; else showAgenda">
         <div class="alert alert-warning mt-5" style="width: 700px;">
-          <strong><img src="assets/images/icons/danger.png"></strong> Aucune agenda trouvé !!!
+          <strong><img src="assets/images/icons/danger.png"></strong> Aucun agenda trouvé !!!
         </div>
       </div>
       <ng-template #showAgenda>
@@ -17,16 +17,16 @@
             <h3 class="mb-3 ml-5 mt-3 nameForm">
               <form [formGroup]="editForm">
                 <div class="input-group">
-                  <input  class="form-control" type="text" disabled
-                          name="titre" formControlName="titre"
-                          style="border: 0 none; box-shadow: none; background-color: white">
-                  <button class="btn btn-sm" type="button">
+                  <input class="form-control" type="text" disabled
+                         name="titre" formControlName="titre"
+                         style="border: 0 none; box-shadow: none; background-color: white">
+                  <button (click)="delete()" class="btn btn-sm" type="button">
                     <img src="assets/images/icons/delete_2.png" style="cursor: pointer"
                          title="Supprimer l'agenda" alt="">
                   </button>
                   <button (click)="showEdit()" class="btn btn-sm" type="button">
                     <img src="assets/images/icons/edit2.png" style="cursor:pointer"
-                         title="Modifier le nom" alt="">
+                         title="Modifier le nom de l'agenda" alt="">
                   </button>
                 </div>
               </form>
@@ -51,59 +51,17 @@
 
             <!-- Adding tasks zone -->
             <div class="col-3">
-              <button class="btn btn-sm" (click)="onClick()"><img src="assets/images/icons/plus.png"> Ajouter une tache
+              <button class="btn btn-sm" (click)="open(add)"><img src="assets/images/icons/plus.png"> Ajouter une tache
               </button>
             </div>
 
-            <div *ngIf="clicked">
-              <div class="container">
-                <div class="row">
-                  <div class="col-4 justify-content-center">
-                    <div class="myForm shadow">
-                      <form class="taskForm" [formGroup]="taskForm" (ngSubmit)="createTask()" autocomplete="off">
-                        <div class="form-group">
-                          <label> Tache </label>
-                          <input type="text" formControlName="tache" name="tache" class="form-control shadow" required>
-                        </div>
-
-                        <div class="form-group">
-                          <label> Description </label>
-                          <textarea type="text" formControlName="description" name="description"
-                                    class="form-control shadow" style="margin-left: 15px" required> </textarea>
-                        </div>
-
-                        <div class="form-group">
-                          <label> Date </label>
-                          <input type="date" formControlName="date" name="date" class="form-control shadow"
-                                 style="width: 165px" required>
-                        </div>
-
-                        <div class="form-group">
-                          <label> Heure </label>
-                          <input type="time" formControlName="heure" name="heure" class="form-control shadow"
-                                 style="width: 100px" required>
-                        </div>
-                        <button type="submit" class="btn btn-sm btn-outline-dark shadow" style="margin-left: 100px">
-                          Ajouter <img src="assets/images/icons/plus.png"></button>
-                        <button class="btn btn-sm" *ngIf="clicked" (click)="onClick()">
-                          <mat-icon>cancel</mat-icon>
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- End  -->
             <div *ngIf="listTache.length == 0; else showTask">
               <div class="alert alert-warning mt-5" style="width: 700px;">
                 <strong><img src="assets/images/icons/danger.png"></strong> Aucune tache trouvée !!!
               </div>
             </div>
             <ng-template #showTask>
-              <div class="row" *ngIf="!clicked">
+              <div class="row">
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3" *ngFor="let item of listTache">
                   <div class="myCard shadow">
                     <div class="myCard-title">
@@ -118,8 +76,12 @@
                       </div>
                     </div>
                     <div class="myCard-footer">
-                      <span class="delete"> <img src="assets/images/icons/delete2.png"></span>
-                      <span class="edit"> <img src="assets/images/icons/edit.png"></span>
+                      <span class="delete">
+                        <img src="assets/images/icons/delete2.png" (click)="deleteTask(item?.id)">
+                      </span>
+                      <span class="edit">
+                        <img src="assets/images/icons/edit.png" (click)="openVerticallyCentered(content); getTaskById(item?.id)">
+                      </span>
                     </div>
 
                   </div>
@@ -131,6 +93,8 @@
       </ng-template>
     </div>
   </mat-tab>
+
+  <!-- Creation Agenda -->
 
   <mat-tab>
     <ng-template mat-tab-label>
@@ -215,3 +179,93 @@
 
 </mat-tab-group>
 
+<!-- Edit Modal -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> Modifier une tâche </h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="container">
+        <div class="justify-content-center">
+          <form [formGroup]="editTaskForm" (ngSubmit)="editTask()" autocomplete="off">
+            <div class="form-group">
+              <input type="hidden" formControlName="id" name="id">
+              <label> Tache </label>
+              <input type="text" formControlName="tache" name="tache" class="form-control"
+                     style="width: 250px" required>
+            </div>
+
+            <div class="form-group">
+              <label> Description </label>
+              <textarea type="text" formControlName="description" name="description"
+                        class="form-control" style="width: 250px" required> </textarea>
+            </div>
+
+            <div class="form-group">
+              <label> Date </label>
+              <input type="date" formControlName="date" name="date" class="form-control"
+                     style="width: 165px" required>
+            </div>
+
+            <div class="form-group">
+              <label> Heure </label>
+              <input type="time" formControlName="heure" name="heure" class="form-control"
+                     style="width: 100px" required>
+            </div>
+            <button type="submit" class="btn btn-outline-dark" style="margin-left: 80px"
+                    (click)="modal.close('Save click')">
+              Modifier
+              <mat-icon>edit</mat-icon>
+            </button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Add task Modal -->
+
+<ng-template #add let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> Ajouter une tache </h4>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="justify-content-center">
+          <form [formGroup]="taskForm" (ngSubmit)="createTask()" autocomplete="off">
+            <div class="form-group">
+              <label> Tache </label>
+              <input type="text" formControlName="tache" name="tache" class="form-control"
+                     style="width: 250px" required>
+            </div>
+
+            <div class="form-group">
+              <label> Description </label>
+              <textarea type="text" formControlName="description" name="description"
+                        class="form-control" style="width: 250px" required> </textarea>
+            </div>
+
+            <div class="form-group">
+              <label> Date </label>
+              <input type="date" formControlName="date" name="date" class="form-control"
+                     style="width: 165px" required>
+            </div>
+
+            <div class="form-group">
+              <label> Heure </label>
+              <input type="time" formControlName="heure" name="heure" class="form-control shadow"
+                     style="width: 100px" required>
+            </div>
+            <button type="submit" class="btn btn-sm btn-outline-dark shadow" style="margin-left: 80px"
+                    (click)="modal.close('Save click')">
+              Ajouter <img src="assets/images/icons/plus.png"></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

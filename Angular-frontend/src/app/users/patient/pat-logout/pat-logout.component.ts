@@ -10,12 +10,19 @@ import {ToastrService} from "ngx-toastr";
 })
 export class PatLogoutComponent implements OnInit {
 
-  constructor(private patientService: PatientService, private router: Router, private toaster: ToastrService) { }
+  constructor(private patientService: PatientService,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.patientService.LogOut();
-    this.toaster.success("Vous êtes deconnectez !");
+    sessionStorage.removeItem("patient");
     this.router.navigate(['mon-compte']);
   }
 
+  reload(): void {
+    setTimeout(
+      () => {
+        window.location.reload();
+      }, 1
+    )
+  }
 }

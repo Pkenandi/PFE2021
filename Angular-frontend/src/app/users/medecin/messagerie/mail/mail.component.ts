@@ -5,6 +5,7 @@ import {PatientService} from "../../../../Services/patientservice/patient.servic
 import {MedecinService} from "../../../../Services/medecinService/medecin.service";
 import {ToastrService} from "ngx-toastr";
 import {Mail} from "../../../../Models/messagerie/mail/mail";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-mail',
@@ -26,9 +27,11 @@ export class MailComponent implements OnInit {
               public rdvService: RendezVousService,
               public patientService: PatientService,
               public medecinService: MedecinService,
-              private toast: ToastrService) { }
+              private toast: ToastrService,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Mail - DrAvicenne ")
   }
 
   sendMail(): void {

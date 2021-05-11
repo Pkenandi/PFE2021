@@ -4,6 +4,8 @@ import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.servic
 import {RendezVous} from "../../../Models/RendezVous/rendez-vous";
 import {Medecin} from "../../../Models/Medecin/medecin";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
+import {Title} from "@angular/platform-browser";
+import {Patient} from "../../../Models/Patient/patient";
 
 @Component({
   selector: 'app-list-rendezvous',
@@ -11,6 +13,8 @@ import {MedecinService} from "../../../Services/medecinService/medecin.service";
   styleUrls: ['./list-rendezvous.component.css']
 })
 export class ListRendezvousComponent implements OnInit {
+
+  patientInfo: Patient = JSON.parse(sessionStorage.getItem("patient"));
 
   accepted: [] = null;
   isAccepted: boolean = false
@@ -27,11 +31,11 @@ export class ListRendezvousComponent implements OnInit {
 
   constructor(public patientService: PatientService,
               private rdvService: RendezVousService,
-              private medecinService: MedecinService) { }
+              private medecinService: MedecinService,
+              private title: Title) { }
 
-  username= this.patientService.patient.username;
-
-  public ngOnInit(): void {
+   ngOnInit(): void {
+     this.title.setTitle(" Liste Rendez-vous - DrAvicenne")
     this.rdvService.p_notifications = 0;
     this.rdvService.pr_note = 0;
     this.rdvService.pw_note = 0;
@@ -48,7 +52,7 @@ export class ListRendezvousComponent implements OnInit {
   }
 
   acceptedRdv(): void{
-    this.rdvService.findByStatus("ACCEPTER",this.username).subscribe(
+    this.rdvService.findByStatus("ACCEPTER",this.patientInfo.username).subscribe(
       (response) => {
         this.accepted = response;
         this.rdvService.p_notifications += this.accepted.length; // total notifications
@@ -67,7 +71,7 @@ export class ListRendezvousComponent implements OnInit {
   }
 
   inWaitRdv(): void {
-    this.rdvService.findByStatus("ATTENTE",this.username).subscribe(
+    this.rdvService.findByStatus("ATTENTE",this.patientInfo.username).subscribe(
       (response) => {
         this.inWait = response;
         this.rdvService.p_notifications += this.inWait.length;
@@ -86,7 +90,7 @@ export class ListRendezvousComponent implements OnInit {
   }
 
   deniedRdv(): void {
-    this.rdvService.findByStatus("REFUSER",this.username).subscribe(
+    this.rdvService.findByStatus("REFUSER",this.patientInfo.username).subscribe(
       (response) => {
         this.denied = response;
         this.rdvService.p_notifications += this.denied.length;
@@ -105,7 +109,7 @@ export class ListRendezvousComponent implements OnInit {
   }
 
   canceledRdv(): void{
-    this.rdvService.findByStatus("ANNULER",this.username).subscribe(
+    this.rdvService.findByStatus("ANNULER",this.patientInfo.username).subscribe(
       (response) =>{
         this.canceled = response;
         if(this.canceled.length == 0){
@@ -122,8 +126,7 @@ export class ListRendezvousComponent implements OnInit {
   cancelRdv(status: string, id_rdv):void{
     this.rdvService.editStatus(status, id_rdv)
       .subscribe(
-        (reponse) => {
-          console.log(reponse);
+        () => {
           this.ngOnInit();
         }
       )
@@ -132,7 +135,7 @@ export class ListRendezvousComponent implements OnInit {
   deleteRdv(id_rdv): void{
     this.rdvService.deleteRdv(id_rdv)
       .subscribe(
-        (response) => {
+        () => {
           this.ngOnInit();
         }
       )

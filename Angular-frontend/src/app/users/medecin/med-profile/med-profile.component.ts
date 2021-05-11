@@ -7,6 +7,7 @@ import { Medecin } from 'src/app/Models/Medecin/medecin';
 import { MedecinService } from 'src/app/Services/medecinService/medecin.service';
 import {FormControl, FormGroup} from "@angular/forms";
 import DateTimeFormat = Intl.DateTimeFormat;
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-med-profile',
@@ -34,10 +35,12 @@ export class MedProfileComponent implements OnInit, OnDestroy{
   constructor(
     public medService: MedecinService,
     public activatedRoute: ActivatedRoute,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private title: Title
     ) { }
 
   ngOnInit(): void {
+    this.title.setTitle(" Profile - DrAvicenne ")
     this.sub = this.activatedRoute.params.subscribe(
       params => {
         this.cin = params['cin'];

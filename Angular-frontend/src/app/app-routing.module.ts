@@ -2,31 +2,30 @@ import { PatDashboardComponent } from './users/patient/pat-dashboard/pat-dashboa
 import { MedDashboardComponent } from './users/medecin/med-dashboard/med-dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, CanActivate } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AccountComponent } from './account/account.component';
+import { HomeComponent } from './components/home/home.component';
+import { AccountComponent } from './components/account/account.component';
 import { PatLoginComponent } from './users/patient/pat-login/pat-login.component';
 import { PatRegisterComponent } from './users/patient/pat-register/pat-register.component';
 import { MedLoginComponent } from './users/medecin/med-login/med-login.component';
 import { MedRegisterComponent } from './users/medecin/med-register/med-register.component';
-import { AuthGuard } from './guards/auth.guard';
 import { DossierMedicalComponent } from './users/patient/dossier-medical/dossier-medical.component';
-import { RendezVousComponent } from './users/rendez-vous/rendez-vous.component';
+import { RendezVousComponent } from './components/rendez-vous/rendez-vous.component';
 import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.component';
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
 import { NotificationComponent } from './notification/notification.component';
-import { ChatComponent } from './users/chat/chat.component';
-import {VideoComponent} from "./users/video/video.component";
+import { ChatComponent } from './components/chat/chat.component';
+import {VideoComponent} from "./components/video/video.component";
 import {PatLogoutComponent} from "./users/patient/pat-logout/pat-logout.component";
 import {MedLogoutComponent} from "./users/medecin/med-logout/med-logout.component";
 import {ListRendezvousComponent} from "./users/patient/list-rendezvous/list-rendezvous.component";
 import {AgendaComponent} from "./users/medecin/agenda/agenda.component";
 import {ProfileMedComponent} from "./users/patient/profile-med/profile-med.component";
-import {ShowDossierContenteComponent} from "./users/patient/show-dossier-contente/show-dossier-contente.component";
 import {ListRendezVousComponent} from "./users/medecin/list-rendez-vous/list-rendez-vous.component";
-import {MailComponent} from "./users/medecin/messagerie/mail/mail.component";
 import {SmsComponent} from "./users/medecin/messagerie/sms/sms.component";
 import {ListDossierComponent} from "./users/medecin/list-dossier/list-dossier.component";
-import {TacheComponent} from "./users/medecin/tache/tache.component";
+import {ConfirmComponent} from "./components/confirm/confirm.component";
+import {PatGuardGuard} from "./guard/patientGuard/pat-guard.guard";
+import {MedGuardGuard} from "./guard/medecinGuard/med-guard.guard";
 
 
 const routes: Routes = [
@@ -41,7 +40,7 @@ const routes: Routes = [
   {
     path: 'patient/:username',
     component: PatProfileComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [PatGuardGuard]
   },
   {
     path: 'Med/:cin',
@@ -50,7 +49,7 @@ const routes: Routes = [
   {
     path: 'medecin/:cin',
     component: MedProfileComponent,
-   //canActivate: [AuthGuard]
+    canActivate: [MedGuardGuard]
   },
   {
     path: 'med/login',
@@ -63,11 +62,12 @@ const routes: Routes = [
   {
     path: 'med/dashboard',
     component: MedDashboardComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [MedGuardGuard]
   },
   {
     path: 'med/agenda',
-    component: AgendaComponent
+    component: AgendaComponent,
+    canActivate: [MedGuardGuard]
   },
   {
     path: 'pat/login',
@@ -88,17 +88,17 @@ const routes: Routes = [
   {
     path: 'pat/dashboard',
     component: PatDashboardComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [PatGuardGuard]
   },
   {
     path: 'patient/dossier/:username',
     component: DossierMedicalComponent,
-   // canActivate: [AuthGuard]
+    canActivate: [PatGuardGuard]
   },
   {
     path: 'rendezVous',
     component: RendezVousComponent,
-    //canActivate: [AuthGuard]
+    canActivate: [PatGuardGuard]
   },
   {
     path: 'pat/listRdv',
@@ -106,7 +106,8 @@ const routes: Routes = [
   },
   {
     path: 'med/listRdv',
-    component: ListRendezVousComponent
+    component: ListRendezVousComponent,
+    canActivate: [MedGuardGuard]
   },
   {
     path: 'notification',
@@ -114,23 +115,26 @@ const routes: Routes = [
   },
   {
     path: 'chat',
-    component: ChatComponent
+    component: ChatComponent,
   },
   {
     path: 'consultation',
-    component: VideoComponent
+    component: VideoComponent,
+    canActivate: [MedGuardGuard, PatGuardGuard]
   },
   {
-    path: 'tache',
-    component: TacheComponent,
+    path: 'confirm',
+    component: ConfirmComponent,
   },
   {
     path: 'sms',
-    component: SmsComponent
+    component: SmsComponent,
+    canActivate: [MedGuardGuard]
   },
   {
     path: 'list',
-    component: ListDossierComponent
+    component: ListDossierComponent,
+    canActivate: [MedGuardGuard]
   },
   {
     path: '',
