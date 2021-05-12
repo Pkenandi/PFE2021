@@ -15,6 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Data
 @Entity
 @Table(name = "Medecin")
 public class Medecin extends User implements Serializable {
@@ -29,7 +30,7 @@ public class Medecin extends User implements Serializable {
     private Agenda agenda;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn( name = "med_Id")
     private List<RendezVous> rendezVous = new ArrayList<>();
 
@@ -39,7 +40,7 @@ public class Medecin extends User implements Serializable {
     private List<Consultation> consultation = new ArrayList<>();
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "dossier_Id")
     private List<DossierMedical> dossierMedicals = new ArrayList<>();
 
@@ -50,6 +51,7 @@ public class Medecin extends User implements Serializable {
 
 
     // Methods
+
     public void connectToRendezVous(RendezVous rendezVous){
         this.rendezVous.add(rendezVous);
     }
@@ -110,59 +112,4 @@ public class Medecin extends User implements Serializable {
 
     }
 
-    public String getCin() {
-        return cin;
-    }
-
-    public void setCin(String cin) {
-        this.cin = cin;
-    }
-
-    public String getSpecialite() {
-        return specialite;
-    }
-
-    public void setSpecialite(String specialite) {
-        this.specialite = specialite;
-    }
-
-    public Agenda getAgenda() {
-        return agenda;
-    }
-
-    public void setAgenda(Agenda agenda) {
-        this.agenda = agenda;
-    }
-
-    public List<RendezVous> getRendezVous() {
-        return rendezVous;
-    }
-
-    public void setRendezVous(List<RendezVous> rendezVous) {
-        this.rendezVous = rendezVous;
-    }
-
-    public List<Consultation> getConsultation() {
-        return consultation;
-    }
-
-    public void setConsultation(List<Consultation> consultation) {
-        this.consultation = consultation;
-    }
-
-    public List<DossierMedical> getDossierMedicals() {
-        return dossierMedicals;
-    }
-
-    public void setDossierMedicals(List<DossierMedical> dossierMedicals) {
-        this.dossierMedicals = dossierMedicals;
-    }
-
-    public List<Specialites> getSpecialites() {
-        return specialites;
-    }
-
-    public void setSpecialites(List<Specialites> specialites) {
-        this.specialites = specialites;
-    }
 }

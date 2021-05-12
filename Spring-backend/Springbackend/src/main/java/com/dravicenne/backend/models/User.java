@@ -26,7 +26,7 @@ public abstract class User implements Serializable {
     protected String Ville;
     @Column(nullable = false, unique = true)
     protected String email;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     protected String phone;
     protected String password;
     protected String Cpassword;

@@ -196,6 +196,7 @@ public class UserService {
             return patient;
         }
     }
+
     public Patient deleteRendezVous(String username, Long RdvId){
         Patient patient = this.patientRepository.findPatientByUsername(username);
         RendezVous rendezVous = this.rendezVousService.findById(RdvId);

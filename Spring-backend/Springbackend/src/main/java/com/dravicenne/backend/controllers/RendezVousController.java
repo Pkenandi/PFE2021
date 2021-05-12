@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(path = "/rendezVous")
 public class RendezVousController {
-    public final RendezVousService rendezVousService;
+    private final RendezVousService rendezVousService;
 
     @PostMapping
     public ResponseEntity<RendezVousDto> addRendezVous(@RequestBody final RendezVousDto rendezVous){
@@ -85,5 +86,18 @@ public class RendezVousController {
         }
         this.rendezVousService.Cancel(status, id);
         return new ResponseEntity<>(RendezVousDto.from(rendezVous), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{cin}/{username}")
+    public ResponseEntity<Boolean> findWithMedecinAndPatient(@PathVariable final String cin,
+                                                             @PathVariable final String username){
+
+        RendezVous exist = this.rendezVousService.findWithMedecinAndPatient(cin, username);
+
+        if(Objects.nonNull(exist)){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
     }
 }

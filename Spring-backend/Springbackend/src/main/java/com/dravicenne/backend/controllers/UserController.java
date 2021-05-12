@@ -1,14 +1,12 @@
 package com.dravicenne.backend.controllers;
 
-import com.dravicenne.backend.models.DossierMedical;
+import com.dravicenne.backend.models.Medecin;
+import com.dravicenne.backend.models.Patient;
+import com.dravicenne.backend.models.User;
 import com.dravicenne.backend.models.dto.MedecinDto;
 import com.dravicenne.backend.models.dto.PatientDto;
-import com.dravicenne.backend.models.exception.NotFoundException;
 import com.dravicenne.backend.models.login.LoginMedecin;
 import com.dravicenne.backend.models.login.LoginPatient;
-import com.dravicenne.backend.models.Medecin;
-import com.dravicenne.backend.models.User;
-import com.dravicenne.backend.models.Patient;
 import com.dravicenne.backend.services.DossierService;
 import com.dravicenne.backend.services.UserService;
 import lombok.AllArgsConstructor;
@@ -16,10 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Base64;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @ResponseBody
@@ -87,7 +84,6 @@ public class UserController {
     }
 
     // Login
-
 
     @PostMapping(value = "/patient/login")
     public PatientDto PatientLogin(@RequestBody LoginPatient patient) throws Exception {

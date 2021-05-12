@@ -21,7 +21,7 @@ public class SpecialiteController {
     private final SpecialiteService specialiteService;
 
     @PostMapping
-    public ResponseEntity<SpecialitesDto> add(@RequestBody final SpecialitesDto specialitesDto){
+    public ResponseEntity<SpecialitesDto> add(@RequestBody final SpecialitesDto specialitesDto) {
         Specialites specialites1 = this.specialiteService.save(Specialites.from(specialitesDto));
 
         return new ResponseEntity<>(SpecialitesDto.from(specialites1), HttpStatus.OK);
@@ -36,7 +36,7 @@ public class SpecialiteController {
     }
 
     @GetMapping(value = "/medecin/{cin}")
-    public ResponseEntity<List<SpecialitesDto>> findWithMedecin(@PathVariable final String cin){
+    public ResponseEntity<List<SpecialitesDto>> findWithMedecin(@PathVariable final String cin) {
         List<Specialites> specialites = this.specialiteService.findWithMedecin(cin);
         List<SpecialitesDto> specialitesDtoList = specialites.stream().map(SpecialitesDto::from).collect(Collectors.toList());
 
@@ -45,7 +45,7 @@ public class SpecialiteController {
 
     @GetMapping(value = "/{id}/medecin/{cin}")
     public ResponseEntity<SpecialitesDto> addMedecin(@PathVariable final Long id,
-                                                  @PathVariable final String cin){
+                                                  @PathVariable final String cin) {
         Specialites specialites = this.specialiteService.addMedecinAndSpecialite(cin, id);
 
         return new ResponseEntity<>(SpecialitesDto.from(specialites), HttpStatus.OK);
