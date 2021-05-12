@@ -7,6 +7,7 @@ import {MedecinService} from "../../../Services/medecinService/medecin.service";
 import {Agenda} from "../../../Models/agenda/agenda";
 import {ToastrService} from "ngx-toastr";
 import {Title} from "@angular/platform-browser";
+import {Medecin} from "../../../Models/Medecin/medecin";
 
 @Component({
   selector: 'app-tache',
@@ -21,8 +22,8 @@ export class TacheComponent implements OnInit {
     description: new FormControl('',[Validators.required])
   })
 
-  tache: Tache = null;
   agenda: Agenda = null;
+  medecinInfo: Medecin = JSON.parse(sessionStorage.getItem("medecin"));
 
   constructor(private tacheService: TacheService,
               private agendaService: AgendaService,
@@ -32,7 +33,7 @@ export class TacheComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle(" Ajout tache - DrAvicenne");
-    this.agendaService.get(this.medecinService.medecin.cin)
+    this.agendaService.get(this.medecinInfo.cin)
       .subscribe(
         (response) => {
           this.agenda = response;
@@ -42,39 +43,6 @@ export class TacheComponent implements OnInit {
         }
       )
   }
-
-  /*createTask() {
-    this.tache = this.taskForm.value;
-    this.tacheService.create(this.tache)
-      .subscribe(
-        (response) =>{
-          this.tache = response;
-          this.toast.success(" Tache créer avec succès !");
-          this.agendaService.addTasks(this.agenda.id,this.tache.id)
-            .subscribe(
-              (rep) => {
-                this.toast.success(" Tache ajouter avec succès !");
-                this.tacheService.getAll(this.agenda.id)
-                  .subscribe(
-                    (listTasks) =>{
-                      this.tacheService.listTasks = listTasks;
-                    },
-                    (errors) => {
-                      console.log(" erreur ", errors.message);
-                    }
-                  )
-              },
-              (error) => {
-                this.toast.error(" Erreur lors de l'ajout de la tache !");
-              }
-            )
-        },
-        (error) => {
-          console.log(" Erreur ", error.message);
-          this.toast.error(" Error lors de la creation de la tache !");
-        }
-      )
-  }*/
 
   sendEvent(){
     this.tacheService.sendEvent();

@@ -15,6 +15,8 @@ export class PatLogoutComponent implements OnInit {
 
   ngOnInit(): void {
     sessionStorage.removeItem("patient");
+    sessionStorage.removeItem("medecin");
+    sessionStorage.removeItem("medecins");
     this.router.navigate(['mon-compte']);
   }
 

@@ -1,12 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Medecin } from 'src/app/Models/Medecin/medecin';
-import { MedecinService } from 'src/app/Services/medecinService/medecin.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Medecin} from 'src/app/Models/Medecin/medecin';
+import {MedecinService} from 'src/app/Services/medecinService/medecin.service';
 import {FormControl, FormGroup} from "@angular/forms";
-import DateTimeFormat = Intl.DateTimeFormat;
 import {Title} from "@angular/platform-browser";
 
 @Component({
@@ -14,7 +13,7 @@ import {Title} from "@angular/platform-browser";
   templateUrl: './med-profile.component.html',
   styleUrls: ['./med-profile.component.css']
 })
-export class MedProfileComponent implements OnInit, OnDestroy{
+export class MedProfileComponent implements OnInit, OnDestroy {
 
   cin: string = null;
   private sub: Subscription;
@@ -37,7 +36,8 @@ export class MedProfileComponent implements OnInit, OnDestroy{
     public activatedRoute: ActivatedRoute,
     private toaster: ToastrService,
     private title: Title
-    ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.title.setTitle(" Profile - DrAvicenne ")
@@ -46,23 +46,22 @@ export class MedProfileComponent implements OnInit, OnDestroy{
         this.cin = params['cin'];
 
         this.medService.getMedecinByCin(this.cin).pipe(
-          map(
-            (medecin: Medecin) => this.medecin = medecin)
-        ).subscribe(
-          result => {
-            this.medecin = result;
-            this.medecinInfo = new FormGroup({
-              nom: new FormControl(result['nom']),
-              prenom: new FormControl(result['prenom']),
-              cin: new FormControl(result['cin']),
-              specialite: new FormControl(result['specialite']),
-              email: new FormControl(result['email']),
-              phone: new FormControl(result['phone']),
-              password: new FormControl(result['password']),
-              ville: new FormControl(result['ville']),
-            })
-          }
-        );
+          map((medecin: Medecin) => this.medecin = medecin))
+          .subscribe(
+            result => {
+              this.medecin = result;
+              this.medecinInfo = new FormGroup({
+                nom: new FormControl(result['nom']),
+                prenom: new FormControl(result['prenom']),
+                cin: new FormControl(result['cin']),
+                specialite: new FormControl(result['specialite']),
+                email: new FormControl(result['email']),
+                phone: new FormControl(result['phone']),
+                password: new FormControl(result['password']),
+                ville: new FormControl(result['ville']),
+              })
+            }
+          );
       }
     );
   }
@@ -77,7 +76,10 @@ export class MedProfileComponent implements OnInit, OnDestroy{
     this.medService.update(this.medecin, this.activatedRoute.snapshot.params.cin)
       .subscribe(
         result => {
-          this.medecin = result;
+          sessionStorage.removeItem("medecin");
+          sessionStorage.setItem("medecin", JSON.stringify(result));
+          this.medecin = JSON.parse(sessionStorage.getItem("medecin"));
+
           this.toaster.success(
             "Vos informations ont étaient modifiées le \n"
             + this.date.getDate()

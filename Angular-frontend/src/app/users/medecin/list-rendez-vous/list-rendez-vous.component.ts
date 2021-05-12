@@ -11,6 +11,7 @@ import {PatientService} from "../../../Services/patientservice/patient.service";
 import {DossierMedical} from "../../../Models/DossierMedical/dossier-medical";
 import {DossierMedicalService} from "../../../Services/dossierService/dossier-medical.service";
 import {Title} from "@angular/platform-browser";
+import {Medecin} from "../../../Models/Medecin/medecin";
 
 @Component({
   selector: 'app-list-rendez-vous',
@@ -61,6 +62,7 @@ export class ListRendezVousComponent implements OnInit {
 
   mail: Mail;
   dossierMed: DossierMedical;
+  medecinInfo: Medecin = JSON.parse(sessionStorage.getItem("medecin"));
 
   InWait: [] = null;
   isInWait = false;
@@ -75,10 +77,13 @@ export class ListRendezVousComponent implements OnInit {
   }
 
   public InWaitRdv() {
-    this.rendezvousService.findWithMedecin("ATTENTE", this.medecinService.Cin)
+    this.rendezvousService.findWithMedecin("ATTENTE", this.medecinInfo.cin)
       .subscribe(
         (response) => {
-          this.InWait = response;
+          sessionStorage.removeItem("attente");
+          sessionStorage.setItem("attente", JSON.stringify(response));
+          this.InWait = JSON.parse(sessionStorage.getItem("attente"));
+
           if(this.InWait.length == 0){
             this.isInWait = false;
           }else {
@@ -92,10 +97,13 @@ export class ListRendezVousComponent implements OnInit {
   }
 
   public ConfirmedRdv() {
-    this.rendezvousService.findWithMedecin("ACCEPTER",this.medecinService.Cin)
+    this.rendezvousService.findWithMedecin("ACCEPTER",this.medecinInfo.cin)
       .subscribe(
         (response) => {
-          this.Confirmed = response;
+          sessionStorage.removeItem("confirmed");
+          sessionStorage.setItem("confirmed", JSON.stringify(response));
+          this.Confirmed = JSON.parse(sessionStorage.getItem("confirmed"));
+
           if(this.Confirmed.length == 0){
             this.isConfirmed = false;
           }else {
@@ -202,6 +210,22 @@ export class ListRendezVousComponent implements OnInit {
 
   openDossierModal(dossier){
     this.modalService.open(dossier, {windowClass: "myCustomModalClass" , centered: true, size: "sm"});
+  }
+
+  warningConfirm(confirm) {
+    this.modalService.open(confirm, { centered: true, size: "sm" })
+  }
+
+  warningRefuse(refuse) {
+    this.modalService.open(refuse, { centered: true, size: "sm" })
+  }
+
+  reload(): void {
+    setTimeout(
+      () => {
+        location.reload();
+      }, 1
+    )
   }
 }
 

@@ -20,7 +20,7 @@
                   <input class="form-control" type="text" disabled
                          name="titre" formControlName="titre"
                          style="border: 0 none; box-shadow: none; background-color: white">
-                  <button (click)="delete()" class="btn btn-sm" type="button">
+                  <button (click)="warningAgenda(agenda)" class="btn btn-sm" type="button">
                     <img src="assets/images/icons/delete_2.png" style="cursor: pointer"
                          title="Supprimer l'agenda" alt="">
                   </button>
@@ -42,7 +42,7 @@
                   <label> Nouveau nom </label>
                   <input class="form-control" name="titre" formControlName="titre" type="text">
                 </div>
-                <button type="submit" class="btn btn-sm">
+                <button type="submit" class="btn btn-sm" (click)="reload()">
                   <mat-icon>save</mat-icon>
                 </button>
               </form>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="myCard-footer">
                       <span class="delete">
-                        <img src="assets/images/icons/delete2.png" (click)="deleteTask(item?.id)">
+                        <img src="assets/images/icons/delete2.png" (click)="warningTask(task)">
                       </span>
                       <span class="edit">
                         <img src="assets/images/icons/edit.png" (click)="openVerticallyCentered(content); getTaskById(item?.id)">
@@ -85,8 +85,45 @@
                     </div>
 
                   </div>
+
+                  <!-- Alert before delete  Task -->
+
+                  <ng-template #task let-modal>
+                    <div class="modal-header">
+                      <h2 class="modal-title" id="modal-basic-title"> Suppression d'une Tâche  </h2>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="container">
+                          <div class="justify-content-center">
+                            <div class="alert alert-danger text-center">
+                              <strong><img src="assets/images/icons/warning.png" alt=""> Attention </strong> cette opération est irreversible !
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <div class="row" align="center">
+                        <div class="col-6">
+                          <button type="button" class="btn btn-outline-light text-dark" (click)="modal.close('Close click')">
+                            <img src="assets/images/icons/previous.png" alt="">Annuler
+                          </button>
+                        </div>
+                        <div class="col-6">
+                          <button type="button" class="btn btn-danger text-light" (click)="modal.close('Close click'); deleteTask(item?.id); reload()">
+                            Supprimer
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                  <!-- End Warning -->
+
                 </div>
               </div>
+
             </ng-template>
           </div>
         </div>
@@ -117,7 +154,7 @@
                         <input class="form-control" type="text" name="titre" formControlName="titre"
                                placeholder="Titre agenda ... " autofocus>
                       </div>
-                      <button class="btn btn-sm"><img src="assets/images/icons/plus.png"> Créer</button>
+                      <button class="btn btn-sm" (click)="reload()"><img src="assets/images/icons/plus.png"> Créer </button>
                     </form>
                   </div>
                 </div>
@@ -177,6 +214,8 @@
     </div>
   </mat-tab>
 
+  <!-- End Creation -->
+
 </mat-tab-group>
 
 <!-- Edit Modal -->
@@ -214,7 +253,7 @@
                      style="width: 100px" required>
             </div>
             <button type="submit" class="btn btn-outline-dark" style="margin-left: 80px"
-                    (click)="modal.close('Save click')">
+                    (click)="modal.close('Save click'); reload()">
               Modifier
               <mat-icon>edit</mat-icon>
             </button>
@@ -261,10 +300,43 @@
                      style="width: 100px" required>
             </div>
             <button type="submit" class="btn btn-sm btn-outline-dark shadow" style="margin-left: 80px"
-                    (click)="modal.close('Save click')">
+                    (click)="modal.close('Save click'); reload()">
               Ajouter <img src="assets/images/icons/plus.png"></button>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Alert before delete  Agenda -->
+
+<ng-template #agenda let-modal>
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title"> Suppression Agenda  </h2>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="container">
+        <div class="justify-content-center">
+          <div class="alert alert-danger text-center">
+            <strong><img src="assets/images/icons/warning.png" alt=""> Attention </strong> cette opération est irreversible !
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row" align="center">
+      <div class="col-6">
+        <button type="button" class="btn btn-outline-light text-dark" (click)="modal.close('Close click')">
+          <img src="assets/images/icons/previous.png" alt="">Annuler
+        </button>
+      </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-danger text-light" (click)="modal.close('Close click'); delete(); reload()">
+          Supprimer
+        </button>
       </div>
     </div>
   </div>

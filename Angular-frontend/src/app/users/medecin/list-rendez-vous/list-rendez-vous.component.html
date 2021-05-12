@@ -38,10 +38,75 @@
                   <button class="btn btn-sm" (click)="openDossierModal(dossier); getDossier(item?.plainPatientDto?.username)"><img src="assets/images/icons/eye.png" alt="">Voir dossier</button>
                 </td>
                 <td>
-                  <img src="assets/images/icons/confirm.png" style="margin-right: 5px; cursor: pointer" (click)="Confirm(item?.id)">
-                  <img src="assets/images/icons/x-button.png" style="cursor: pointer" (click)="Reject(item?.id)">
+                  <img src="assets/images/icons/confirm.png" style="margin-right: 5px; cursor: pointer" (click)="warningConfirm(confirm)">
+                  <img src="assets/images/icons/x-button.png" style="cursor: pointer" (click)="warningRefuse(refuse)">
                 </td>
               </tr>
+              <!-- Alert before confirm rendez-vous -->
+              <ng-template #confirm let-modal>
+                <div class="modal-header">
+                  <h2 class="modal-title" id="modal-basic-title"> Confirmation rendez-vous  </h2>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="container">
+                      <div class="justify-content-center">
+                        <div class="alert alert-warning text-center">
+                          <strong><img src="assets/images/icons/info.png" alt=""> Attention </strong><br>Voulez-vous confirmer ce rendez-vous ?
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="row" align="center">
+                    <div class="col-6">
+                      <button type="button" class="btn btn-outline-light text-dark" (click)="modal.close('Close click')">
+                        <img src="assets/images/icons/previous.png" alt="">Annuler
+                      </button>
+                    </div>
+                    <div class="col-6">
+                      <button type="button" class="btn btn-primary text-light" (click)="modal.close('Close click'); Confirm(item?.id); reload()">
+                        Oui
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <!-- End Warning -->
+
+              <!-- Alert before refuse rendez-vous -->
+              <ng-template #refuse let-modal>
+                <div class="modal-header">
+                  <h2 class="modal-title" id="modal-basic-title"> Refus d'un rendez-vous  </h2>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="container">
+                      <div class="justify-content-center">
+                        <div class="alert alert-warning text-center">
+                          <strong><img src="assets/images/icons/info.png" alt=""> Attention </strong><br>Voulez-vous refuser ce rendez-vous ?
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="row" align="center">
+                    <div class="col-6">
+                      <button type="button" class="btn btn-outline-light text-dark" (click)="modal.close('Close click')">
+                        <img src="assets/images/icons/previous.png" alt="">Annuler
+                      </button>
+                    </div>
+                    <div class="col-6">
+                      <button type="button" class="btn btn-danger text-light" (click)="modal.close('Close click'); Reject(item?.id); reload()">
+                        Oui
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <!-- End Warning -->
               </tbody>
             </table>
           </div>
@@ -219,29 +284,10 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">
-                      <textarea formControlName="body" name="body" class="form-control" placeholder=" Antécédents Médicaux ... " style=" height: 100px;"> {{dossierMed?.antecedent}} </textarea>
+                      <textarea formControlName="body" name="body" class="form-control" placeholder=" Antécédents Médicaux ... " style=" height: 100px;" disabled> {{dossierMed?.antecedent}} </textarea>
                     </div>
                   </div>
                 </div>
-
-                <div class="row">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <textarea name="body" class="form-control" placeholder="Prescriptions ... " style="width: 100%; height: 150px;"></textarea>
-                    </div>
-                  </div>
-
-                  <div class="col-6">
-                    <div class="form-group">
-                      <textarea name="body" class="form-control" placeholder=" Observation ... " style=" height: 150px;"></textarea>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row col-12 justify-content-end">
-                  <button class="btn btn-outline-primary"> Enregistrer </button>
-                </div>
-
               </div>
             </div>
           </div>

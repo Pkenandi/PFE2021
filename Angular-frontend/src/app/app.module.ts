@@ -25,7 +25,6 @@ import { CardComponent } from './components/card/card.component';
 import { LogoutComponent } from './users/logout/logout.component';
 import { DossierMedicalComponent } from './users/patient/dossier-medical/dossier-medical.component';
 import { RendezVousComponent } from './components/rendez-vous/rendez-vous.component';
-import { ShowDossierContenteComponent } from './users/patient/show-dossier-contente/show-dossier-contente.component';
 import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.component';
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
 import { UserService } from './Services/userService/user.service';
@@ -46,7 +45,6 @@ import { MedLogoutComponent } from './users/medecin/med-logout/med-logout.compon
 import { PatLogoutComponent } from './users/patient/pat-logout/pat-logout.component';
 import { ListRendezvousComponent } from './users/patient/list-rendezvous/list-rendezvous.component';
 import { MatTabsModule } from "@angular/material/tabs";
-import { FormDossierComponent } from './users/patient/form-dossier/form-dossier.component';
 import { AgendaComponent } from './users/medecin/agenda/agenda.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatDialogModule} from "@angular/material/dialog";
@@ -101,7 +99,6 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     LogoutComponent,
     DossierMedicalComponent,
     RendezVousComponent,
-    ShowDossierContenteComponent,
     PatProfileComponent,
     MedProfileComponent,
     NotificationComponent,
@@ -110,7 +107,6 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     MedLogoutComponent,
     PatLogoutComponent,
     ListRendezvousComponent,
-    FormDossierComponent,
     AgendaComponent,
     ProfileMedComponent,
     ListRendezVousComponent,

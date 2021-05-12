@@ -53,7 +53,7 @@ export class MedLoginComponent implements OnInit {
             this.medService.medecin = this.medecin;
             this.medService.log = true;
             this.service.isLoggedIn = true;
-            sessionStorage.setItem(this.medecin.nom,JSON.stringify(this.medecin));
+            sessionStorage.setItem("medecin", JSON.stringify(this.medecin));
             this._router.navigate(['../med/dashboard']);
           },
           error => {

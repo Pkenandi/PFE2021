@@ -13,11 +13,13 @@ export class MedLogoutComponent implements OnInit {
   constructor(private medecinService: MedecinService, private router: Router, private toaster: ToastrService) { }
 
   ngOnInit(): void {
-    this.medecinService.logOut();
-    sessionStorage.removeItem(this.medecinService.medecin.nom);
-    this.toaster.success("Vous êtes deconnectez !");
+    sessionStorage.removeItem("medecin");
+    sessionStorage.removeItem("ville");
+    sessionStorage.removeItem("agenda");
+    sessionStorage.removeItem("listDossiers");
+    sessionStorage.removeItem("attente");
+    sessionStorage.removeItem("confirmed");
     this.router.navigate(['mon-compte']);
   }
-
 
 }

@@ -27,9 +27,11 @@ import {Title} from "@angular/platform-browser";
       background-color: #292b2c;
       color: white;
     }
+
     .dark-modal .close {
       color: white;
     }
+
     .light-blue-backdrop {
       background-color: #5cb3fd;
     }
@@ -44,9 +46,9 @@ export class AgendaComponent implements OnInit {
 
   taskForm = new FormGroup({
     tache: new FormControl('', [Validators.required]),
-    heure: new FormControl('',[Validators.required]),
-    date: new FormControl('',[Validators.required]),
-    description: new FormControl('',[Validators.required])
+    heure: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required])
   });
 
   editForm = new FormGroup({
@@ -67,8 +69,6 @@ export class AgendaComponent implements OnInit {
   agendaMed: Agenda;
   medAgenda: Medecin = null;
   listTache: Tache[] = [];
-  agendaId: number;
-  agendaTitle: string;
   clicked: boolean = false;
   showEditForm: boolean = false;
   modal = true;
@@ -83,11 +83,14 @@ export class AgendaComponent implements OnInit {
               private modalService: NgbModal,
               public confirmDialog: DialogService,
               private router: Router,
-              private title: Title) {  }
+              private title: Title) {
+  }
 
   ngOnInit(): void {
     this.title.setTitle(" Agenda - DrAvicenne")
-    this.medecinInfo = JSON.parse(sessionStorage.getItem(this.medecinService.nom))
+    this.medecinInfo = JSON.parse(sessionStorage.getItem("medecin"));
+    this.agendaInfo = JSON.parse(sessionStorage.getItem("agenda"));
+    this.listTache = JSON.parse(sessionStorage.getItem("listTache"));
     this.check();
   }
 
@@ -99,11 +102,13 @@ export class AgendaComponent implements OnInit {
         (response) => {
           this.agenda = response;
           // Attaching agenda to a medecin
-          this.medecinService.attachToAgenda(this.medecinService.medecin.cin,this.agenda.id)
+          this.medecinService.attachToAgenda(this.medecinInfo.cin, response['id'])
             .subscribe(
               () => {
                 this.ngOnInit();
-                sessionStorage.setItem(this.agenda.titre,JSON.stringify(this.agenda));
+                sessionStorage.removeItem("agenda");
+                sessionStorage.setItem("agenda", JSON.stringify(this.agenda));
+                this.agendaInfo = JSON.parse(sessionStorage.getItem("agenda"));
                 this.toast.info(" Votre agenda est maintenant disponible !", "Création");
               },
               (errors) => {
@@ -114,14 +119,15 @@ export class AgendaComponent implements OnInit {
       )
   }
 
-  delete(): void{
-    this.getAgenda();
-    this.medecinService.deleteAgenda(this.medecinService.medecin.cin,this.agendaId)
+  delete(): void {
+    this.medecinService.deleteAgenda(this.medecinInfo.cin, this.agendaInfo.id)
       .subscribe(
         () => {
-            this.toast.show(" Agenda deleted !!", 'Suppression');
-            this.exist = false;
-            this.ngOnInit();
+          sessionStorage.removeItem("agenda");
+          sessionStorage.removeItem("listTache");
+          this.toast.show(" Agenda deleted !!", 'Suppression');
+          this.exist = false;
+          this.ngOnInit();
         },
         (errors) => {
           console.log(errors.messages);
@@ -130,18 +136,23 @@ export class AgendaComponent implements OnInit {
   }
 
   check(): void {
-    this.agendaService.get(this.medecinService.medecin.cin)
+    this.agendaService.get(this.medecinInfo.cin)
       .subscribe(
         (response) => {
-          this.agendaMed = response;
-          if (Object.keys(this.agendaMed).length === 0 || Object.keys(this.agendaMed).length < 0){
+          // Storage agenda in session
+            sessionStorage.removeItem("agenda");
+            sessionStorage.setItem("agenda", JSON.stringify(response))
+            this.agendaMed = JSON.parse(sessionStorage.getItem("agenda"));
+
+          if (Object.keys(this.agendaMed).length === 0 || Object.keys(this.agendaMed).length < 0) {
             this.exist = false;
-          }else {
+          } else {
             this.tacheService.getAll(this.agendaMed.id)
               .subscribe(
                 (listTache) => {
-                  this.listTache = null;
-                  this.listTache = listTache;
+                  sessionStorage.removeItem("listTache");
+                  sessionStorage.setItem("listTache", JSON.stringify(listTache));
+                  this.listTache = JSON.parse(sessionStorage.getItem("listTache"));
                 },
                 (error) => {
                   console.log(" Erreur: ", error.message)
@@ -161,25 +172,13 @@ export class AgendaComponent implements OnInit {
       )
   }
 
-  getAgenda(): void {
-    this.agendaService.get(this.medecinService.medecin.cin)
-      .subscribe(
-        (response) =>{
-          this.agendaId = response['id'];
-          this.agendaTitle = response['titre'];
-        },
-        (error) =>{
-          console.log(" Erreur ");
-        }
-      )
-  }
-
   edit(): void {
-    this.getAgenda();
     this.agenda = this.editForm.value;
-    this.agendaService.edit(this.agenda,this.agendaId)
+    this.agendaService.edit(this.agenda, this.agendaInfo.id)
       .subscribe(
         (response) => {
+          sessionStorage.removeItem("agenda");
+          sessionStorage.setItem("agenda", JSON.stringify(response));
           this.showEditForm = false;
           this.agendaForm.reset({});
           this.ngOnInit();
@@ -204,14 +203,12 @@ export class AgendaComponent implements OnInit {
     this.tache = this.taskForm.value;
     this.tacheService.create(this.tache)
       .subscribe(
-        (response) =>{
-          this.tache = response;
-          this.agendaService.addTasks(this.agendaMed.id,this.tache.id)
+        (response) => {
+          this.agendaService.addTasks(this.agendaInfo.id, response['id'])
             .subscribe(
               (rep) => {
                 this.toast.success(" Tache créer avec succès !");
-                this.getAllTask();
-                this.router.navigate(['../../med/dashboard']);
+                this.ngOnInit();
               },
               (error) => {
                 this.toast.error(" Erreur lors de l'ajout de la tache !");
@@ -234,7 +231,7 @@ export class AgendaComponent implements OnInit {
           this.ngOnInit();
         },
         (error) => {
-          this.toast.error(error.message,'Erreur lors de la modification');
+          this.toast.error(error.message, 'Erreur lors de la modification');
         }
       )
   }
@@ -243,20 +240,11 @@ export class AgendaComponent implements OnInit {
     this.tacheService.delete(id)
       .subscribe(
         () => {
-          this.toast.warning(" Tache supprimer ",'suppression');
+          this.toast.warning(" Tache supprimer ", 'suppression');
           this.ngOnInit();
         },
         (error) => {
           this.toast.error(error.message, " Erreur lors de la suppression !!");
-        }
-      )
-  }
-
-  getAllTask(): void {
-    this.tacheService.getAll(this.agendaMed.id)
-      .subscribe(
-        (taches) => {
-          this.listTache = taches;
         }
       )
   }
@@ -277,6 +265,7 @@ export class AgendaComponent implements OnInit {
   }
 
   closeResult = '';
+
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: "sm"}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -296,7 +285,22 @@ export class AgendaComponent implements OnInit {
   }
 
   openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true , size: "sm"});
+    this.modalService.open(content, {centered: true, size: "sm"});
   }
 
+  warningAgenda(agenda) {
+    this.modalService.open(agenda, { centered: true, size: "sm"})
+  }
+
+  warningTask(task) {
+    this.modalService.open(task, { centered: true, size: "sm"})
+  }
+
+  reload(): void {
+    setTimeout(
+      () => {
+        location.reload();
+      }, 1
+    )
+  }
 }

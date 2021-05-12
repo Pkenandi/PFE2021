@@ -16,6 +16,7 @@ export class ListDossierComponent implements OnInit {
 
   dossiers: DossierMedical[] = null;
   isEmpty = true;
+  medecinInfo: Medecin = JSON.parse(sessionStorage.getItem("medecin"));
 
   constructor(public dossierService: DossierMedicalService,
               public rdvService: RendezVousService,
@@ -29,10 +30,13 @@ export class ListDossierComponent implements OnInit {
   }
 
   getDossiers(): void{
-    this.dossierService.findWithMedecin(this.medecinService.Cin)
+    this.dossierService.findWithMedecin(this.medecinInfo.cin)
       .subscribe(
         (dossiers) => {
-          this.dossiers = dossiers;
+          sessionStorage.removeItem("listDossiers");
+          sessionStorage.setItem("listDossiers", JSON.stringify(dossiers));
+          this.dossiers = JSON.parse(sessionStorage.getItem("listDossiers"));
+
           if(this.dossiers.length == 0){
             this.isEmpty = true;
           }else {

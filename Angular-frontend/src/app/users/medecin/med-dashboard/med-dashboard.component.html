@@ -2,13 +2,13 @@
     <!-- Sidebar -->
     <div class="border-right" id="sidebar-wrapper">
         <div class="sidebar-heading color text-center mt-2 mb-2 shadow">
-          <img src="assets/images/home/doctor.png" alt=""> <br> <span id="Dr">Dr {{medecinService.medecin.prenom}} {{medecinService.medecin.nom}}</span>
+          <img src="assets/images/home/doctor.png" alt=""> <br> <span id="Dr">Dr {{medecinInfo.prenom}} {{medecinInfo.nom}}</span>
         </div>
         <div class="list-group list-group-flush bg-secondary" style="margin-top: 83px">
-          <a routerLink="../../medecin/{{medecinService.Cin}}" class="list-group-item list-group-item-action bg-light">
+          <a routerLink="../../medecin/{{medecinInfo.cin}}" class="list-group-item list-group-item-action bg-light">
             <img src="assets/images/profile.png">   Profile </a>
             <a routerLink="../../med/logout" class="list-group-item list-group-item-action bg-light">
-              <img src="assets/images/logout.png" alt="logout"> Deconnexion </a>
+              <img src="assets/images/logout.png" alt="logout" (click)="reload()"> Deconnexion </a>
         </div>
     </div>
 

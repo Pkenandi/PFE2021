@@ -7,6 +7,8 @@ import {
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { basedUrl } from 'src/environments/environment';
+import {Patient} from "../../Models/Patient/patient";
+import {Medecin} from "../../Models/Medecin/medecin";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -45,12 +47,12 @@ export class UserService {
   // Log methods
 
 
-  loginPatient(username: string, password: string): Observable<any> {
-    return this._http.post(`${basedUrl}patient/login`, { username, password});
+  loginPatient(username: string, password: string): Observable<Patient> {
+    return this._http.post<Patient>(`${basedUrl}patient/login`, { username, password});
   }
 
-  loginMedecin(cin: string, password: string): Observable<any> {
-    return this._http.post(`${basedUrl}medecin/login`, { cin, password });
+  loginMedecin(cin: string, password: string): Observable<Medecin> {
+    return this._http.post<Medecin>(`${basedUrl}medecin/login`, { cin, password });
   }
 
   logOut(): void {

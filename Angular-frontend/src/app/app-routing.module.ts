@@ -1,7 +1,7 @@
 import { PatDashboardComponent } from './users/patient/pat-dashboard/pat-dashboard.component';
 import { MedDashboardComponent } from './users/medecin/med-dashboard/med-dashboard.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, CanActivate } from '@angular/router';
+import { RouterModule, Routes} from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AccountComponent } from './components/account/account.component';
 import { PatLoginComponent } from './users/patient/pat-login/pat-login.component';
