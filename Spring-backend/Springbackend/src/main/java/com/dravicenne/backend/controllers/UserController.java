@@ -3,11 +3,11 @@ package com.dravicenne.backend.controllers;
 import com.dravicenne.backend.models.Medecin;
 import com.dravicenne.backend.models.Patient;
 import com.dravicenne.backend.models.User;
-import com.dravicenne.backend.models.dto.MedecinDto;
-import com.dravicenne.backend.models.dto.PatientDto;
+import com.dravicenne.backend.models.dto.*;
 import com.dravicenne.backend.models.login.LoginMedecin;
 import com.dravicenne.backend.models.login.LoginPatient;
 import com.dravicenne.backend.services.DossierService;
+import com.dravicenne.backend.services.MailService;
 import com.dravicenne.backend.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ResponseBody
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
-    private final DossierService dossierService;
+    private final MailService mailService;
     private static final SecureRandom secureRandom = new SecureRandom(); //threadsafe
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder(); //threadsafe
 
@@ -173,6 +174,20 @@ public class UserController {
         return MedecinDto.from(medecin);
     }
 
+    @GetMapping(path = "/medecin/{email}")
+    public ResponseEntity<MedecinDto> findByMedecinEmail(@PathVariable final String email){
+        Medecin medecin = this.userService.findByEmail(email);
+
+        return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/patient/{email}")
+    public ResponseEntity<PatientDto> findByPatientEmail(@PathVariable final String email){
+        Patient patient = this.userService.findByPatientEmail(email);
+
+        return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+    }
+
     // Delete
 
     @DeleteMapping(path = "/patient/{username}")
@@ -180,6 +195,87 @@ public class UserController {
         Patient patient = this.userService.deletePatientByUsername(username);
 
         return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+    }
+
+    // Emails and Reset Password
+
+    @PostMapping(path = "medecin/{email}/reset-password")
+    public ResponseEntity<MedecinDto> medecinReset(@PathVariable final String email,
+                                               @RequestBody final MailDto mailDto){
+        Medecin medecin = this.userService.findByEmail(email);
+        if (Objects.isNull(medecin)){
+            return null;
+        }else{
+            this.mailService.medecinReset(mailDto);
+
+            return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(path = "patient/{email}/reset-password")
+    public ResponseEntity<PatientDto> patientReset(@PathVariable final String email,
+                                                   @RequestBody final MailDto mailDto){
+        Patient patient = this.userService.findByPatientEmail(email);
+        if (Objects.isNull(patient)){
+            return null;
+        }else{
+            this.mailService.patientReset(mailDto);
+
+            return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(path = "patient/check")
+    public ResponseEntity<PatientDto> patientCheck(@RequestBody final UsernameDto usernameDto){
+        Patient patient = this.userService.findPatientByUsername(usernameDto.getUsername());
+
+        if (Objects.nonNull(patient)){
+            return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    @PostMapping(path = "medecin/check")
+    public ResponseEntity<MedecinDto> medecinCheck(@RequestBody final CinDto cinDto){
+        Medecin medecin = this.userService.findMedecinByCin(cinDto.getCin());
+
+        if (Objects.nonNull(medecin)){
+            return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    @PostMapping(path = "patient/{username}/reset")
+    public ResponseEntity<PatientDto> patientReset(@RequestBody final ResetPasswordDto resetPasswordDto,
+                                                   @PathVariable final String username){
+        Patient patient = this.userService.findPatientByUsername(username);
+
+            if (Objects.nonNull(patient)){
+                this.userService.resetPatientPassword(resetPasswordDto, username);
+
+                return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+    }
+
+    @PostMapping(path = "medecin/{cin}/reset")
+    public ResponseEntity<MedecinDto> medecinReset(@RequestBody final ResetPasswordDto resetPasswordDto,
+                                                   @PathVariable final String cin){
+        Medecin medecin = this.userService.findMedecinByCin(cin);
+
+        if (Objects.nonNull(medecin)){
+            this.userService.resetPassword(resetPasswordDto, cin);
+            return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
+        }else
+        {
+           return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
     }
 
 

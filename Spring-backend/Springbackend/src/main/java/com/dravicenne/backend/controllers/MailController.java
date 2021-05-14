@@ -15,7 +15,7 @@ public class MailController {
 
     @PostMapping(value = "/send")
     public void send(@RequestBody final Mail mail){
-        this.mailService.sendMail(mail.getFrom(),mail.getDest(),mail.getBody(),mail.getTopic());
+        this.mailService.sendMail(mail);
     }
 
 }

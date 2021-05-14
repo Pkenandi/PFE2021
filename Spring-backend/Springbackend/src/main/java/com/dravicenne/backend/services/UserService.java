@@ -68,6 +68,12 @@ public class UserService {
     public Medecin findMedecinByCin(String cin) {
         return this.medecinRepository.findMedecinBycin(cin);
     }
+    public Medecin findByEmail(String email){
+        return this.medecinRepository.findByEmail(email);
+    }
+    public void resetPassword(ResetPasswordDto resetPasswordDto, String cin){
+        this.medecinRepository.resetPassword(resetPasswordDto.getPassword(),resetPasswordDto.getCpassword(),cin);
+    }
     public List<Medecin> findMedecinByNom(String nom){
         return this.medecinRepository.findMedecinByNom(nom);
 
@@ -92,8 +98,8 @@ public class UserService {
     }
     public List<Medecin> findMedecinBySpecialite(String specialite) {
        return this.medecinRepository.findMedecinBySpecialite(specialite);
-
     }
+
     public Medecin connectToRendezVous(String cin, Long rdvId){
         Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
         RendezVous rendezVous = this.rendezVousService.findById(rdvId);
@@ -128,7 +134,6 @@ public class UserService {
             return medecin;
         }
     }
-
     public Medecin removeAgenda(String cin, Long id){
         Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
         Agenda agenda = this.agendaService.findById(id);
@@ -144,7 +149,6 @@ public class UserService {
     public Patient findPatientByUsername(String username) {
         return this.patientRepository.findPatientByUsername(username);
     }
-
     public Patient findPatientByUsernameAndPassword(String username, String password) {
         return this.patientRepository.findPatientByUsernameAndPassword(username,password);
     }
@@ -195,6 +199,12 @@ public class UserService {
             rendezVous.setPatient(patient);
             return patient;
         }
+    }
+    public Patient findByPatientEmail(final String email){
+        return this.patientRepository.findByEmail(email);
+    }
+    public void resetPatientPassword(ResetPasswordDto resetPasswordDto, String username){
+        this.patientRepository.resetPassword(resetPasswordDto.getPassword(),resetPasswordDto.getCpassword(),username);
     }
 
     public Patient deleteRendezVous(String username, Long RdvId){
