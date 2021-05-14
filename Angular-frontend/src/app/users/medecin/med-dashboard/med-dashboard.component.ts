@@ -31,7 +31,7 @@ export class MedDashboardComponent implements OnInit {
   reload(): void {
     setTimeout(
       () => {
-        location.reload();
+        window.location.reload();
       }, 1
     )
   }

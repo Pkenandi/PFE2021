@@ -42,10 +42,12 @@ export class RendezVousService {
     return this.http.delete(`${mainUrl}/rendezVous/${id_rdv}`);
   }
 
-  //Medecin
-
   findWithMedecin(status, cin): Observable<any>{
     return this.http.get<any>(`${mainUrl}rendezVous/getWithMedecin/${status}/medecin/${cin}`);
+  }
+
+  findWithMedecinAndPatient(cin: string, username: string): Observable<boolean>{
+    return this.http.get<boolean>(`${mainUrl}rendezVous/${cin}/${username}`);
   }
 
 }

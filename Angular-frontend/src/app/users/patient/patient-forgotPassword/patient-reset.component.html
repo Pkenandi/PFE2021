@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6 mt-5">
+      <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
+    </div>
+
+    <div class="col-md-6 col-sm-12 col-lg-6 mt-5">
+      <main class="form-signin shadow">
+        <form [formGroup]="resetForm" (ngSubmit)="check()" autocomplete="off">
+          <img class="mb-4" src="https://tlr.stripocdn.email/content/guids/CABINET_dd354a98a803b60e2f0411e893c82f56/images/23891556799905703.png"
+               alt="" style="margin-left: 85px" width="100px" height="120px"> <br>
+                      <small style="color: red; margin-left: 25px"
+                             *ngIf="not_found">{{message}}</small>
+          <h3 class="h3 mb-3 fw-normal text-center"> Réinitialisation du mot de passe </h3>
+
+          <div class="form-floating">
+            <input formControlName="username" name="username" type="text" class="form-control" id="floatingInput" placeholder="Nom d'utilisateur ">
+          </div>
+          <div style="margin-left: 100px">
+            <button class="w-40 mt-5 btn btn-sm btn-danger mx-auto" type="submit">
+              Soumettre
+            </button>
+          </div>
+
+        </form>
+      </main>
+    </div>
+  </div>
+</div>

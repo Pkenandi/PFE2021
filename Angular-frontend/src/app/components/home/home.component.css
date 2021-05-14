@@ -1,3 +1,105 @@
+.wrapper {
+  height: auto;
+  /*This part is important for centering*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -20px;
+}
+
+.typing-demo {
+  width: 240px;
+  animation: typing 3s steps(15) 2s infinite alternate;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid;
+  font-family: monospace;
+  font-size: 2em;
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
+}
+
+svg text {
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 7px;
+  stroke: #e582b5;
+  font-size: 70px;
+  font-weight: 100;
+  font-style: italic;
+  stroke-width: 3;
+  animation: textAnimate 4s infinite alternate
+}
+
+@keyframes textAnimate {
+  0% {
+    stroke-dasharray: 0 50%;
+    stroke-dashoffset:  20%;
+    fill: hsl(218, 77%, 26%)
+  }
+
+  100% {
+    stroke-dasharray: 50% 0;
+    stroke-dashoffstet: -20%;
+    fill: hsla(189, 68%, 75%,0%)
+  }
+}
+
+.bg-image{
+  /* Add the blur effect */
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+  width: 100%;
+  height: 350px;
+
+  /* Center and scale the image nicely */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-text {
+  color: black;
+  font-weight: bold;
+  position: absolute;
+  border-radius: 7px;
+  left: 10%;
+  top: 2%;
+  z-index: 2;
+  width: 30%;
+  padding: 20px;
+  text-align: center;
+}
+
+.bg-text button {
+  height: 64px;
+  font: normal normal 1500 1em/4em Arial, Helvetica, sans-serif;;
+  overflow: hidden;
+  width: 200px;
+  background-color: #5d719e;
+  border-radius: 20px;
+}
+
+.bg-text button:hover {
+  font-style: italic;
+  background-color: #003D60;
+  font-size: large;
+  width: 250px;
+}
+
+.image {
+  position: relative;
+  width: 100%;
+}
+
 .heading-box h2 {
     width: 100%;
     color: red;
@@ -60,51 +162,6 @@ p {
     width: 100%;
 }
 
-
-/* Bottom left text */
-
-.bottom-left {
-    position: absolute;
-    bottom: 8px;
-    left: 16px;
-}
-
-
-/* Top left text */
-
-.top-left {
-    position: absolute;
-    top: 8px;
-    left: 16px;
-}
-
-
-/* Top right text */
-
-.top-right {
-    position: absolute;
-    top: 8px;
-    right: 16px;
-}
-
-
-/* Bottom right text */
-
-.bottom-right {
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-}
-
-/* Centered text */
-
-.centered {
-    position: absolute;
-    top: 70%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-}
-
 .image p{
   font-style: italic;
   font-size: 50px;
@@ -123,8 +180,7 @@ p {
 }
 h1 {
     font-style: italic;
-    font-weight: bolder;
-    font-size: 50px;
+    font-weight: bold;
     font-family: "Times New Roman", Times, serif;
 }
 

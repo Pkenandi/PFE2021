@@ -31,6 +31,7 @@ export class RendezVousComponent implements OnInit {
   dossier: DossierMedical = null;
   exist = false;
   medecinInfo: Medecin;
+  found: boolean = false;
 
 
   constructor(
@@ -54,47 +55,58 @@ export class RendezVousComponent implements OnInit {
       (response) => {
         this.dossier = response;
         if (this.dossier != null) {
-          this.rendezVous = this.rdvForm.value;
-          this.rendezVousService.createRendezVous(this.rdvForm.value).subscribe(
-            (response) => {
-              this.rendezVous = response;
-              // Attach rendez-vous to a patient
 
-              this.patientService.addRendezVous(this.patient.username, this.rendezVous.id).subscribe(
-                () => {
-                  // attach medecin to rendezVous
+          // Check if an existing rendez-vous has been made between both
 
-                  this.medecinService.attachToRendezVous(this.medecinInfo.cin, this.rendezVous.id).subscribe(
-                    () => {
-                      this.toast.success("  Votre rendez-vous est placé en Attente,\n en attendant la confirmation du Médecin",'',
-                        {
-                          timeOut: 10000,
-                        });
+          this.rendezVousService.findWithMedecinAndPatient(this.medecinInfo.cin, this.patient.username)
+            .subscribe(
+              (exist) => {
+                  this.rendezVous = this.rdvForm.value;
+                  this.rendezVousService.createRendezVous(this.rdvForm.value).subscribe(
+                    (response) => {
+                      this.rendezVous = response;
+                      // Attach rendez-vous to a patient
 
-                      // Give Medecin access to Dossier
-                      this.dossierService.attachMedecin(this.medecinService.medecin.cin,this.dossier.id)
-                        .subscribe(
-                          (medecin) => {
-                            this.medecin = medecin;
-                          }
-                        )
-                      this.router.navigate(['../pat/dashboard']);
+                      this.patientService.addRendezVous(this.patient.username, this.rendezVous.id).subscribe(
+                        () => {
+                          // attach medecin to rendezVous
+
+                          this.medecinService.attachToRendezVous(this.medecinInfo.cin, this.rendezVous.id).subscribe(
+                            () => {
+                              this.toast.success("  Votre rendez-vous est placé en Attente,\n en attendant la confirmation du Médecin",'',
+                                {
+                                  timeOut: 10000,
+                                });
+
+                              // Give Medecin access to Dossier
+                              this.dossierService.attachMedecin(this.medecinService.medecin.cin,this.dossier.id)
+                                .subscribe(
+                                  (medecin) => {
+                                    this.medecin = medecin;
+                                  }
+                                )
+                              this.router.navigate(['../pat/dashboard']);
+                            },
+                            () => {
+                              this.toast.error("Erreur lors de l'assignation du dossier au médecin  !");
+                            }
+
+                          )
+                        },
+                        (error) => {
+                          this.toast.error("Erreur lors de l'ajout du patient au rendez-vous !");
+                        }
+                      )
                     },
-                    () => {
-                      this.toast.error("Erreur lors de l'assignation du dossier au médecin  !");
+                    error => {
+                      this.toast.error(" Désoler ! votre rendez-vous n'as pas pu être soumis ", "Echec");
                     }
-
                   )
-                },
-                (error) => {
-                  this.toast.error("Erreur lors de l'ajout du patient au rendez-vous !");
-                }
-              )
-            },
-            error => {
-              this.toast.error(" Désoler ! votre rendez-vous n'as pas pu être soumis ", "Echec");
-            }
-          )
+              },
+              (error) => {
+                this.toast.info(" Désoler! Vous avez dèja un rendez-vous avec ce Médecin !", "Attention !");
+              }
+            )
         }else {
           return;
         }

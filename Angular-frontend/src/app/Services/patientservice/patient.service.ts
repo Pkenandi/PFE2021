@@ -5,6 +5,8 @@ import { basedUrl, mainUrl } from 'src/environments/environment';
 import { Patient } from '../../Models/Patient/patient';
 import { UserService } from '../userService/user.service';
 import {stringify} from "@angular/compiler/src/util";
+import {UsernameDto} from "../../Models/reset/Dto/Username/username-dto";
+import {ResetDto} from "../../Models/reset/Dto/Reset/reset-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +41,6 @@ patient: Patient = JSON.parse(sessionStorage.getItem("patient"));
     return this._service.loginPatient(username, password);
   }
 
-  // tslint:disable-next-line: typedef
   LogOut() {
     this._service.logOut();
     this.log = false;
@@ -59,6 +60,15 @@ patient: Patient = JSON.parse(sessionStorage.getItem("patient"));
 
   addRendezVous(username: string, id: number): Observable<any>{
     return this._http.get<any>(`${basedUrl}/patient/${username}/rendezvous/${id}/add`);
+  }
+
+  // Reset Password
+  check(resetForm): Observable<any>{
+    return this._http.post<UsernameDto>(`${mainUrl}user/patient/check`, resetForm)
+  }
+
+  reset(Reset: ResetDto, username: string): Observable<any>{
+   return this._http.post<ResetDto>(`${mainUrl}user/patient/${username}/reset`,Reset)
   }
 
 }

@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.service";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
-import {MatDialog, MatDialogRef, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {MailComponent} from "../messagerie/mail/mail.component";
 import {SmsComponent} from "../messagerie/sms/sms.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";

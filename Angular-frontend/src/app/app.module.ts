@@ -80,6 +80,13 @@ import { ListRdvComponent } from './users/medecin/list-rdv/list-rdv.component';
 import { SpecialiteComponent } from './users/medecin/specialite/specialite.component';
 import { TacheComponent } from './users/medecin/tache/tache.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { MedecinResetComponent } from './users/medecin/medecin-reset/medecin-reset.component';
+import { SuccessComponent } from './users/reset/success/success.component';
+import { FailedComponent } from './users/reset/failed/failed.component';
+import { PatResetPasswordComponent } from './users/patient/pat-reset-password/pat-reset-password.component';
+import { MedResetPasswordComponent } from './users/medecin/med-reset-password/med-reset-password.component';
+import {PatientResetComponent} from "./users/patient/patient-forgotPassword/patient-reset.component";
+import {CountdownModule} from "ngx-countdown";
 
 @NgModule({
   declarations: [
@@ -119,6 +126,12 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     SpecialiteComponent,
     TacheComponent,
     ConfirmComponent,
+    PatientResetComponent,
+    MedecinResetComponent,
+    SuccessComponent,
+    FailedComponent,
+    PatResetPasswordComponent,
+    MedResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -154,7 +167,8 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     MatCardModule,
     NgxMaterialTimepickerModule,
     MatCardModule,
-    NgbModule
+    NgbModule,
+    CountdownModule
   ],
   exports: [
     HeaderComponent,

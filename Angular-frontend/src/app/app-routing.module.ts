@@ -26,6 +26,10 @@ import {ListDossierComponent} from "./users/medecin/list-dossier/list-dossier.co
 import {ConfirmComponent} from "./components/confirm/confirm.component";
 import {PatGuardGuard} from "./guard/patientGuard/pat-guard.guard";
 import {MedGuardGuard} from "./guard/medecinGuard/med-guard.guard";
+import {PatientResetComponent} from "./users/patient/patient-forgotPassword/patient-reset.component";
+import {MedecinResetComponent} from "./users/medecin/medecin-reset/medecin-reset.component";
+import {PatResetPasswordComponent} from "./users/patient/pat-reset-password/pat-reset-password.component";
+import {MedResetPasswordComponent} from "./users/medecin/med-reset-password/med-reset-password.component";
 
 
 const routes: Routes = [
@@ -110,10 +114,6 @@ const routes: Routes = [
     canActivate: [MedGuardGuard]
   },
   {
-    path: 'notification',
-    component: NotificationComponent,
-  },
-  {
     path: 'chat',
     component: ChatComponent,
   },
@@ -121,10 +121,6 @@ const routes: Routes = [
     path: 'consultation',
     component: VideoComponent,
     canActivate: [MedGuardGuard, PatGuardGuard]
-  },
-  {
-    path: 'confirm',
-    component: ConfirmComponent,
   },
   {
     path: 'sms',
@@ -135,6 +131,22 @@ const routes: Routes = [
     path: 'list',
     component: ListDossierComponent,
     canActivate: [MedGuardGuard]
+  },
+  {
+    path: 'user/patient/reset',
+    component: PatientResetComponent
+  },
+  {
+    path: 'user/patient/reset-password',
+    component: PatResetPasswordComponent
+  },
+  {
+    path: 'user/medecin/reset-password',
+    component: MedResetPasswordComponent
+  },
+  {
+    path: "user/medecin/reset",
+    component: MedecinResetComponent
   },
   {
     path: '',

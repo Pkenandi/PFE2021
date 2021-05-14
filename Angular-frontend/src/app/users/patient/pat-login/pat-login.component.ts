@@ -53,6 +53,7 @@ export class PatLoginComponent implements OnInit {
         this.patientService.log = true;
         this.userService.isLoggedIn = true;
         sessionStorage.setItem("patient",JSON.stringify(this.patient));
+        sessionStorage.removeItem("response");
         this._router.navigate(['../pat/dashboard']);
       },
       (error: HttpErrorResponse) => {
