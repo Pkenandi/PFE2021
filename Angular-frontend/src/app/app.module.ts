@@ -192,7 +192,6 @@ import {CountdownModule} from "ngx-countdown";
     MatOptionModule,
     MatCardModule,
   ],
-
   providers: [
     UserService,
     MedecinService,

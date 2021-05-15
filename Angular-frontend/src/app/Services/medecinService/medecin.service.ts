@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
 import {basedUrl, mainUrl} from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import {UserService} from "../userService/user.service";
+import {CinDto} from "../../Models/reset/Dto/Cin/cin-dto";
+import {ResetDto} from "../../Models/reset/Dto/Reset/reset-dto";
+import {Mail} from "../../Models/reset/Dto/mail/mail";
 
 
 @Injectable({
@@ -48,6 +51,22 @@ export class MedecinService {
   logOut(): void{
     this.userService.logOut();
     this.log = false;
+  }
+
+  check(resetForm): Observable<any>{
+    return this._http.post<CinDto>(`${mainUrl}user/medecin/cin/check`,resetForm)
+  }
+
+  reset(Reset: ResetDto, cin: string): Observable<any>{
+    return this._http.post<ResetDto>(`${mainUrl}user/medecin/${cin}/reset`,Reset)
+  }
+
+  checkEmail(email: string): Observable<any>{
+    return this._http.get(`${mainUrl}user/medecin/check/${email}`);
+  }
+
+  sendLink(mail: Mail, email: string): Observable<any> {
+    return this._http.post<Mail>(`${mainUrl}user/medecin/${email}/reset-password`,mail)
   }
 
   Login(cin, password): Observable<any>{

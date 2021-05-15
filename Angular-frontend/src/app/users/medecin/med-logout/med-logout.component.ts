@@ -17,6 +17,7 @@ export class MedLogoutComponent implements OnInit {
     sessionStorage.removeItem("ville");
     sessionStorage.removeItem("agenda");
     sessionStorage.removeItem("listDossiers");
+    sessionStorage.removeItem("listTache");
     sessionStorage.removeItem("attente");
     sessionStorage.removeItem("confirmed");
     this.router.navigate(['mon-compte']);

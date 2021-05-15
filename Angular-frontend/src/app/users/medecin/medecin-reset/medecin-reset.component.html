@@ -1,26 +1,94 @@
 <div class="container">
+  <div class="account">
+    <h3> Medecin - reinitialisation
+    </h3>
+    <hr style="height:2px;border-width:0;color:gray;background-color:whitesmoke; border-left: 175px solid #0000A0">
+  </div>
   <div class="row">
     <div class="col-md-6 col-lg-6 col-sm-6 mt-5">
       <img src="https://cdn.med.tn/img/piclogin.svg" style="width: 100%">
     </div>
 
     <div class="col-md-6 col-sm-12 col-lg-6 mt-5">
-      <main class="form-signin shadow">
-        <form>
-          <img class="mb-4" src="assets/images/home/doctor.png" alt="" style="margin-left: 75px">
-          <h3 class="h3 mb-3 fw-normal text-center"> Réinitialisation du mot de passe </h3>
+      <main class="form-signin"
+            style="border: 2px solid whitesmoke; border-radius: 5px">
+        <img class="mb-4"
+             src="https://tlr.stripocdn.email/content/guids/CABINET_dd354a98a803b60e2f0411e893c82f56/images/23891556799905703.png"
 
-          <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="Cin ou Email ">
-          </div>
-          <div style="margin-left: 100px">
-            <button class="w-40 mt-5 btn btn-sm btn-primary mx-auto" type="submit">
-              Soumettre
-            </button>
-          </div>
+             alt="" style="margin-left: 85px" width="100px" height="120px"> <br>
+        <h3 class="h3 mb-3 fw-normal text-center mb-3"> Réinitialisation du mot de passe </h3>
+        <div class="username" align="center">
+          <h3 class="mr-5" (click)="byUsernameModal(cin)"><img src="assets/images/icons/id-card.png" alt=""> Avec le Cin </h3>
+        </div>
 
-        </form>
+        <div class="email" align="center">
+          <h3 class="mr-5" (click)="byEmailModal(email)"><img src="assets/images/icons/email-sm.png" alt=""> Avec l'adresse mail </h3>
+        </div>
       </main>
     </div>
   </div>
 </div>
+
+<!-- By Email Modal -->
+<ng-template #email let-modal>
+  <div class="modal-body">
+    <div class="main-content">
+      <div class="container" style="margin-top: 10px">
+        <div class="row">
+          <form [formGroup]="resetFormEmail" (ngSubmit)="checkEmail()" autocomplete="off">
+            <img class="mb-4" src="https://tlr.stripocdn.email/content/guids/CABINET_dd354a98a803b60e2f0411e893c82f56/images/23891556799905703.png"
+                 alt="" style="margin-left: 85px" width="100px" height="120px"> <br>
+            <small style="color: red; margin-left: 25px"
+                   *ngIf="not_found">{{message}}</small>
+            <h3 class="h3 mb-3 fw-normal text-center"> Réinitialisation du mot de passe </h3>
+            <div *ngIf="is_found">
+              <p>
+                <ngb-alert type="success"> Vous recevrez un lien de réinitialisation dans votre Email. </ngb-alert>
+              </p>
+            </div>
+            <div class="form-floating">
+              <input formControlName="email" name="email" type="email" class="form-control mr-3" id="floatingInput" placeholder=" Email ">
+            </div>
+            <div style="margin-left: 80px">
+              <button class="w-40 mt-5 btn btn-sm btn-danger mx-auto" type="submit">
+                Soumettre
+              </button>
+            </div>
+
+          </form>
+          <p class="mt-5 mb-3 text-muted text-center">&copy; DrAvicenne 2020 – ...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- By Cin Modal -->
+<ng-template #cin let-modal>
+  <div class="modal-body">
+    <div class="main-content">
+      <div class="container" style="margin-top: 10px">
+        <div class="row">
+          <form [formGroup]="resetFormCin" (ngSubmit)="check()" autocomplete="off">
+            <img class="mb-4" src="https://tlr.stripocdn.email/content/guids/CABINET_dd354a98a803b60e2f0411e893c82f56/images/23891556799905703.png"
+                 alt="" style="margin-left: 85px" width="100px" height="120px"> <br>
+            <small style="color: red; margin-left: 25px"
+                   *ngIf="not_found">{{message}}</small>
+            <h3 class="h3 mb-3 fw-normal text-center"> Réinitialisation du mot de passe </h3>
+
+            <div class="form-floating">
+              <input formControlName="cin" name="cin" type="text" class="form-control" id="floatingInput" placeholder=" Cin ... ">
+            </div>
+            <div style="margin-left: 80px">
+              <button class="w-40 mt-5 btn btn-sm btn-danger mx-auto" type="submit">
+                Soumettre
+              </button>
+            </div>
+
+          </form>
+          <p class="mt-5 mb-3 ml-5 text-muted text-center">&copy; DrAvicenne 2020 – ...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

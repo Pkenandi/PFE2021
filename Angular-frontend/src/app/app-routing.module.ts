@@ -12,7 +12,6 @@ import { DossierMedicalComponent } from './users/patient/dossier-medical/dossier
 import { RendezVousComponent } from './components/rendez-vous/rendez-vous.component';
 import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.component';
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
-import { NotificationComponent } from './notification/notification.component';
 import { ChatComponent } from './components/chat/chat.component';
 import {VideoComponent} from "./components/video/video.component";
 import {PatLogoutComponent} from "./users/patient/pat-logout/pat-logout.component";
@@ -23,7 +22,6 @@ import {ProfileMedComponent} from "./users/patient/profile-med/profile-med.compo
 import {ListRendezVousComponent} from "./users/medecin/list-rendez-vous/list-rendez-vous.component";
 import {SmsComponent} from "./users/medecin/messagerie/sms/sms.component";
 import {ListDossierComponent} from "./users/medecin/list-dossier/list-dossier.component";
-import {ConfirmComponent} from "./components/confirm/confirm.component";
 import {PatGuardGuard} from "./guard/patientGuard/pat-guard.guard";
 import {MedGuardGuard} from "./guard/medecinGuard/med-guard.guard";
 import {PatientResetComponent} from "./users/patient/patient-forgotPassword/patient-reset.component";

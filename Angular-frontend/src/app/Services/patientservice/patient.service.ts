@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { basedUrl, mainUrl } from 'src/environments/environment';
 import { Patient } from '../../Models/Patient/patient';
 import { UserService } from '../userService/user.service';
-import {stringify} from "@angular/compiler/src/util";
 import {UsernameDto} from "../../Models/reset/Dto/Username/username-dto";
 import {ResetDto} from "../../Models/reset/Dto/Reset/reset-dto";
+import {Email} from "../../Models/reset/Dto/email/email";
+import {Mail} from "../../Models/reset/Dto/mail/mail";
 
 @Injectable({
   providedIn: 'root'
@@ -64,11 +65,19 @@ patient: Patient = JSON.parse(sessionStorage.getItem("patient"));
 
   // Reset Password
   check(resetForm): Observable<any>{
-    return this._http.post<UsernameDto>(`${mainUrl}user/patient/check`, resetForm)
+    return this._http.post<UsernameDto>(`${mainUrl}user/patient/username/check`, resetForm)
+  }
+
+  checkEmail(email: string): Observable<any>{
+    return this._http.get(`${mainUrl}user/patient/check/${email}`);
   }
 
   reset(Reset: ResetDto, username: string): Observable<any>{
    return this._http.post<ResetDto>(`${mainUrl}user/patient/${username}/reset`,Reset)
+  }
+
+  sendLink(mail: Mail, email: string): Observable<any> {
+    return this._http.post<Mail>(`${mainUrl}user/patient/${email}/reset-password`,mail)
   }
 
 }
