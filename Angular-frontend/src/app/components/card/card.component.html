@@ -10,9 +10,10 @@
 
   <div class="row mb-5 ml-5 ml-4">
     <div class="col-8 col-lg-offset-4">
-      <input style="margin-left: 85px" type="search" name="specialite" [(ngModel)]="specialite"
-             (ngModelChange)="searchFilter()" class="form-control"
-             placeholder="Rechercher par nom, specialité, ville ..." autocomplete="false">
+      <form autocomplete="off">
+        <input style="margin-left: 85px" type="search" name="specialite" [(ngModel)]="specialite" class="form-control"
+               placeholder="Rechercher par nom, specialité, ville ...">
+      </form>
     </div>
     <div class="col-lg-2 col-sm-10 ">
       <button class="btn btn-primary "><span> <i class="fas fa-search "></i> </span></button>
@@ -20,7 +21,7 @@
   </div>
 
   <div class="row">
-    <div class="col-12" *ngFor="let itr of medecins | paginate: {itemsPerPage: 6, currentPage: page }">
+    <div class="col-12" *ngFor="let itr of medecins | searcheFilter: specialite | paginate: {itemsPerPage: 6, currentPage: page }">
       <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" style="width: 500px; height: 140px; margin-bottom: 5px">
           <div class="carousel-item active">

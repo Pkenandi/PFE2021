@@ -87,6 +87,7 @@ import { PatResetPasswordComponent } from './users/patient/pat-reset-password/pa
 import { MedResetPasswordComponent } from './users/medecin/med-reset-password/med-reset-password.component';
 import {PatientResetComponent} from "./users/patient/patient-forgotPassword/patient-reset.component";
 import {CountdownModule} from "ngx-countdown";
+import { SearcheFilterPipe } from './Pipe/searche-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,8 @@ import {CountdownModule} from "ngx-countdown";
     FailedComponent,
     PatResetPasswordComponent,
     MedResetPasswordComponent,
+    SearcheFilterPipe,
+    SearcheFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -168,7 +171,7 @@ import {CountdownModule} from "ngx-countdown";
     NgxMaterialTimepickerModule,
     MatCardModule,
     NgbModule,
-    CountdownModule
+    CountdownModule,
   ],
   exports: [
     HeaderComponent,

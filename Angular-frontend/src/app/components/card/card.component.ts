@@ -19,7 +19,7 @@ export class CardComponent implements OnInit {
   private sub: Subscription;
   medecin: Medecin = null;
   medecins: Medecin[];
-  specialite: any;
+  specialite: string;
   page = 1;
 
   constructor(public _service: MedecinService,
@@ -68,7 +68,8 @@ export class CardComponent implements OnInit {
     if (this.specialite === '') {
       this.ngOnInit();
     } else {
-      this.medecins = this.medecins.filter(res => {
+      this.medecins = this.medecins.filter(
+        res => {
         return res.specialite.toLowerCase().match(this.specialite.toLowerCase());
       });
     }
