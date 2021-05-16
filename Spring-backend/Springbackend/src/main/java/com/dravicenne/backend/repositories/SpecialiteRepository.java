@@ -1,5 +1,6 @@
 package com.dravicenne.backend.repositories;
 
+import com.dravicenne.backend.models.Medecin;
 import com.dravicenne.backend.models.Specialites;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,10 @@ import java.util.List;
 
 @Repository
 public interface SpecialiteRepository extends JpaRepository<Specialites, Long> {
-    @Query("Select spec from Specialites spec where spec.medecinList.get(cin)=?1")
-    public List<Specialites> findWithMedecin(String cin);
+    @Query(value = "select * from specialites spec " +
+            "inner join medecin_specialite ms " +
+            "on spec.id = ms.specialite_id " +
+            "where ms.medecin_id =?1",
+            nativeQuery = true)
+    List<Specialites> findWithMedecin(Long id);
 }

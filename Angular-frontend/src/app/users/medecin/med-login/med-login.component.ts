@@ -6,6 +6,7 @@ import { UserService } from 'src/app/Services/userService/user.service';
 import { MedecinService } from 'src/app/Services/medecinService/medecin.service';
 import {ToastrService} from "ngx-toastr";
 import {Title} from "@angular/platform-browser";
+import {Medecin} from "src/app/Models/Medecin/medecin";
 
 @Component({
   selector: 'app-med-login',
@@ -17,7 +18,7 @@ export class MedLoginComponent implements OnInit {
   logData: any;
   Data: any;
   message = '';
-  medecin: medecin.Medecin;
+  medecin: Medecin;
 
   medLogForm = new FormGroup({
     cin: new FormControl('', [Validators.required]),
@@ -38,15 +39,13 @@ export class MedLoginComponent implements OnInit {
 
   login(): void {
     this.logData = this.medLogForm.value;
-    console.log(this.logData);
-
     this.service.loginMedecin(this.logData.cin, this.logData.password)
         .subscribe(
           response => {
             this.medecin = response;
             this.medLogForm.reset({});
             this.medService.Cin = this.medecin.cin;
-            this.medService.ville = this.medecin.Ville;
+            this.medService.ville = this.medecin.ville;
             this.service.Username = this.medecin.nom;
             this.medService.nom = this.medecin.nom;
             this.service.setIsAuthenticated(true);

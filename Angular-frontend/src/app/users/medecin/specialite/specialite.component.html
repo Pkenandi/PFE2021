@@ -1,6 +1,6 @@
 <div class="container">
  <div class="text-center">
-   <h2> Vous avez d'autres specialités additionnelles ? </h2>
+   <h2> Vous avez d'autres specialités ? </h2>
    <h4 style="color: red"> Ajoutez-les ici une à une </h4>
  </div>
   <div class="row">
@@ -8,8 +8,14 @@
       <img src="assets/images/medicals/Specialite.jpg" style="width: 100%">
     </div>
     <div class="col-md-6 col-sm-12 col-xl-6">
+      <div class="alert alert-success d-flex align-items-center alert-dismissible" role="alert" *ngIf="added">
+        <img src="assets/images/icons/success.png" alt="">
+        <div>
+          Nouvelle spécialité ajoutée
+        </div>
+      </div>
       <div class="container">
-        <div class="form shadow">
+        <div class="form">
           <form [formGroup]="specialiteForm" (ngSubmit)="add()" autocomplete="off">
             <div class="form-group">
               <label> Autre spécialité </label>
@@ -24,7 +30,9 @@
               <textarea class="form-control" placeholder="" formControlName="description" name="description"> </textarea>
             </div>
             <div align="left">
-              <button class="btn btn-sm btn-primary" type="submit"> Ajouter <img src="assets/images/icons/plus.png" width="17" height="17"></button>
+              <button class="btn btn-sm btn-primary" type="submit" [disabled]="specialiteForm.invalid">
+                Ajouter <img src="assets/images/icons/plus.png" width="17" height="17">
+              </button>
             </div>
           </form>
         </div>

@@ -35,9 +35,9 @@ public class SpecialiteController {
         return new ResponseEntity<>(specialitesDtos, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/medecin/{cin}")
-    public ResponseEntity<List<SpecialitesDto>> findWithMedecin(@PathVariable final String cin) {
-        List<Specialites> specialites = this.specialiteService.findWithMedecin(cin);
+    @GetMapping(value = "/medecin/{id}")
+    public ResponseEntity<List<SpecialitesDto>> findWithMedecin(@PathVariable final Long id) {
+        List<Specialites> specialites = this.specialiteService.findWithMedecin(id);
         List<SpecialitesDto> specialitesDtoList = specialites.stream().map(SpecialitesDto::from).collect(Collectors.toList());
 
         return new ResponseEntity<>(specialitesDtoList, HttpStatus.OK);

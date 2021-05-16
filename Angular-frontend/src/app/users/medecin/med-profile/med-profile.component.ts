@@ -7,6 +7,8 @@ import {Medecin} from 'src/app/Models/Medecin/medecin';
 import {MedecinService} from 'src/app/Services/medecinService/medecin.service';
 import {FormControl, FormGroup} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
+import {SpecialiteService} from "../../../Services/specialiteService/specialite.service";
+import {Specialite} from "../../../Models/spacialite/specialite";
 
 @Component({
   selector: 'app-med-profile',
@@ -18,6 +20,8 @@ export class MedProfileComponent implements OnInit, OnDestroy {
   cin: string = null;
   private sub: Subscription;
   medecin: Medecin = null;
+  specialite: Specialite[];
+  med = JSON.parse(sessionStorage.getItem("medecin"));
   date = new Date();
 
   medecinInfo = new FormGroup({
@@ -33,10 +37,10 @@ export class MedProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     public medService: MedecinService,
+    private specialiteService: SpecialiteService,
     public activatedRoute: ActivatedRoute,
     private toaster: ToastrService,
-    private title: Title
-  ) {
+    private title: Title) {
   }
 
   ngOnInit(): void {
@@ -62,6 +66,17 @@ export class MedProfileComponent implements OnInit, OnDestroy {
               })
             }
           );
+
+        // get all specialities
+        this.specialiteService.getWithMedecin(this.med.id)
+          .subscribe(
+            (specialities) =>{
+              this.specialite = specialities;
+            },
+            (error) => {
+              console.log(error);
+            }
+          )
       }
     );
   }

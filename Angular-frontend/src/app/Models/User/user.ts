@@ -2,7 +2,7 @@ export class User {
   public Id: number;
   public nom: string;
   public prenom: string;
-  public Ville: string;
+  public ville: string;
   public email: string;
   public phone: string;
   public password: string;
@@ -13,7 +13,7 @@ export class User {
     this.nom = nom;
     this.prenom = prenom;
     this.phone = phone;
-    this.Ville = ville;
+    this.ville = ville;
     this.email = email;
     this.password = password;
     this.cpassword = cpassword;
@@ -31,7 +31,7 @@ export class User {
 
   getVille(): string
   {
-    return this.Ville;
+    return this.ville;
   }
 
   getPhone(): string

@@ -174,14 +174,14 @@ public class UserController {
         return MedecinDto.from(medecin);
     }
 
-    @GetMapping(path = "/medecin/{email}")
+    @GetMapping(path = "/medecin/check/{email}")
     public ResponseEntity<MedecinDto> findByMedecinEmail(@PathVariable final String email){
         Medecin medecin = this.userService.findByEmail(email);
 
         return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/patient/{email}")
+    @GetMapping(path = "/patient/check/{email}")
     public ResponseEntity<PatientDto> findByPatientEmail(@PathVariable final String email){
         Patient patient = this.userService.findByPatientEmail(email);
 
@@ -225,7 +225,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "patient/check")
+    @PostMapping(path = "patient/username/check")
     public ResponseEntity<PatientDto> patientCheck(@RequestBody final UsernameDto usernameDto){
         Patient patient = this.userService.findPatientByUsername(usernameDto.getUsername());
 
@@ -237,7 +237,7 @@ public class UserController {
 
     }
 
-    @PostMapping(path = "medecin/check")
+    @PostMapping(path = "medecin/cin/check")
     public ResponseEntity<MedecinDto> medecinCheck(@RequestBody final CinDto cinDto){
         Medecin medecin = this.userService.findMedecinByCin(cinDto.getCin());
 

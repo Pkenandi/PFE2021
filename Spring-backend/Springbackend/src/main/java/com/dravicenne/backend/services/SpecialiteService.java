@@ -83,7 +83,7 @@ public class SpecialiteService {
         return null;
     }
 
-    public List<Specialites> findWithMedecin(String cin){
-        return this.specialiteRepository.findWithMedecin(cin);
+    public List<Specialites> findWithMedecin(Long id){
+        return this.specialiteRepository.findWithMedecin(id);
     }
 }

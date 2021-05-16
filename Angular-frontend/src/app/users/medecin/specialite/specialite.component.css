@@ -5,6 +5,7 @@ form{
 
 .form{
   border: whitesmoke solid 1px;
+  border-radius: 5px;
   padding: 10px 10px;
   width: 290px;
 }
