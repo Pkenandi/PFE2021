@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping( path = "dossier")
+@RequestMapping( path = "api/dossier")
 @AllArgsConstructor
 @ResponseBody
 public class DossierController {

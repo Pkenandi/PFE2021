@@ -23,6 +23,7 @@ public class Medecin extends User implements Serializable {
     private String cin;
     @Column(nullable = false)
     private String specialite;
+    private String status;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -33,11 +34,6 @@ public class Medecin extends User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn( name = "med_Id")
     private List<RendezVous> rendezVous = new ArrayList<>();
-
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "cons_Id")
-    private List<Consultation> consultation = new ArrayList<>();
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToMany(fetch = FetchType.LAZY)

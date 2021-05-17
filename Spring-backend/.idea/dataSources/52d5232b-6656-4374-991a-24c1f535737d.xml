@@ -1234,443 +1234,477 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
       <Position>3</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <index id="353" parent="338" name="unique_value">
+    <column id="353" parent="338" name="created_at">
+      <Position>4</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>current_timestamp()</DefaultExpression>
+    </column>
+    <index id="354" parent="338" name="unique_value">
       <ColNames>titre</ColNames>
       <Unique>1</Unique>
       <Type>hash</Type>
     </index>
-    <index id="354" parent="338" name="FKrgdq6e1uhc5yp1i3th563cdto">
+    <index id="355" parent="338" name="FKrgdq6e1uhc5yp1i3th563cdto">
       <ColNames>medecin_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="355" parent="338" name="PRIMARY">
+    <key id="356" parent="338" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="356" parent="338" name="unique_value">
+    <key id="357" parent="338" name="unique_value">
       <ColNames>titre</ColNames>
       <UnderlyingIndexName>unique_value</UnderlyingIndexName>
     </key>
-    <column id="357" parent="339" name="id">
+    <column id="358" parent="339" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="358" parent="339" name="date">
+    <column id="359" parent="339" name="date">
       <Position>2</Position>
       <DataType>date|0s</DataType>
     </column>
-    <column id="359" parent="339" name="numero">
+    <column id="360" parent="339" name="numero">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <column id="360" parent="339" name="medecin_id">
+    <column id="361" parent="339" name="medecin_id">
       <Position>4</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="361" parent="339" name="patient_id">
+    <column id="362" parent="339" name="patient_id">
       <Position>5</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="362" parent="339" name="consultation_id">
+    <column id="363" parent="339" name="consultation_id">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="363" parent="339" name="cons_id">
+    <column id="364" parent="339" name="cons_id">
       <Position>7</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="364" parent="339" name="tarification">
+    <column id="365" parent="339" name="tarification">
       <Position>8</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <index id="365" parent="339" name="FK8hcrvaxsjxg8ln7wis56xa1y">
+    <index id="366" parent="339" name="FK8hcrvaxsjxg8ln7wis56xa1y">
       <ColNames>medecin_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="366" parent="339" name="FK7us6be9pm4xnpnf70gx1rt39k">
+    <index id="367" parent="339" name="FK7us6be9pm4xnpnf70gx1rt39k">
       <ColNames>patient_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="367" parent="339" name="FKgv1t2r529ilrat3x64m80ej6r">
+    <index id="368" parent="339" name="FKgv1t2r529ilrat3x64m80ej6r">
       <ColNames>consultation_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="368" parent="339" name="FK7nlfb2i67ysg0ao163atvt84m">
+    <index id="369" parent="339" name="FK7nlfb2i67ysg0ao163atvt84m">
       <ColNames>cons_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="369" parent="339" name="PRIMARY">
+    <key id="370" parent="339" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="370" parent="340" name="id">
+    <column id="371" parent="340" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="371" parent="340" name="antecedent">
+    <column id="372" parent="340" name="antecedent">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="372" parent="340" name="numero">
+    <column id="373" parent="340" name="numero">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="373" parent="340" name="observation">
+    <column id="374" parent="340" name="observation">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="374" parent="340" name="prescription">
+    <column id="375" parent="340" name="prescription">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="375" parent="340" name="medecin_id">
+    <column id="376" parent="340" name="medecin_id">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="376" parent="340" name="patient_id">
+    <column id="377" parent="340" name="patient_id">
       <Position>7</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="377" parent="340" name="dossier_id">
+    <column id="378" parent="340" name="dossier_id">
       <Position>8</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <index id="378" parent="340" name="FKgdcll3v8fve4rej9f8lxiqbpw">
+    <column id="379" parent="340" name="created_at">
+      <Position>9</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>current_timestamp()</DefaultExpression>
+    </column>
+    <index id="380" parent="340" name="FKgdcll3v8fve4rej9f8lxiqbpw">
       <ColNames>medecin_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="379" parent="340" name="FKhacw8x7861tc1hne9q1tbyi9g">
+    <index id="381" parent="340" name="FKhacw8x7861tc1hne9q1tbyi9g">
       <ColNames>patient_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="380" parent="340" name="FKt6qgeg5cihxu5dsgfy9hk74rg">
+    <index id="382" parent="340" name="FKt6qgeg5cihxu5dsgfy9hk74rg">
       <ColNames>dossier_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="381" parent="340" name="PRIMARY">
+    <key id="383" parent="340" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="382" parent="341" name="cin">
+    <column id="384" parent="341" name="cin">
       <Position>1</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="383" parent="341" name="specialite">
+    <column id="385" parent="341" name="specialite">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="384" parent="341" name="id">
+    <column id="386" parent="341" name="id">
       <Position>3</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="385" parent="341" name="agenda_id">
+    <column id="387" parent="341" name="agenda_id">
       <Position>4</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <index id="386" parent="341" name="UK_o8i3xgu6uqmyvs50mg4c88o0f">
+    <column id="388" parent="341" name="status">
+      <Position>5</Position>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="389" parent="341" name="created_at">
+      <Position>6</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>current_timestamp()</DefaultExpression>
+    </column>
+    <index id="390" parent="341" name="UK_o8i3xgu6uqmyvs50mg4c88o0f">
       <ColNames>cin</ColNames>
       <Unique>1</Unique>
       <Type>hash</Type>
     </index>
-    <index id="387" parent="341" name="FKsjyjcjvsv95qpadr6ss8qcstb">
+    <index id="391" parent="341" name="FKsjyjcjvsv95qpadr6ss8qcstb">
       <ColNames>agenda_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="388" parent="341" name="PRIMARY">
+    <key id="392" parent="341" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="389" parent="341" name="UK_o8i3xgu6uqmyvs50mg4c88o0f">
+    <key id="393" parent="341" name="UK_o8i3xgu6uqmyvs50mg4c88o0f">
       <ColNames>cin</ColNames>
       <UnderlyingIndexName>UK_o8i3xgu6uqmyvs50mg4c88o0f</UnderlyingIndexName>
     </key>
-    <column id="390" parent="342" name="specialite_id">
+    <column id="394" parent="342" name="specialite_id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="391" parent="342" name="medecin_id">
+    <column id="395" parent="342" name="medecin_id">
       <Position>2</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="392" parent="342" name="FKfnrklpcbbecxhtxdef0swglpi">
+    <index id="396" parent="342" name="FKfnrklpcbbecxhtxdef0swglpi">
       <ColNames>specialite_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="393" parent="342" name="FK1u9kh9ak7apfcjhrb28lcvql9">
+    <index id="397" parent="342" name="FK1u9kh9ak7apfcjhrb28lcvql9">
       <ColNames>medecin_id</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="394" parent="343" name="medecin_id">
+    <column id="398" parent="343" name="medecin_id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="395" parent="343" name="specialites_id">
+    <column id="399" parent="343" name="specialites_id">
       <Position>2</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="396" parent="343" name="FKkxw810bxlwf5q0n2wrf57ssto">
+    <index id="400" parent="343" name="FKkxw810bxlwf5q0n2wrf57ssto">
       <ColNames>medecin_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="397" parent="343" name="FKax8rwybs9rv9qr9abtqjnh4jh">
+    <index id="401" parent="343" name="FKax8rwybs9rv9qr9abtqjnh4jh">
       <ColNames>specialites_id</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="398" parent="344" name="id">
+    <column id="402" parent="344" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="399" parent="344" name="date">
+    <column id="403" parent="344" name="date">
       <Position>2</Position>
       <DataType>date|0s</DataType>
     </column>
-    <column id="400" parent="344" name="numero">
+    <column id="404" parent="344" name="numero">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <key id="401" parent="344" name="PRIMARY">
+    <key id="405" parent="344" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="402" parent="345" name="date_naiss">
+    <column id="406" parent="345" name="date_naiss">
       <Position>1</Position>
       <DataType>date|0s</DataType>
     </column>
-    <column id="403" parent="345" name="groupe_sang">
+    <column id="407" parent="345" name="groupe_sang">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="404" parent="345" name="username">
+    <column id="408" parent="345" name="username">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="405" parent="345" name="id">
+    <column id="409" parent="345" name="id">
       <Position>4</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="406" parent="345" name="dossier_id">
+    <column id="410" parent="345" name="dossier_id">
       <Position>5</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <index id="407" parent="345" name="UK_avbwwnxo3348e62y2reiv3fko">
+    <column id="411" parent="345" name="created_at">
+      <Position>6</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>current_timestamp()</DefaultExpression>
+    </column>
+    <index id="412" parent="345" name="UK_avbwwnxo3348e62y2reiv3fko">
       <ColNames>username</ColNames>
       <Unique>1</Unique>
       <Type>hash</Type>
     </index>
-    <index id="408" parent="345" name="FKm8nejixj01rgf0lpqa8c8g2gr">
+    <index id="413" parent="345" name="FKm8nejixj01rgf0lpqa8c8g2gr">
       <ColNames>dossier_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="409" parent="345" name="PRIMARY">
+    <key id="414" parent="345" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="410" parent="345" name="UK_avbwwnxo3348e62y2reiv3fko">
+    <key id="415" parent="345" name="UK_avbwwnxo3348e62y2reiv3fko">
       <ColNames>username</ColNames>
       <UnderlyingIndexName>UK_avbwwnxo3348e62y2reiv3fko</UnderlyingIndexName>
     </key>
-    <column id="411" parent="346" name="id">
+    <column id="416" parent="346" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="412" parent="346" name="date">
+    <column id="417" parent="346" name="date">
       <Position>2</Position>
       <DataType>date|0s</DataType>
     </column>
-    <column id="413" parent="346" name="heure">
+    <column id="418" parent="346" name="heure">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="414" parent="346" name="status">
+    <column id="419" parent="346" name="status">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="415" parent="346" name="patient_id">
+    <column id="420" parent="346" name="patient_id">
       <Position>5</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="416" parent="346" name="rendez_vous_id">
+    <column id="421" parent="346" name="rendez_vous_id">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="417" parent="346" name="med_id">
+    <column id="422" parent="346" name="med_id">
       <Position>7</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="418" parent="346" name="medecin_id">
+    <column id="423" parent="346" name="medecin_id">
       <Position>8</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <index id="419" parent="346" name="FK35ayulwe26jii3vq14v6sokp3">
+    <column id="424" parent="346" name="created_at">
+      <Position>9</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>current_timestamp()</DefaultExpression>
+    </column>
+    <index id="425" parent="346" name="FK35ayulwe26jii3vq14v6sokp3">
       <ColNames>patient_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="420" parent="346" name="FKfdki2rneqxmchlktp34fc5man">
+    <index id="426" parent="346" name="FKfdki2rneqxmchlktp34fc5man">
       <ColNames>rendez_vous_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="421" parent="346" name="FKktgh14vg97l3yqgk484wc3xtp">
+    <index id="427" parent="346" name="FKktgh14vg97l3yqgk484wc3xtp">
       <ColNames>med_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="422" parent="346" name="FK3cfgw39eujld73uwqc3efmom2">
+    <index id="428" parent="346" name="FK3cfgw39eujld73uwqc3efmom2">
       <ColNames>medecin_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="423" parent="346" name="PRIMARY">
+    <key id="429" parent="346" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="424" parent="347" name="id">
+    <column id="430" parent="347" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="425" parent="347" name="specialite">
+    <column id="431" parent="347" name="specialite">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="426" parent="347" name="description">
+    <column id="432" parent="347" name="description">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <key id="427" parent="347" name="PRIMARY">
+    <key id="433" parent="347" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="428" parent="348" name="id">
+    <column id="434" parent="348" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="429" parent="348" name="description">
+    <column id="435" parent="348" name="description">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="430" parent="348" name="heure">
+    <column id="436" parent="348" name="heure">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="431" parent="348" name="tache">
+    <column id="437" parent="348" name="tache">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="432" parent="348" name="id_tache">
+    <column id="438" parent="348" name="id_tache">
       <Position>5</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="433" parent="348" name="agenda_id">
+    <column id="439" parent="348" name="agenda_id">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
     </column>
-    <column id="434" parent="348" name="date">
+    <column id="440" parent="348" name="date">
       <Position>7</Position>
       <DataType>date|0s</DataType>
     </column>
-    <index id="435" parent="348" name="FKfr8chk3paou60w84w6jyrcice">
+    <index id="441" parent="348" name="FKfr8chk3paou60w84w6jyrcice">
       <ColNames>id_tache</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="436" parent="348" name="FK1ectvy0l7i4yj21vomkv2qy3h">
+    <index id="442" parent="348" name="FK1ectvy0l7i4yj21vomkv2qy3h">
       <ColNames>agenda_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="437" parent="348" name="PRIMARY">
+    <key id="443" parent="348" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="438" parent="349" name="id">
+    <column id="444" parent="349" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="439" parent="349" name="cpassword">
+    <column id="445" parent="349" name="cpassword">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="440" parent="349" name="ville">
+    <column id="446" parent="349" name="ville">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="441" parent="349" name="email">
+    <column id="447" parent="349" name="email">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="442" parent="349" name="nom">
+    <column id="448" parent="349" name="nom">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="443" parent="349" name="password">
+    <column id="449" parent="349" name="password">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="444" parent="349" name="phone">
+    <column id="450" parent="349" name="phone">
       <Position>7</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="445" parent="349" name="prenom">
+    <column id="451" parent="349" name="prenom">
       <Position>8</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="446" parent="349" name="token">
+    <column id="452" parent="349" name="token">
       <Position>9</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <index id="447" parent="349" name="UK_ob8kqyqqgmefl0aco34akdtpe">
+    <index id="453" parent="349" name="UK_ob8kqyqqgmefl0aco34akdtpe">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>hash</Type>
     </index>
-    <index id="448" parent="349" name="UK_589idila9li6a4arw1t8ht1gx">
+    <index id="454" parent="349" name="UK_589idila9li6a4arw1t8ht1gx">
       <ColNames>phone</ColNames>
       <Unique>1</Unique>
       <Type>hash</Type>
     </index>
-    <key id="449" parent="349" name="PRIMARY">
+    <key id="455" parent="349" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="450" parent="349" name="UK_ob8kqyqqgmefl0aco34akdtpe">
+    <key id="456" parent="349" name="UK_ob8kqyqqgmefl0aco34akdtpe">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>UK_ob8kqyqqgmefl0aco34akdtpe</UnderlyingIndexName>
     </key>
-    <key id="451" parent="349" name="UK_589idila9li6a4arw1t8ht1gx">
+    <key id="457" parent="349" name="UK_589idila9li6a4arw1t8ht1gx">
       <ColNames>phone</ColNames>
       <UnderlyingIndexName>UK_589idila9li6a4arw1t8ht1gx</UnderlyingIndexName>
     </key>

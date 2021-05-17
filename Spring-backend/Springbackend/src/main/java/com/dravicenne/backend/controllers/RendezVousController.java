@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @ResponseBody
 @RestController
-@RequestMapping(path = "/rendezVous")
+@RequestMapping(path = "api/rendezVous")
 public class RendezVousController {
     private final RendezVousService rendezVousService;
 

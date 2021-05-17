@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @ResponseBody
 @RestController
-@RequestMapping("/specialite")
+@RequestMapping("api/specialite")
 public class SpecialiteController {
     private final SpecialiteService specialiteService;
 

@@ -8,6 +8,7 @@ import com.dravicenne.backend.models.plaindto.PlainDossierDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -19,6 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Data
 public class DossierMedical implements Serializable {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -67,63 +69,5 @@ public class DossierMedical implements Serializable {
         dossierMedical.setId(plainDossierDto.getId());
 
         return dossierMedical;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getAntecedent() {
-        return antecedent;
-    }
-
-    public void setAntecedent(String antecedent) {
-        this.antecedent = antecedent;
-    }
-
-    public String getObservation() {
-        return observation;
-    }
-
-    public void setObservation(String observation) {
-        this.observation = observation;
-    }
-
-    public String getPrescription() {
-        return prescription;
-    }
-
-    public void setPrescription(String prescription) {
-        this.prescription = prescription;
-    }
-
-    //@JsonBackReference(value = "patient_dossierMedical")
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
-    //@JsonBackReference(value = "medecin_dossierMedical")
-    public Medecin getMedecin() {
-        return medecin;
-    }
-
-    public void setMedecin(Medecin medecin) {
-        this.medecin = medecin;
     }
 }

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @ResponseBody
-@RequestMapping(path = "/tache")
+@RequestMapping(path = "api/tache")
 public class TacheController {
     private final TacheService tacheService;
 

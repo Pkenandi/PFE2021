@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @Entity
 @ToString
 @Table(name = "Patient")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
 public class Patient extends User implements Serializable {
 
     @Column(unique = true, nullable = false)
@@ -36,13 +35,6 @@ public class Patient extends User implements Serializable {
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "rendezVous_Id")
     private List<RendezVous> rendezVousList = new ArrayList<>();
-// -------
-
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "consultation_Id")
-    private List<Consultation> consultations = new ArrayList<>();
-// -------
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -55,12 +47,11 @@ public class Patient extends User implements Serializable {
     public Patient() {
     }
 
-    public Patient(String username, String groupeSang, LocalDate dateNaiss, List<RendezVous> rendezVousList, List<Consultation> consultations, DossierMedical dossierMedical) {
+    public Patient(String username, String groupeSang, LocalDate dateNaiss, List<RendezVous> rendezVousList, DossierMedical dossierMedical) {
         this.username = username;
         this.groupeSang = groupeSang;
         this.dateNaiss = dateNaiss;
         this.rendezVousList = rendezVousList;
-        this.consultations = consultations;
         this.dossierMedical = dossierMedical;
     }
 
@@ -72,12 +63,6 @@ public class Patient extends User implements Serializable {
         this.rendezVousList.remove(rendezVous);
     }
     // ---------------------------------
-    public void addConsultation(Consultation consultation){
-        this.consultations.add(consultation);
-    }
-    public void removeConsultation(Consultation consultation){
-        this.consultations.remove(consultation);
-    }
     public void addDossier(DossierMedical dossierMedical){
         this.setDossierMedical(dossierMedical);
     }
@@ -167,14 +152,6 @@ public class Patient extends User implements Serializable {
 
     public void setRendezVousList(List<RendezVous> rendezVousList) {
         this.rendezVousList = rendezVousList;
-    }
-
-    public List<Consultation> getConsultations() {
-        return consultations;
-    }
-
-    public void setConsultations(List<Consultation> consultations) {
-        this.consultations = consultations;
     }
 
     public DossierMedical getDossierMedical() {

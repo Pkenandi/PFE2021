@@ -19,7 +19,7 @@ public class SpecialitesDto {
     private Long id;
     private String specialite;
     private String description;
-    private List<MedecinDto> medecinDtos = new ArrayList<>();
+    private List<MedecinDto> medecinDtoList = new ArrayList<>();
 
     public static SpecialitesDto from(Specialites specialites){
         SpecialitesDto specialitesDto = new SpecialitesDto();
@@ -30,7 +30,7 @@ public class SpecialitesDto {
             specialitesDto.setSpecialite(specialites.getSpecialite());
             specialitesDto.setId(specialites.getId());
             specialitesDto.setDescription(specialites.getDescription());
-            specialitesDto.setMedecinDtos(specialites.getMedecinList().stream().map(MedecinDto::from).collect(Collectors.toList()));
+            specialitesDto.setMedecinDtoList(specialites.getMedecinList().stream().map(MedecinDto::from).collect(Collectors.toList()));
 
             return specialitesDto;
         }

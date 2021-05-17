@@ -50,7 +50,7 @@ public class Specialites implements Serializable {
             specialites.setSpecialite(specialitesDto.getSpecialite());
             specialites.setId(specialitesDto.getId());
             specialites.setDescription(specialitesDto.getDescription());
-            specialites.setMedecinList(specialitesDto.getMedecinDtos().stream().map(Medecin::from).collect(Collectors.toList()));
+            specialites.setMedecinList(specialitesDto.getMedecinDtoList().stream().map(Medecin::from).collect(Collectors.toList()));
 
             return specialites;
         }
