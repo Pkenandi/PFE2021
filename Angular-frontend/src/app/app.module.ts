@@ -33,7 +33,6 @@ import { PatientService } from './Services/patientservice/patient.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NotificationComponent } from './notification/notification.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { VideoComponent } from './components/video/video.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -88,6 +87,11 @@ import { MedResetPasswordComponent } from './users/medecin/med-reset-password/me
 import {PatientResetComponent} from "./users/patient/patient-forgotPassword/patient-reset.component";
 import {CountdownModule} from "ngx-countdown";
 import { SearcheFilterPipe } from './Pipe/searche-filter.pipe';
+import { AdminDashboardComponent } from './users/administrateur/admin-dashboard/admin-dashboard.component';
+import { AdminLoginComponent } from './users/administrateur/admin-login/admin-login.component';
+import { AdminListPatientComponent } from './users/administrateur/admin-list-patient/admin-list-patient.component';
+import { AdminListMedecinComponent } from './users/administrateur/admin-list-medecin/admin-list-medecin.component';
+import { AdminListSpecialiteComponent } from './users/administrateur/admin-list-specialite/admin-list-specialite.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +113,6 @@ import { SearcheFilterPipe } from './Pipe/searche-filter.pipe';
     RendezVousComponent,
     PatProfileComponent,
     MedProfileComponent,
-    NotificationComponent,
     ChatComponent,
     VideoComponent,
     MedLogoutComponent,
@@ -135,6 +138,11 @@ import { SearcheFilterPipe } from './Pipe/searche-filter.pipe';
     MedResetPasswordComponent,
     SearcheFilterPipe,
     SearcheFilterPipe,
+    AdminDashboardComponent,
+    AdminLoginComponent,
+    AdminListPatientComponent,
+    AdminListMedecinComponent,
+    AdminListSpecialiteComponent,
   ],
   imports: [
     BrowserModule,

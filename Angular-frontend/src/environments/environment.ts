@@ -7,7 +7,7 @@ export const environment = {
 };
 
 export const basedUrl = 'http://localhost:8080/user/';
-export const mainUrl = 'http://localhost:8080/';
+export const mainUrl = 'http://localhost:8080/api/';
 export const webUrl = 'ws://localhost:8080/chat';
 export const videoUrl = 'ws://localhost:8081';
 /*

@@ -36,16 +36,16 @@ export class MedecinService {
   }
 
   getMedecins(): Observable<Medecin[]> {
-    return this._http.get<Medecin[]>(`${basedUrl}medecin/all`);
+    return this._http.get<Medecin[]>(`${mainUrl}user/medecin/all`);
   }
 
   getMedecinByCin(cin: string): Observable<Medecin>{
-    return this._http.get<Medecin>(`${basedUrl}medecin/${cin}`)
+    return this._http.get<Medecin>(`${mainUrl}user/medecin/${cin}`)
                .pipe(map((medecin: Medecin) => medecin));
   }
 
   update(data, cin): Observable<any>{
-    return this._http.put<any>(`${basedUrl}medecin/update/${cin}`, data);
+    return this._http.put<any>(`${mainUrl}user/medecin/update/${cin}`, data);
   }
 
   logOut(): void{
@@ -74,7 +74,7 @@ export class MedecinService {
   }
 
   attachToRendezVous(cin: string, id: number): Observable<any>{
-    return this._http.get<any>(`${basedUrl}/medecin/${cin}/rendezvous/${id}/assign`);
+    return this._http.get<any>(`${mainUrl}user/medecin/${cin}/rendezvous/${id}/assign`);
   }
 
   attachToAgenda(cin: string, id: number): Observable<any>{

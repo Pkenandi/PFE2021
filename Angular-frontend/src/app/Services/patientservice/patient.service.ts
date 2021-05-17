@@ -52,15 +52,15 @@ patient: Patient = JSON.parse(sessionStorage.getItem("patient"));
   }
 
   getByUsername(username: string): Observable<Patient> {
-      return this._http.get<Patient>(`${basedUrl}patient/${username}`);
+      return this._http.get<Patient>(`${mainUrl}user/patient/${username}`);
   }
 
   updatePatient(patientDetails, username): Observable<any> {
-    return this._http.put<any>(`${basedUrl}patient/update/${username}`, patientDetails);
+    return this._http.put<any>(`${mainUrl}user/patient/update/${username}`, patientDetails);
   }
 
   addRendezVous(username: string, id: number): Observable<any>{
-    return this._http.get<any>(`${basedUrl}/patient/${username}/rendezvous/${id}/add`);
+    return this._http.get<any>(`${mainUrl}user/patient/${username}/rendezvous/${id}/add`);
   }
 
   // Reset Password

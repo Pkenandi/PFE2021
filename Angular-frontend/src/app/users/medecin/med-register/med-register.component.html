@@ -46,7 +46,7 @@
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text"> <i class="fas fa-user-md"></i> </span>
+                <span class="input-group-text"> <img src="assets/images/icons/coding.png" alt="Cin"/> </span>
               </div>
               <input formControlName="cin" name="cin" class="form-control" placeholder="CIN ..." type="text"
                      [ngClass]="{'is-invalid': regValue.cin.errors && regValue.cin.touched}">
@@ -57,7 +57,7 @@
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text"> <i class="far fa-user"></i> </span>
+                <span class="input-group-text"> <img src="assets/images/icons/medal.png" alt="specialite"/> </span>
               </div>
               <select formControlName="specialite" name="specialite" class="form-select form-control"
                       aria-label="Default select example" [ngClass]="{'is-invalid': regValue.specialite.errors && regValue.specialite.touched}">>
@@ -91,6 +91,7 @@
                 <option value="médecine interne"> Médecine interne</option>
                 <option value="médecine interne"> Médecine interne</option>
                 <option value="Médecine d'urgence"> Médecine d'urgence</option>
+                <option value="A definir plus tard"> Autres </option>
               </select>
 
               <div *ngIf="regValue.specialite.errors" class="invalid-feedback">
@@ -111,7 +112,7 @@
 
             <div class="form-group input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                <span class="input-group-text"> <img src="assets/images/icons/cityscape.png" alt="ville"/> </span>
               </div>
               <input formControlName="ville" name="ville" class="form-control" placeholder="Ville ... " type="text"
                      [ngClass]="{'is-invalid': regValue.ville.errors && regValue.ville.touched}">

@@ -50,7 +50,6 @@ export class HeaderComponent implements OnInit {
 
   p_notifications(){
     const config = new MatDialogConfig();
-    config.disableClose = true;
     config.autoFocus = true;
     config.width = "20%";
     config.height = "50%"
@@ -61,7 +60,7 @@ export class HeaderComponent implements OnInit {
   m_notifications(){
     const config = new MatDialogConfig();
     config.width = "20%";
-    config.height = "50%"
+    config.height = "35%"
     config.position = { right : `40px`, top : `100px`}
     this.dialog.open(MedNotifComponent,config);
   }

@@ -6,7 +6,7 @@ import {
 
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { basedUrl } from 'src/environments/environment';
+import {basedUrl, mainUrl} from 'src/environments/environment';
 import {Patient} from "../../Models/Patient/patient";
 import {Medecin} from "../../Models/Medecin/medecin";
 
@@ -37,22 +37,22 @@ export class UserService {
   // Registrations Methods
 
   registerPatient(user: any): Observable<any>{
-    return this._http.post(`${basedUrl}patient/register`, user, {responseType: 'text'});
+    return this._http.post(`${mainUrl}user/patient/register`, user, {responseType: 'text'});
   }
 
   registerMedecin(user: any): Observable<any> {
-    return this._http.post(`${basedUrl}medecin/register`, user, {responseType: 'text'});
+    return this._http.post(`${mainUrl}user/medecin/register`, user, {responseType: 'text'});
   }
 
   // Log methods
 
 
   loginPatient(username: string, password: string): Observable<Patient> {
-    return this._http.post<Patient>(`${basedUrl}patient/login`, { username, password});
+    return this._http.post<Patient>(`${mainUrl}user/patient/login`, { username, password});
   }
 
   loginMedecin(cin: string, password: string): Observable<Medecin> {
-    return this._http.post<Medecin>(`${basedUrl}medecin/login`, { cin, password });
+    return this._http.post<Medecin>(`${mainUrl}user/medecin/login`, { cin, password });
   }
 
   logOut(): void {

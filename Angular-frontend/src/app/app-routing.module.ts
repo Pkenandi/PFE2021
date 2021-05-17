@@ -28,11 +28,15 @@ import {PatientResetComponent} from "./users/patient/patient-forgotPassword/pati
 import {MedecinResetComponent} from "./users/medecin/medecin-reset/medecin-reset.component";
 import {PatResetPasswordComponent} from "./users/patient/pat-reset-password/pat-reset-password.component";
 import {MedResetPasswordComponent} from "./users/medecin/med-reset-password/med-reset-password.component";
+import {AdminDashboardComponent} from "./users/administrateur/admin-dashboard/admin-dashboard.component";
+import {AdminLoginComponent} from "./users/administrateur/admin-login/admin-login.component";
+import {AdminListMedecinComponent} from "./users/administrateur/admin-list-medecin/admin-list-medecin.component";
+import {AdminListPatientComponent} from "./users/administrateur/admin-list-patient/admin-list-patient.component";
 
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: HomeComponent
   },
   {
@@ -40,36 +44,26 @@ const routes: Routes = [
     component: AccountComponent
   },
   {
+    path: 'chat',
+    component: ChatComponent,
+  },
+  {
+    path: 'consultation',
+    component: VideoComponent,
+    canActivate: [MedGuardGuard, PatGuardGuard]
+  },
+  {
+    path: 'sms',
+    component: SmsComponent,
+    canActivate: [MedGuardGuard]
+  },
+
+  // Patient
+
+  {
     path: 'patient/:username',
     component: PatProfileComponent,
     canActivate: [PatGuardGuard]
-  },
-  {
-    path: 'Med/:cin',
-    component: ProfileMedComponent
-  },
-  {
-    path: 'medecin/:cin',
-    component: MedProfileComponent,
-    canActivate: [MedGuardGuard]
-  },
-  {
-    path: 'med/login',
-    component: MedLoginComponent
-  },
-  {
-    path: 'med/register',
-    component: MedRegisterComponent
-  },
-  {
-    path: 'med/dashboard',
-    component: MedDashboardComponent,
-    canActivate: [MedGuardGuard]
-  },
-  {
-    path: 'med/agenda',
-    component: AgendaComponent,
-    canActivate: [MedGuardGuard]
   },
   {
     path: 'pat/login',
@@ -82,10 +76,6 @@ const routes: Routes = [
   {
     path: 'pat/logout',
     component: PatLogoutComponent
-  },
-  {
-    path: 'med/logout',
-    component: MedLogoutComponent
   },
   {
     path: 'pat/dashboard',
@@ -103,40 +93,50 @@ const routes: Routes = [
     canActivate: [PatGuardGuard]
   },
   {
-    path: 'pat/listRdv',
-    component: ListRendezvousComponent
-  },
-  {
-    path: 'med/listRdv',
-    component: ListRendezVousComponent,
-    canActivate: [MedGuardGuard]
-  },
-  {
-    path: 'chat',
-    component: ChatComponent,
-  },
-  {
-    path: 'consultation',
-    component: VideoComponent,
-    canActivate: [MedGuardGuard, PatGuardGuard]
-  },
-  {
-    path: 'sms',
-    component: SmsComponent,
-    canActivate: [MedGuardGuard]
-  },
-  {
-    path: 'list',
-    component: ListDossierComponent,
-    canActivate: [MedGuardGuard]
-  },
-  {
     path: 'user/patient/reset',
     component: PatientResetComponent
   },
   {
     path: 'user/patient/reset-password',
     component: PatResetPasswordComponent
+  },
+  {
+    path: 'pat/listRdv',
+    component: ListRendezvousComponent
+  },
+
+  // Medecin
+
+  {
+    path: 'Med/:cin',
+    component: ProfileMedComponent
+  },
+  {
+    path: 'medecin/:cin',
+    component: MedProfileComponent,
+    canActivate: [MedGuardGuard]
+  },
+  {
+    path: 'med/login',
+    component: MedLoginComponent
+  },
+  {
+    path: 'med/logout',
+    component: MedLogoutComponent
+  },
+  {
+    path: 'med/register',
+    component: MedRegisterComponent
+  },
+  {
+    path: 'med/dashboard',
+    component: MedDashboardComponent,
+    canActivate: [MedGuardGuard]
+  },
+  {
+    path: 'med/agenda',
+    component: AgendaComponent,
+    canActivate: [MedGuardGuard]
   },
   {
     path: 'user/medecin/reset-password',
@@ -146,6 +146,36 @@ const routes: Routes = [
     path: "user/medecin/reset",
     component: MedecinResetComponent
   },
+  {
+    path: 'med/listRdv',
+    component: ListRendezVousComponent,
+    canActivate: [MedGuardGuard]
+  },
+  {
+    path: 'list',
+    component: ListDossierComponent,
+    canActivate: [MedGuardGuard]
+  },
+
+  // Admin
+  {
+    path:"admin/login",
+    component: AdminLoginComponent
+  },
+  {
+    path:"admin/dashboard",
+    component: AdminDashboardComponent
+  },
+  {
+    path:"admin/list-medecin",
+    component: AdminListMedecinComponent
+  },
+  {
+    path:"admin/list-patient",
+    component: AdminListPatientComponent
+  },
+
+
   {
     path: '',
     redirectTo: 'home',

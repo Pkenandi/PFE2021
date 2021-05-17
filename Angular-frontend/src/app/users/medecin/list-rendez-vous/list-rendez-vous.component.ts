@@ -12,6 +12,8 @@ import {DossierMedical} from "../../../Models/DossierMedical/dossier-medical";
 import {DossierMedicalService} from "../../../Services/dossierService/dossier-medical.service";
 import {Title} from "@angular/platform-browser";
 import {Medecin} from "../../../Models/Medecin/medecin";
+import {MailService} from "../../../Services/mailService/mail.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-list-rendez-vous',
@@ -44,7 +46,9 @@ export class ListRendezVousComponent implements OnInit {
               public dialog: MatDialog,
               private modalService: NgbModal,
               private dossierService: DossierMedicalService,
-              private title: Title) { }
+              private title: Title,
+              private mailService: MailService,
+              private toast: ToastrService) { }
 
   mailForm = new FormGroup({
     dest: new FormControl(''),
@@ -72,6 +76,9 @@ export class ListRendezVousComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.setTitle(" Liste Rendez-vous - DrAvicenne")
+    this.rendezvousService.mw_note = 0;
+    this.rendezvousService.ma_note = 0;
+    this.rendezvousService.m_notifications = 0;
     this.InWaitRdv();
     this.ConfirmedRdv();
   }
@@ -86,8 +93,11 @@ export class ListRendezVousComponent implements OnInit {
 
           if(this.InWait.length == 0){
             this.isInWait = false;
+            this.rendezvousService.mw_note = 0;
           }else {
             this.isInWait = true;
+            this.rendezvousService.mw_note = this.InWait.length;
+            this.rendezvousService.m_notifications += this.InWait.length;
           }
         },
         (error) => {
@@ -106,8 +116,12 @@ export class ListRendezVousComponent implements OnInit {
 
           if(this.Confirmed.length == 0){
             this.isConfirmed = false;
+            this.rendezvousService.ma_note = 0;
           }else {
             this.isConfirmed = true;
+            this.rendezvousService.m_notifications += this.Confirmed.length;
+            this.rendezvousService.ma_note += this.Confirmed.length;
+
           }
         },
         (error) => {
@@ -150,7 +164,7 @@ export class ListRendezVousComponent implements OnInit {
         (response) => {
           this.mailForm = new FormGroup({
             dest: new FormControl(response['email']),
-            from: new FormControl(this.medecinService.medecin.email),
+            from: new FormControl("dravicennegroupe@gmail.com"),
             topic:new FormControl(''),
             body: new FormControl('')
           })
@@ -182,7 +196,15 @@ export class ListRendezVousComponent implements OnInit {
 
   sendMail(): void {
     this.mail = this.mailForm.value;
-    console.log(this.mail);
+    this.mailService.sendMail(this.mail)
+      .subscribe(
+        () => {
+          this.toast.info(" Votre mail à été envoyé avec succès !", "Sending")
+        },
+        (error) => {
+          this.toast.error(" Erreur à l'envoi du mail ", error.title)
+        }
+      )
   }
 
   Sms(): void {
