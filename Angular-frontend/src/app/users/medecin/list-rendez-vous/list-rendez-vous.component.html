@@ -244,10 +244,11 @@
 <!-- Dossier Modal -->
 
 <ng-template #dossier let-modal class="light-modal">
-  <div class="modal-body">
+  <div style="margin-left: 260px; cursor:pointer;"><mat-icon (click)="modal.close('modal close')">close</mat-icon></div>
+  <div class="modal-body" style="width: 750px">
     <div class="container">
       <div class="row">
-        <div class="col-6">
+        <div class="col-8">
           <div class="dossier">
             <div class="header shadow">
               <h3 class="text-center" style="font-family: 'Arial Black', sans-serif"> Dossier numero {{dossierMed.numero}} </h3>
@@ -270,7 +271,7 @@
                 <div class="row">
                   <div class="col-5">
                     <div class="form-group">
-                      <input type="text" name="prenom" class="form-control" value="Age : {{dossierMed?.plainPatientDto.age}}" disabled>
+                      <input type="text" name="prenom" class="form-control" value="Age : [ {{dossierMed?.plainPatientDto.age}} ]" disabled>
                     </div>
                   </div>
 
@@ -280,14 +281,26 @@
                     </div>
                   </div>
                 </div>
+                <fieldset class="border p-3">
+                  <legend>Antécedents médicaux </legend>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> Allergie : [ {{dossierMed?.antMed.allergie}} ]</li>
+                    <li class="list-group-item"> Hypertendu(e) : [ {{dossierMed?.antMed.hypertension}} ]</li>
+                    <li class="list-group-item"> Présence diabète chez soi ou famille : [ {{dossierMed?.antMed.diabete}} ] </li>
+                    <li class="list-group-item"> Asmathique : [ {{dossierMed?.antMed.asthme}} ]</li>
+                    <li class="list-group-item"> Autres antécedents médicaux : [ {{dossierMed?.antMed.autres}} ]</li>
+                  </ul>
+                </fieldset>
 
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <textarea formControlName="body" name="body" class="form-control" placeholder=" Antécédents Médicaux ... " style=" height: 100px;" disabled> {{dossierMed?.antecedent}} </textarea>
-                    </div>
-                  </div>
-                </div>
+                <fieldset class="border p-3">
+                  <legend>Antécedents Chirurgicaux </legend>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> Subit une opération antérieurement : [ {{dossierMed?.antCh.operationAnt}} ]</li>
+                    <li class="list-group-item"> Subit un traumatisme antérieurement : [ {{dossierMed?.antCh.traumatismeAnt}} ]</li>
+                    <li class="list-group-item"> Autres antécedents chirurgicaux : [ {{dossierMed?.antCh.autres}} ]</li>
+                  </ul>
+                </fieldset>
+
               </div>
             </div>
           </div>

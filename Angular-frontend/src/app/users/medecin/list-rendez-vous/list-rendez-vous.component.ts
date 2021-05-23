@@ -30,7 +30,7 @@ import {ToastrService} from "ngx-toastr";
     }
 
     .myCustomModalClass .modal-dialog {
-      max-width: 475px;
+      max-width: 550px;
     }
 
     .light-blue-backdrop {
@@ -231,7 +231,7 @@ export class ListRendezVousComponent implements OnInit {
   }
 
   openDossierModal(dossier){
-    this.modalService.open(dossier, {windowClass: "myCustomModalClass" , centered: true, size: "sm"});
+    this.modalService.open(dossier, {windowClass: "myCustomModalClass" , centered: true, size:"sm"});
   }
 
   warningConfirm(confirm) {

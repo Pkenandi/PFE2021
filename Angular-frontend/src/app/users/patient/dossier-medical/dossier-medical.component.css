@@ -6,6 +6,15 @@ h1 {
     margin-bottom: 40px
 }
 
+legend{
+  font-size: medium;
+  font-weight: bold;
+}
+
+input[type=text]{
+  width: 2cm;
+}
+
 .ant{
   float:right;
   height:75px;
@@ -41,10 +50,10 @@ label {
 
 .myform{
   padding: 50px;
-  width: 400px;
+  width: 100%;
 }
 form{
-  width: 350px;
+  width: 500px;
   margin-left: -20px;
 }
 

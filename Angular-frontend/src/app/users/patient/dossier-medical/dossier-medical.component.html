@@ -5,7 +5,7 @@
         Vous ne disposer pas encore d'un dossier Médical !</h2>
     </div>
     <ng-template #doss>
-      <div class="container">
+      <div class="container" id="dossier" #content>
         <h2><img src="assets/images/dossier.png">
           Mon Dossier Médical </h2>
         <div class="row mx-auto">
@@ -32,8 +32,32 @@
                 <td> {{ patient?.phone }}</td>
               </tr>
               <tr>
-                <td> Antecedent Médicaux :</td>
-                <td> {{ dossier?.antecedent }}</td>
+                <td> Allergique : </td>
+                <td> {{ dossier?.antMed.allergie }}</td>
+              </tr>
+              <tr>
+                <td> Hypertendu(e) : </td>
+                <td> {{ dossier?.antMed.hypertension }}</td>
+              </tr>
+              <tr>
+                <td> Asmathique : </td>
+                <td> {{ dossier?.antMed.asthme }}</td>
+              </tr>
+              <tr>
+                <td> Autres antecedents médicaux : </td>
+                <td> {{ dossier?.antMed.autres }}</td>
+              </tr>
+              <tr>
+                <td> Opérer anterieurement : </td>
+                <td> {{ dossier?.antCh.operationAnt }}</td>
+              </tr>
+              <tr>
+                <td> Présence d'un traumatisme anterieure : </td>
+                <td> {{ dossier?.antCh.traumatismeAnt }}</td>
+              </tr>
+              <tr>
+                <td> Autres antécedents chirurgicaux : </td>
+                <td> {{ dossier?.antCh.autres }}</td>
               </tr>
 
               <tr>
@@ -50,6 +74,12 @@
           </div>
         </div>
       </div>
+
+      <button class="btn btn-sm text-danger" style="float: left" (click)="openPdf()">
+        Ouvrir <i class="far fa-folder-open"></i></button>
+      <button class="btn btn-sm text-danger" style="float: right" (click)="download()">
+        Télécharger <mat-icon>download</mat-icon></button>
+
     </ng-template>
   </mat-tab>
 
@@ -61,42 +91,165 @@
     <ng-template #noDoss>
       <div class="container">
         <div class="row">
-          <div class="col-md-6 col-xl-6 col-sm-4 mx-auto" align="center">
-            <div class="myform form shadow">
-              <form [formGroup]="dossierForm" (ngSubmit)="createDossier()" autocomplete="off">
+          <div class="col-md-8 col-xl-8 col-sm-12 mx-auto">
+            <div class="myform form">
+              <form [formGroup]="dossierForm" autocomplete="off">
                 <div class="form-group">
-                  <input type="text" name="name" class="form-control my-input" id="name"
-                         placeholder="{{patient?.nom}} {{ patient?.prenom}}" disabled>
+                  <input type="hidden" name="numero" class="form-control my-input" formControlName="numero" disabled>
                 </div>
-                <div class="form-group">
-                  <input type="email" name="email" class="form-control my-input" id="email"
-                         placeholder="groupe sang [ {{ patient?.groupeSang}} ]" disabled>
-                </div>
+                <!-- Antecedent medicaux form -->
+                <form [formGroup]="antMed">
+                  <fieldset class="form-group border p-3">
+                    <legend> Antécedents Médicaux</legend>
 
-                <div class="form-group">
-                  <label> Numero Dossier </label>
-                  <input type="text" name="numero" class="form-control my-input" formControlName="numero" disabled>
-                </div>
-                <div class="form-group" style=" margin-bottom: 5px;">
-                  <label> Antecedant Médicaux </label>
-                  <input type="text" min="0" name="antecedent" class="form-control my-input ant"
-                         formControlName="antecedent">
-                </div>
-                <div class="text-center ">
-                  <button type="submit" class="btn btn-block btn-sm btn-primary tx-tfm"> Créer</button>
-                </div>
+                    <label> Avez-vous une allergie quelconque ? </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Oui" name="allergie" id="allergie1"
+                             formControlName="allergie">
+                      <label class="form-check-label" for="allergie1">
+                        Oui
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Non" name="allergie" id="allergie2"
+                             formControlName="allergie" checked>
+                      <label class="form-check-label" for="allergie2">
+                        Non
+                      </label>
+                    </div>
+
+                    <label> Êtes-vous hypertendu(e) ? </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Oui" name="hypertension" id="hypertension1"
+                             formControlName="hypertension">
+                      <label class="form-check-label" for="hypertension1">
+                        Oui
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Non" name="hypertension" id="hypertension2"
+                             formControlName="hypertension">
+                      <label class="form-check-label" for="hypertension2">
+                        Non
+                      </label>
+                    </div>
+
+                    <label> Êtes-vous asthmatique ? </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Oui" name="asthme" id="asthme1"
+                             formControlName="asthme">
+                      <label class="form-check-label" for="asthme1">
+                        Oui
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Non" name="asthme" id="asthme2"
+                             formControlName="asthme">
+                      <label class="form-check-label" for="asthme2">
+                        Non
+                      </label>
+                    </div>
+
+                    <label> Êtes-vous diabetique ou avez-vous un cas de diabete dans votre famille ? </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Oui" name="diabete" id="diabete1"
+                             formControlName="diabete">
+                      <label class="form-check-label" for="diabete1">
+                        Oui
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Non" name="diabete" id="diabete2"
+                             formControlName="diabete">
+                      <label class="form-check-label" for="diabete2">
+                        Non
+                      </label>
+                    </div>
+                    <hr>
+                    <label> Avez-vous d'autres antecedents médicaux ? </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Oui" name="autres" id="autres1"
+                             formControlName="autres">
+                      <label class="form-check-label" for="autres1">
+                        Oui
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Non" name="autres" id="autres2"
+                             formControlName="autres">
+                      <label class="form-check-label" for="autres2">
+                        Non
+                      </label>
+                    </div>
+                  </fieldset>
+                </form>
+
+                <!-- Antecedent chirurgicaux form -->
+                <form [formGroup]="antCh">
+                  <fieldset class="form-group border p-3">
+                    <legend> Antécedents Chirurgicaux</legend>
+
+                    <label> Avez-vous subit une opération antérieurement ? </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Oui" name="operationAnt" id="operationAnt1"
+                             formControlName="operationAnt">
+                      <label class="form-check-label" for="operationAnt1">
+                        Oui
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Non" name="operationAnt" id="operationAnt2"
+                             formControlName="operationAnt" checked>
+                      <label class="form-check-label" for="operationAnt2">
+                        Non
+                      </label>
+                    </div>
+
+                    <label> Avez-vous eu des traumatismes anterieurement ? </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Oui" name="traumatismeAnt"
+                             id="traumatismeAnt1" formControlName="traumatismeAnt">
+                      <label class="form-check-label" for="operationAnt1">
+                        Oui
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Non" name="traumatismeAnt"
+                             id="traumatismeAnt2" formControlName="traumatismeAnt" checked>
+                      <label class="form-check-label" for="operationAnt2">
+                        Non
+                      </label>
+                    </div>
+                    <hr>
+                    <label> Avez-vous d'autres antecedents chirurgicaux ? </label>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Oui" name="autres" id="autres3"
+                             formControlName="autres">
+                      <label class="form-check-label" for="autres3">
+                        Oui
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" value="Non" name="autres" id="autres4"
+                             formControlName="autres">
+                      <label class="form-check-label" for="autres4">
+                        Non
+                      </label>
+                    </div>
+                  </fieldset>
+                </form>
+
+                <button type="submit" class="btn btn-block btn-sm btn-primary tx-tfm w-25" (click)="createDossier()">
+                  Créer
+                </button>
+
               </form>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-6 col-sm-4">
-            <img src="assets/images/img10.png" style="width: 100%;">
-          </div>
         </div>
       </div>
 
     </ng-template>
   </mat-tab>
 </mat-tab-group>
-
-

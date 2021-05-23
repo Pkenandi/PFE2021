@@ -1,15 +1,18 @@
 import { DossierMedical } from '../../../Models/DossierMedical/dossier-medical';
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Patient } from 'src/app/Models/Patient/patient';
 import { PatientService } from 'src/app/Services/patientservice/patient.service';
 import { DossierMedicalService } from 'src/app/Services/dossierService/dossier-medical.service';
-import { FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Tab } from 'src/app/Models/tab';
 import {HttpErrorResponse} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
 import {Title} from "@angular/platform-browser";
+import {jsPDF} from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-dossier-medical',
@@ -18,15 +21,41 @@ import {Title} from "@angular/platform-browser";
 })
 export class DossierMedicalComponent implements OnInit {
 
+  @ViewChild('content') content: ElementRef;
   patient: Patient = JSON.parse(sessionStorage.getItem("patient"))
   dossier: DossierMedical = null;
+  dossierPdf: any;
   numero = this.getRandomInt(1000000);
   exist: boolean = false;
+  checked: boolean = false;
   Tab: Tab = null;
 
+  antMed = new FormGroup({
+    allergie: new FormControl('', [Validators.required]),
+    diabete: new FormControl('', [Validators.required]),
+    hypertension: new FormControl('', [Validators.required]),
+    asthme: new FormControl('', [Validators.required]),
+    autres: new FormControl('', [Validators.required]),
+  })
+
+  antCh = new FormGroup({
+    operationAnt: new FormControl('', [Validators.required]),
+    traumatismeAnt: new FormControl('', [Validators.required]),
+    autres: new FormControl('', [Validators.required]),
+  })
+
+  antGyn = new FormGroup({
+    nombreGrossesse: new FormControl(''),
+    nombreEnfant: new FormControl(''),
+    cesarienne: new FormControl(''),
+    autres: new FormControl(''),
+  })
+
   dossierForm = new FormGroup({
-    numero: new FormControl(''),
-    antecedent: new FormControl(''),
+    numero: new FormControl(this.numero),
+    antMed: new FormControl(this.antMed.value),
+    andCh: new FormControl(this.antCh.value),
+    andGyn: new FormControl(this.antGyn.value)
   });
 
   constructor(public patientService: PatientService,
@@ -39,11 +68,6 @@ export class DossierMedicalComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle(" Dossier - DrAvicenne ")
     this.findWithPatient();
-
-    this.dossierForm = new FormGroup({
-      numero: new FormControl(this.numero),
-      antecedent: new FormControl(" Pas d'antecedent ")
-    });
   }
 
   findWithPatient(): void {
@@ -68,8 +92,13 @@ export class DossierMedicalComponent implements OnInit {
 
   createDossier(): void {
 
-    this.dossier = this.dossierForm.value;
+    this.dossierForm = new FormGroup({
+      numero: new FormControl(this.numero),
+      antMed: new FormControl(this.antMed.value),
+      antCh: new FormControl(this.antCh.value),
+    });
 
+    this.dossier = this.dossierForm.value;
     this.dossierService.addDossier(this.dossier).subscribe(
       response => {
         this.Tab = response;
@@ -91,6 +120,67 @@ export class DossierMedicalComponent implements OnInit {
       (error: HttpErrorResponse) => {
         this.toast.error("Une erreur est survenue : " + error.message);
       });
+  }
+
+  download() : void {
+    let data  = this.content.nativeElement;
+    let options : any = {
+      orientation: 'p',
+      unit: 'px',
+      format: 'a4',
+    };
+    let doc = new jsPDF(options);
+    doc.html(data.innerHTML, {
+      callback: function (doc) {
+        doc.save("dossier.pdf")
+      },
+      margin: 15,
+      x: 10,
+      y: 10
+    });
+  }
+
+  openPdf(): void {
+    let data  = this.content.nativeElement;
+    let options : any = {
+      orientation: 'p',
+      unit: 'px',
+      format: 'a4',
+    };
+    let doc = new jsPDF(options);
+    doc.html(data.innerHTML, {
+      callback: function (doc) {
+       doc.output('dataurlnewwindow');
+      },
+      margin: 15,
+      x: 10,
+      y: 10
+    });
+    // let doc = new jsPDF();
+    // let specialElementHandlers = {
+    //   '#editor': function (element, renderer){
+    //     return true;
+    //   }
+    // };
+    //
+    // let content = this.content.nativeElement;
+    // doc.fromHtml(content.innerHTML, 15,15, {
+    //   'width': 190,
+    //   'elementHandlers': specialElementHandlers,
+    // });
+    //
+    // doc.save("Dossier.pdf")
+    // let element = document.getElementById('dossier');
+    // html2canvas(element).then(
+    //   (canvas) => {
+    //     let dossierUrl = canvas.toDataURL('image/png');
+    //     let dossierWidth = canvas.height * 300 / canvas.width;
+    //     this.dossierPdf = new jsPDF('p','mm','a4');
+    //     this.dossierPdf.addImage(dossierUrl,'PNG',15,15,190,208);
+    //
+    //     this.dossierPdf.save("Mon-Dossier.pdf");
+    //   }
+    // )
   }
 
 }

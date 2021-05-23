@@ -50,7 +50,6 @@ const routes: Routes = [
   {
     path: 'consultation',
     component: VideoComponent,
-    canActivate: [MedGuardGuard, PatGuardGuard]
   },
   {
     path: 'sms',

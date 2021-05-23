@@ -22,6 +22,7 @@ export class PatRegisterComponent implements OnInit {
       ville: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]),
       email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(5)]),
       groupeSang: new FormControl(""),
+      age: new FormControl(''),
       phone: new FormControl('', [Validators.required, Validators.minLength(5)]),
       dateNaiss: new FormControl('', [Validators.required]),
       username: new FormControl('', [Validators.required]),
@@ -54,7 +55,7 @@ export class PatRegisterComponent implements OnInit {
       .subscribe(
         (response) => {
           this.service.isAuthenticated = true;
-          this.toast.success("Heureux de vous comptez parmis nous " + response['nom']);
+          this.toast.success("Heureux de vous comptez parmis nous ");
           this.regPatForm.reset({});
           this._router.navigate(['../pat/login']);
         },

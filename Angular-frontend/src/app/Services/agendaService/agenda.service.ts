@@ -14,8 +14,8 @@ export class AgendaService {
 
   constructor(private http: HttpClient) { }
 
-  create(agenda): Observable<any>{
-    return this.http.post(`${mainUrl}agenda`, agenda);
+  create(agenda): Observable<Agenda>{
+    return this.http.post<Agenda>(`${mainUrl}agenda`, agenda);
   }
 
   get(cin): Observable<Agenda>{

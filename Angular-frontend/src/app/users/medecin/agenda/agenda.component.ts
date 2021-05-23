@@ -102,17 +102,16 @@ export class AgendaComponent implements OnInit {
         (response) => {
           this.agenda = response;
           // Attaching agenda to a medecin
-          this.medecinService.attachToAgenda(this.medecinInfo.cin, response['id'])
+          this.medecinService.attachToAgenda(this.medecinInfo.cin, this.agenda.id)
             .subscribe(
               () => {
                 this.ngOnInit();
-                sessionStorage.removeItem("agenda");
                 sessionStorage.setItem("agenda", JSON.stringify(this.agenda));
                 this.agendaInfo = JSON.parse(sessionStorage.getItem("agenda"));
                 this.toast.info(" Votre agenda est maintenant disponible !", "Création");
               },
               (errors) => {
-                console.log(errors);
+                this.toast.error(" Error lors de la  creation de l'agenda ", errors)
               }
             )
         }
@@ -177,7 +176,6 @@ export class AgendaComponent implements OnInit {
     this.agendaService.edit(this.agenda, this.agendaInfo.id)
       .subscribe(
         (response) => {
-          sessionStorage.removeItem("agenda");
           sessionStorage.setItem("agenda", JSON.stringify(response));
           this.showEditForm = false;
           this.agendaForm.reset({});
@@ -204,7 +202,8 @@ export class AgendaComponent implements OnInit {
     this.tacheService.create(this.tache)
       .subscribe(
         (response) => {
-          this.agendaService.addTasks(this.agendaInfo.id, response['id'])
+          this.tache = response;
+          this.agendaService.addTasks(this.agendaInfo.id, this.tache.id)
             .subscribe(
               (rep) => {
                 this.toast.success(" Tache créer avec succès !");

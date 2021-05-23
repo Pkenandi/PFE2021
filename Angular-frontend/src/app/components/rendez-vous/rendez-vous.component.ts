@@ -58,9 +58,9 @@ export class RendezVousComponent implements OnInit {
 
           // Check if an existing rendez-vous has been made between both
 
-          this.rendezVousService.findWithMedecinAndPatient(this.medecinInfo.cin, this.patient.username)
-            .subscribe(
-              (exist) => {
+          // this.rendezVousService.findWithMedecinAndPatient(this.medecinInfo.cin, this.patient.username)
+          //   .subscribe(
+          //     (exist) => {
                   this.rendezVous = this.rdvForm.value;
                   this.rendezVousService.createRendezVous(this.rdvForm.value).subscribe(
                     (response) => {
@@ -102,11 +102,11 @@ export class RendezVousComponent implements OnInit {
                       this.toast.error(" Désoler ! votre rendez-vous n'as pas pu être soumis ", "Echec");
                     }
                   )
-              },
-              (error) => {
-                this.toast.info(" Désoler! Vous avez dèja un rendez-vous avec ce Médecin !", "Attention !");
-              }
-            )
+
+            //   (error) => {
+            //     this.toast.info(" Désoler! Vous avez dèja un rendez-vous avec ce Médecin !", "Attention !");
+            //   }
+            // )
         }else {
           return;
         }
