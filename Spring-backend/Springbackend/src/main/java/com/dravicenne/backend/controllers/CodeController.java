@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @ResponseBody
-@RequestMapping(path = "/api/code")
+@RequestMapping(path = "code")
 public class CodeController {
     private final CodeService codeService;
 

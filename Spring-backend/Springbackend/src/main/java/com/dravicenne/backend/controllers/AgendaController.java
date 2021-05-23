@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @ResponseBody
-@RequestMapping(path = "api/agenda")
+@RequestMapping(path = "agenda")
 public class AgendaController {
     private final AgendaService agendaService;
 

@@ -23,7 +23,6 @@ public class Medecin extends User implements Serializable {
     private String cin;
     @Column(nullable = false)
     private String specialite;
-    private String status;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)

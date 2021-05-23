@@ -1,5 +1,8 @@
 package com.dravicenne.backend.models;
 
+import com.dravicenne.backend.models.antecedent.Chirurgicaux;
+import com.dravicenne.backend.models.antecedent.GynecoObstetricaux;
+import com.dravicenne.backend.models.antecedent.Medicaux;
 import com.dravicenne.backend.models.dto.DossierDto;
 import com.dravicenne.backend.models.dto.MedecinDto;
 import com.dravicenne.backend.models.dto.PatientDto;
@@ -26,7 +29,8 @@ public class DossierMedical implements Serializable {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
     private String numero;
-    private String antecedent;
+    private Medicaux antMed;
+    private Chirurgicaux antCh;
     private String observation;
     private String prescription;
 
@@ -49,7 +53,8 @@ public class DossierMedical implements Serializable {
         if(Objects.isNull(dossierDto)){
             return null;
         }else{
-            dossierMedical.setAntecedent(dossierDto.getAntecedent());
+            dossierMedical.setAntMed(dossierDto.getAntMed());
+            dossierMedical.setAntCh(dossierDto.getAntCh());
             dossierMedical.setId(dossierDto.getId());
             dossierMedical.setNumero(dossierDto.getNumero());
             dossierMedical.setObservation(dossierDto.getObservation());
@@ -57,17 +62,5 @@ public class DossierMedical implements Serializable {
 
             return dossierMedical;
         }
-    }
-
-    public static DossierMedical ToPlainDossier(PlainDossierDto plainDossierDto){
-        DossierMedical dossierMedical = new DossierMedical();
-
-        dossierMedical.setAntecedent(plainDossierDto.getAntecedent());
-        dossierMedical.setNumero(plainDossierDto.getNumero());
-        dossierMedical.setObservation(plainDossierDto.getObservation());
-        dossierMedical.setPrescription(plainDossierDto.getPrescription());
-        dossierMedical.setId(plainDossierDto.getId());
-
-        return dossierMedical;
     }
 }

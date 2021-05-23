@@ -39,7 +39,8 @@ public class DossierService {
         dossierToEdit.setPrescription(dossierMedical.getPrescription());
         dossierToEdit.setObservation(dossierMedical.getObservation());
         dossierToEdit.setNumero(dossierMedical.getNumero());
-        dossierToEdit.setAntecedent(dossierMedical.getAntecedent());
+        dossierToEdit.setAntMed(dossierMedical.getAntMed());
+        dossierToEdit.setAntCh(dossierMedical.getAntCh());
 
         return this.dossierMedicalRepository.save(dossierToEdit);
     }

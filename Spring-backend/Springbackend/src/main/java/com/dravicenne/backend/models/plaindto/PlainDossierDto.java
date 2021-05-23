@@ -1,6 +1,9 @@
 package com.dravicenne.backend.models.plaindto;
 
 import com.dravicenne.backend.models.DossierMedical;
+import com.dravicenne.backend.models.antecedent.Chirurgicaux;
+import com.dravicenne.backend.models.antecedent.GynecoObstetricaux;
+import com.dravicenne.backend.models.antecedent.Medicaux;
 import com.dravicenne.backend.models.dto.DossierDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +17,8 @@ import java.util.Objects;
 public class PlainDossierDto {
     private Long id;
     private String numero;
-    private String antecedent;
+    private Medicaux antMed;
+    private Chirurgicaux antCh;
     private String observation;
     private String prescription;
 
@@ -25,7 +29,8 @@ public class PlainDossierDto {
         if(Objects.isNull(medical)){
             return null;
         }else{
-            plainDossierDto.setAntecedent(medical.getAntecedent());
+            plainDossierDto.setAntMed(medical.getAntMed());
+            plainDossierDto.setAntCh(medical.getAntCh());
             plainDossierDto.setId(medical.getId());
             plainDossierDto.setNumero(medical.getNumero());
             plainDossierDto.setObservation(medical.getObservation());
