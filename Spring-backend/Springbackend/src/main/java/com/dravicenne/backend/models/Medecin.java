@@ -25,6 +25,11 @@ public class Medecin extends User implements Serializable {
     private String specialite;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "medecin_id")
+    private List<Horraire> horraire = new ArrayList<>();
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn( name = "agenda_Id")
     private Agenda agenda;
@@ -63,6 +68,14 @@ public class Medecin extends User implements Serializable {
         this.specialites.remove(specialites);
     }
 
+    public void addHorraire(Horraire horraire){
+        this.horraire.add(horraire);
+    }
+
+    public void removeHorraire(Horraire horraire){
+        this.horraire.remove(horraire);
+    }
+
     public static Medecin from(MedecinDto medecinDto){
         Medecin medecin = new Medecin();
 
@@ -79,6 +92,7 @@ public class Medecin extends User implements Serializable {
             medecin.setCpassword(medecinDto.getCpassword());
             medecin.setPassword(medecinDto.getPassword());
             medecin.setPhone(medecinDto.getPhone());
+            medecin.setPicture(medecinDto.getPicture());
 
             return medecin;
         }
@@ -100,6 +114,7 @@ public class Medecin extends User implements Serializable {
             medecin.setPassword(plainMedecinDto.getPassword());
             medecin.setCpassword(plainMedecinDto.getCpassword());
             medecin.setCin(plainMedecinDto.getCin());
+            medecin.setPicture(plainMedecinDto.getPicture());
 
             return medecin;
 

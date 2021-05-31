@@ -10,6 +10,7 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -18,22 +19,22 @@ public class DossierService {
 
     private final DossierMedicalRepository dossierMedicalRepository;
 
-    public DossierMedical createDossier(DossierMedical dossierMedical){
+    public DossierMedical createDossier(DossierMedical dossierMedical) {
         return this.dossierMedicalRepository.save(dossierMedical);
     }
 
-    public List<DossierMedical> findAll(){
+    public List<DossierMedical> findAll() {
         return this.dossierMedicalRepository.findAll();
     }
 
-    public DossierMedical findById(Long id){
+    public DossierMedical findById(Long id) {
 
         return this.dossierMedicalRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(" Dossier medical not found ")
         );
     }
 
-    public DossierMedical editDossierMedical(DossierMedical dossierMedical, Long id){
+    public DossierMedical editDossierMedical(DossierMedical dossierMedical, Long id) {
         DossierMedical dossierToEdit = this.findById(id);
 
         dossierToEdit.setPrescription(dossierMedical.getPrescription());
@@ -45,27 +46,28 @@ public class DossierService {
         return this.dossierMedicalRepository.save(dossierToEdit);
     }
 
-    public DossierMedical deleteDossierMedical(Long id){
+    public DossierMedical deleteDossierMedical(Long id) {
         DossierMedical dossierToEdit = this.findById(id);
+
         this.dossierMedicalRepository.delete(dossierToEdit);
 
         return dossierToEdit;
     }
 
-    public void disablePatientId(Long id){
+    public void disablePatientId(Long id) {
         DossierMedical medical = new DossierMedical();
         medical.setPatient(null);
     }
 
-    public Boolean hasDossierMedical(String username){
+    public Boolean hasDossierMedical(String username) {
         return this.dossierMedicalRepository.findByPatientUsername(username);
     }
 
-    public DossierMedical findWithPatient(String username){
+    public DossierMedical findWithPatient(String username) {
         return this.dossierMedicalRepository.findWithPatient(username);
     }
 
-    public List<DossierMedical> findWithMedecin(String cin){
+    public List<DossierMedical> findWithMedecin(String cin) {
         return this.dossierMedicalRepository.findWithMedecinAndPatient(cin);
     }
 

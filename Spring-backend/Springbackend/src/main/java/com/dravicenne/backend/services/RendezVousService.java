@@ -62,8 +62,8 @@ public class RendezVousService {
         this.rendezVousRepository.Cancel(status, id);
     }
 
-    public RendezVous findWithMedecinAndPatient(String cin, String username){
-        return this.rendezVousRepository.findWithMedecinAndPatient(cin, username);
+    public RendezVous findByPatient_UsernameAndMedecin_Cin(String cin, String username){
+        return this.rendezVousRepository.findByPatient_UsernameAndMedecin_Cin(username, cin);
     }
 
 }

@@ -34,6 +34,7 @@ public class PlainMedecinDto extends User {
            plainMedecinDto.setCpassword(medecin.getCpassword());
            plainMedecinDto.setPassword(medecin.getPassword());
            plainMedecinDto.setPhone(medecin.getPhone());
+           plainMedecinDto.setPicture(medecin.getPicture());
 
            return plainMedecinDto;
        }

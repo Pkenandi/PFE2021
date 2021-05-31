@@ -1,5 +1,6 @@
 package com.dravicenne.backend.models.dto;
 
+import com.dravicenne.backend.models.Horraire;
 import com.dravicenne.backend.models.Medecin;
 import com.dravicenne.backend.models.Specialites;
 import com.dravicenne.backend.models.User;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public class MedecinDto extends User {
     private String cin;
     private String specialite;
+    private List<Horraire> horraireList;
     private List<DossierDto> dossierDtos = new ArrayList<>();
     private List<PlainSpecialitesDto> plainSpecialitesDtos = new ArrayList<>();
     private AgendaDto agendaDto;
@@ -42,7 +44,9 @@ public class MedecinDto extends User {
             medecinDto.setCpassword(medecin.getCpassword());
             medecinDto.setPassword(medecin.getPassword());
             medecinDto.setPhone(medecin.getPhone());
+            medecinDto.setPicture(medecin.getPicture());
             medecinDto.setToken(medecin.getToken());
+            medecinDto.setHorraireList(medecin.getHorraire());
             medecinDto.setDossierDtos(medecin.getDossierMedicals().stream().map(DossierDto::from).collect(Collectors.toList()));
             medecinDto.setPlainSpecialitesDtos(medecin.getSpecialites().stream().map(PlainSpecialitesDto::ToPlainSpecialite).collect(Collectors.toList()));
             medecinDto.setAgendaDto(AgendaDto.from(medecin.getAgenda()));

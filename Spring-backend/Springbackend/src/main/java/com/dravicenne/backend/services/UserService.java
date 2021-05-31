@@ -99,6 +99,15 @@ public class UserService {
     public List<Medecin> findMedecinBySpecialite(String specialite) {
        return this.medecinRepository.findMedecinBySpecialite(specialite);
     }
+    public Medecin setProfileMedecin(String picture, String cin){
+        Medecin medecin = this.findMedecinByCin(cin);
+        if(Objects.nonNull(medecin)){
+            this.medecinRepository.setProfilePicture(picture, cin);
+            return medecin;
+        }else {
+            return null;
+        }
+    }
 
     public Medecin connectToRendezVous(String cin, Long rdvId){
         Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
@@ -206,6 +215,16 @@ public class UserService {
     public void resetPatientPassword(ResetPasswordDto resetPasswordDto, String username){
         this.patientRepository.resetPassword(resetPasswordDto.getPassword(),resetPasswordDto.getCpassword(),username);
     }
+    public Patient setProfilePatient(String picture, String username){
+        Patient patient = this.findPatientByUsername(username);
+
+        if(Objects.nonNull(patient)){
+            this.patientRepository.setProfilePicture(picture, username);
+            return patient;
+        }else{
+            return null;
+        }
+    }
 
     public Patient deleteRendezVous(String username, Long RdvId){
         Patient patient = this.patientRepository.findPatientByUsername(username);
@@ -254,5 +273,8 @@ public class UserService {
             }
         }
         return null;
+    }
+    public Patient findByDossierId(Long id){
+        return this.patientRepository.findByDossierMedicalId(id);
     }
 }

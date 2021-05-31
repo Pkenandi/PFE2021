@@ -27,6 +27,7 @@ public class PlainMedecinDto extends User {
             medecinDto.setSpecialite(medecin.getSpecialite());
             medecinDto.setNom(medecin.getNom());
             medecinDto.setPrenom(medecin.getPrenom());
+            medecinDto.setPicture(medecin.getPicture());
             medecinDto.setVille(medecin.getVille());
             medecinDto.setCin(medecinDto.getCin());
             medecinDto.setEmail(medecin.getEmail());

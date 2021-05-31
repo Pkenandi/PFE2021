@@ -28,6 +28,7 @@ public abstract class User implements Serializable {
     protected String email;
     @Column(nullable = false)
     protected String phone;
+    protected String picture;
     protected String password;
     protected String Cpassword;
     protected String Token;

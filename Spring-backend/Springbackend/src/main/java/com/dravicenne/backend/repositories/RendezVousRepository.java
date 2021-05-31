@@ -29,6 +29,5 @@ public interface RendezVousRepository extends JpaRepository<RendezVous, Long> {
     @Query(value = "UPDATE rendez_vous SET status = :status WHERE id = :id", nativeQuery = true)
     void Cancel(@Param(value = "status") String status, @Param(value = "id") Long id);
 
-    @Query(" select rdv from RendezVous rdv where rdv.medecin.cin=?1 and rdv.patient.username=?1")
-    RendezVous findWithMedecinAndPatient(String cin, String username);
+    RendezVous findByPatient_UsernameAndMedecin_Cin(String username, String cin);
 }

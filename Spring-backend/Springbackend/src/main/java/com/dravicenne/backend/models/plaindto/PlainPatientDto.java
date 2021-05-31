@@ -38,6 +38,7 @@ public class PlainPatientDto extends User {
             plainPatientDto.setDateNaiss(patient.getDateNaiss());
             plainPatientDto.setEmail(patient.getEmail());
             plainPatientDto.setPhone(patient.getPhone());
+            plainPatientDto.setPicture(patient.getPicture());
             plainPatientDto.setPassword(patient.getPassword());
             plainPatientDto.setCpassword(patient.getCpassword());
 

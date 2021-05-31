@@ -104,6 +104,7 @@ public class Patient extends User implements Serializable {
             patient.setVille(patientDto.getVille());
             patient.setId(patientDto.getId());
             patient.setPhone(patientDto.getPhone());
+            patient.setPicture(patientDto.getPicture());
             patient.setEmail(patientDto.getEmail());
             patient.setPassword(patientDto.getPassword());
             patient.setCpassword(patientDto.getCpassword());

@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
+    private final DossierService dossierService;
     private final MailService mailService;
     private static final SecureRandom secureRandom = new SecureRandom(); //threadsafe
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder(); //threadsafe
@@ -374,6 +375,17 @@ public class UserController {
         Medecin medecin =  this.userService.removeAgenda(cin, id);
 
         return new ResponseEntity<>(MedecinDto.from(medecin), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/patient/dossier/{id}")
+    public ResponseEntity<PatientDto> deleteDossier(@PathVariable final Long id){
+        Patient patient = this.userService.findByDossierId(id);
+        if(Objects.nonNull(patient)){
+            patient.setDossierMedical(null);
+            this.dossierService.deleteDossierMedical(id);
+            return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
 }

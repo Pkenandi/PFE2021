@@ -12,7 +12,12 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
     Patient findPatientByUsername(String username);
     Patient findPatientByUsernameAndPassword(String username, String password);
     Patient findByEmail(final String email);
+    @Query("select p from Patient p where p.dossierMedical.id=?1")
+    Patient findByDossierMedicalId(final Long id);
     @Modifying
     @Query("update Patient pat set pat.password=?1, pat.Cpassword=?2 where pat.username=?3")
     void resetPassword(String password, String Cpassword, String username);
+    @Modifying
+    @Query("update Patient p set p.picture=?1 where p.username=?2")
+    void setProfilePicture(String picture, String username);
 }
