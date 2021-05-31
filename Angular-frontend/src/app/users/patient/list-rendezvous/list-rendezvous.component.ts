@@ -1,20 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import {PatientService} from "../../../Services/patientservice/patient.service";
 import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.service";
-import {RendezVous} from "../../../Models/RendezVous/rendez-vous";
-import {Medecin} from "../../../Models/Medecin/medecin";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
 import {Title} from "@angular/platform-browser";
 import {Patient} from "../../../Models/Patient/patient";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-list-rendezvous',
   templateUrl: './list-rendezvous.component.html',
-  styleUrls: ['./list-rendezvous.component.css']
+  styleUrls: ['./list-rendezvous.component.css'],
+  styles: [`
+    .dark-modal .modal-content {
+      background-color: transparent;
+      opacity: 0.9;
+      color: white;
+    }
+    .modal-xl .modal-lg {
+      max-width: 550px;
+    }
+  `]
+
 })
 export class ListRendezvousComponent implements OnInit {
 
   patientInfo: Patient = JSON.parse(sessionStorage.getItem("patient"));
+  handler:any = null;
+  name: string = '';
 
   accepted: [] = null;
   isAccepted: boolean = false
@@ -26,16 +38,18 @@ export class ListRendezvousComponent implements OnInit {
   isDenied: boolean = false;
 
   canceled: [] = null;
-  isCanceled: boolean = false;e
+  isCanceled: boolean = false;
   message: string;
 
   constructor(public patientService: PatientService,
               private rdvService: RendezVousService,
               private medecinService: MedecinService,
-              private title: Title) { }
+              private modalService: NgbModal,
+              private title: Title) {}
 
    ngOnInit(): void {
      this.title.setTitle(" Liste Rendez-vous - DrAvicenne")
+     this.loadStripe();
     this.rdvService.p_notifications = 0;
     this.rdvService.pr_note = 0;
     this.rdvService.pw_note = 0;
@@ -123,8 +137,8 @@ export class ListRendezvousComponent implements OnInit {
 
   // Operations
 
-  cancelRdv(status: string, id_rdv):void{
-    this.rdvService.editStatus(status, id_rdv)
+  cancelRdv(id_rdv):void{
+    this.rdvService.deleteRdv(id_rdv)
       .subscribe(
         () => {
           this.ngOnInit();
@@ -141,4 +155,48 @@ export class ListRendezvousComponent implements OnInit {
       )
   }
 
+  pay(amount: any) {
+    let handler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51HxRkiCumzEESdU2Z1FzfCVAJyiVHyHifo0GeCMAyzHPFme6v6ahYeYbQPpD9BvXbAacO2yFQ8ETlKjo4pkHSHSh00qKzqUVK9',
+      locale: 'auto',
+      token: function (token: any) {
+        console.log(token)
+        alert('Paiement effectuer avec suucès !/');
+      }
+    });
+
+    handler.open({
+      name: 'Paiement consultation',
+      description: 'Cabinet de Médecins ',
+      amount: amount * 100
+    });
+  }
+
+  loadStripe() {
+
+    if(!window.document.getElementById('stripe-script')) {
+      let s = window.document.createElement("script");
+      s.id = "stripe-script";
+      s.type = "text/javascript";
+      s.src = "https://checkout.stripe.com/checkout.js";
+      s.onload = () => {
+        this.handler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_51IxCsxA1axM7RFxG47LDDTV9IaZM7509N5EKLD2W8kKZInFcPyenVzjlOXIbBOwba5NSnPFFRwV8IfL3SLvO1C5K00BbMpYAn3',
+          locale: 'auto',
+          token: function (token: any) {
+            // You can access the token ID with `token.id`.
+            // Get the token ID to your server-side code for use.
+            console.log(token)
+            alert(' Paiement effectuer avec succès !!');
+          }
+        });
+      }
+
+      window.document.body.appendChild(s);
+    }
+  }
+
+  openPaymentModal(payment){
+    this.modalService.open(payment, { windowClass: 'dark-modal', centered: true, size: "md"})
+  }
 }

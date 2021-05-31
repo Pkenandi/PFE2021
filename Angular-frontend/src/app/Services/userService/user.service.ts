@@ -48,11 +48,11 @@ export class UserService {
 
 
   loginPatient(username: string, password: string): Observable<Patient> {
-    return this._http.post<Patient>(`${mainUrl}user/patient/login`, { username, password});
+    return this._http.post<Patient>(`${mainUrl}user/patient/login`, { username, password}, {withCredentials:true});
   }
 
   loginMedecin(cin: string, password: string): Observable<Medecin> {
-    return this._http.post<Medecin>(`${mainUrl}user/medecin/login`, { cin, password });
+    return this._http.post<Medecin>(`${mainUrl}user/medecin/login`, { cin, password }, {withCredentials:true});
   }
 
   logOut(): void {

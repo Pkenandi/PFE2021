@@ -1,5 +1,5 @@
 export class User {
-  public Id: number;
+  public id: number;
   public nom: string;
   public prenom: string;
   public ville: string;
@@ -7,6 +7,7 @@ export class User {
   public phone: string;
   public password: string;
   public cpassword: string;
+  public picture: string;
 
   constructor(nom: string, prenom: string, ville: string, email: string, phone: string, password: string, cpassword: string)
   {

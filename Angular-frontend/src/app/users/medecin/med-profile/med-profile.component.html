@@ -8,12 +8,13 @@
 
     <div class="profile-header-content">
       <div class="profile-header-img">
-        <img src="assets/images/doctor256.png" alt="" />
+        <img src="assets/files/{{medecin.picture}}" alt="Photo de profile manquant" />
       </div>
 
       <div class="profile-header-info">
         <h4 class="m-t-sm">{{ medecin.nom }} {{ medecin.prenom }}</h4>
         <p class="m-b-sm">{{medecin.specialite}}</p>
+        <p style="cursor:pointer;" (click)="setProfileModal(profile)"><img src="assets/images/icons/edit2.png" alt=""> Modifier</p>
       </div>
     </div>
 
@@ -124,4 +125,37 @@
     </div>
   </div>
 </div>
+
+<ng-template #profile let-modal>
+  <div class="container" style="margin-top: 20px; margin-bottom: 20px; padding: 10px">
+    <div class="row">
+      <div class="col-auto mx-auto">
+        <h3> Photo de profile </h3>
+        <div class="alert alert-danger" *ngIf="!validity">
+          <p> {{ message }}</p>
+        </div>
+        <div class="progress" *ngIf=" fileStatus.status === 'progress'">
+          <div [style.width.%]="fileStatus.percent" class="progress-bar progress-bar-animated bg-info" role="progressbar" aria-valuenow="">
+            {{ fileStatus.requestType }}
+          </div>
+        </div>
+        <br>
+        <small class="text-muted">jpg/jpeg/png/gif</small>
+        <form enctype="multipart/form-data">
+          <div class="form-group">
+            <div>
+              <input (change)="onUploadFile($event.target.files)" type="file" name="file" class="form-control-file" required>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-secondary" (click)="setPicture(); modal.close('close modal');" [disabled]="!show">
+              Changer <img src="assets/images/icons/edit2.png" alt="">
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
 </body>

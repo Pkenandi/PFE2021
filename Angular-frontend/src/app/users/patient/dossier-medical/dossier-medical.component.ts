@@ -81,7 +81,7 @@ export class DossierMedicalComponent implements OnInit {
         }
       },
       (error) => {
-        console.log(" Erreur : " + error.message);
+        console.log(" Error : " + error.message);
       }
     )
   }
@@ -140,47 +140,21 @@ export class DossierMedicalComponent implements OnInit {
     });
   }
 
-  openPdf(): void {
-    let data  = this.content.nativeElement;
-    let options : any = {
-      orientation: 'p',
-      unit: 'px',
-      format: 'a4',
-    };
-    let doc = new jsPDF(options);
-    doc.html(data.innerHTML, {
-      callback: function (doc) {
-       doc.output('dataurlnewwindow');
-      },
-      margin: 15,
-      x: 10,
-      y: 10
-    });
-    // let doc = new jsPDF();
-    // let specialElementHandlers = {
-    //   '#editor': function (element, renderer){
-    //     return true;
-    //   }
-    // };
-    //
-    // let content = this.content.nativeElement;
-    // doc.fromHtml(content.innerHTML, 15,15, {
-    //   'width': 190,
-    //   'elementHandlers': specialElementHandlers,
-    // });
-    //
-    // doc.save("Dossier.pdf")
-    // let element = document.getElementById('dossier');
-    // html2canvas(element).then(
-    //   (canvas) => {
-    //     let dossierUrl = canvas.toDataURL('image/png');
-    //     let dossierWidth = canvas.height * 300 / canvas.width;
-    //     this.dossierPdf = new jsPDF('p','mm','a4');
-    //     this.dossierPdf.addImage(dossierUrl,'PNG',15,15,190,208);
-    //
-    //     this.dossierPdf.save("Mon-Dossier.pdf");
-    //   }
-    // )
+  delete(): void {
+    this.patientService.deleteFromDossier(this.dossier.id)
+      .subscribe(
+        (patient) =>{
+          this.ngOnInit();
+          this.reload();
+        }
+      )
   }
 
+  reload(): void {
+    setTimeout(
+      () => {
+        location.reload();
+      }, 2
+    )
+  }
 }

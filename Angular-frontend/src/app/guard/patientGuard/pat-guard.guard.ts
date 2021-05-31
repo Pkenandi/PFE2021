@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import {Patient} from "../../Models/Patient/patient";
 
@@ -8,6 +8,9 @@ import {Patient} from "../../Models/Patient/patient";
 })
 
 export class PatGuardGuard implements CanActivate {
+
+  constructor(private router: Router) {
+  }
   patientSession: Patient = JSON.parse(sessionStorage.getItem("patient"));
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -16,6 +19,7 @@ export class PatGuardGuard implements CanActivate {
     if(this.patientSession != null){
       return true
     }else{
+      this.router.navigate(['/pat/login']);
       return false
     }
   }

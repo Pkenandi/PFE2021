@@ -63,13 +63,17 @@ patient: Patient = JSON.parse(sessionStorage.getItem("patient"));
     return this._http.get<any>(`${mainUrl}user/patient/${username}/rendezvous/${id}/add`);
   }
 
+  deleteFromDossier(id: number): Observable<Patient>{
+    return this._http.get<Patient>(`${mainUrl}user/patient/dossier/${id}`);
+  }
+
   // Reset Password
   check(resetForm): Observable<any>{
     return this._http.post<UsernameDto>(`${mainUrl}user/patient/username/check`, resetForm)
   }
 
-  checkEmail(email: string): Observable<any>{
-    return this._http.get(`${mainUrl}user/patient/check/${email}`);
+  checkEmail(email: string): Observable<Patient>{
+    return this._http.get<Patient>(`${mainUrl}user/patient/check/${email}`);
   }
 
   reset(Reset: ResetDto, username: string): Observable<any>{
@@ -78,6 +82,10 @@ patient: Patient = JSON.parse(sessionStorage.getItem("patient"));
 
   sendLink(mail: Mail, email: string): Observable<any> {
     return this._http.post<Mail>(`${mainUrl}user/patient/${email}/reset-password`,mail)
+  }
+
+  getToken() {
+    return localStorage.getItem("token");
   }
 
 }

@@ -17,8 +17,8 @@ import {Title} from "@angular/platform-browser";
 export class MedRegisterComponent implements OnInit {
 
   regMedForm = new FormGroup({
-      nom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
-      prenom: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(8)]),
+      nom: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
+      prenom: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
       specialite: new FormControl('', [Validators.required]),
       ville: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       email: new FormControl('', [Validators.required, Validators.email]),

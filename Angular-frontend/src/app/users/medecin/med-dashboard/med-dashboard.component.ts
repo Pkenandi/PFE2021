@@ -21,6 +21,13 @@ export class MedDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle(" Tableau de bord - DrAvicenne ")
     this.medecinInfo = JSON.parse(sessionStorage.getItem("medecin"));
+    this.medecinService.getMedecinByCin(this.medecinInfo.cin)
+      .subscribe(
+        (results) => {
+          sessionStorage.setItem("medecin", JSON.stringify(results));
+          this.medecinInfo = results;
+        }
+      )
       //Toggle Click Function
     $("#menu-toggle").click(function(e) {
     e.preventDefault();

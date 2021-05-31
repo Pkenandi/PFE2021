@@ -7,11 +7,11 @@
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
         <div class="sidebar-heading text-center mt-2 mb-2 shadow">
-          <img src="assets/images/home/patient.png" alt=""> <br> <span id="Dr">{{patientInfo.nom}} {{patientInfo.prenom}}</span>
+          <img src="assets/files/{{patientInfo.picture}}" alt="Photo de Profile manquant"> <br> <br> <span id="Dr">{{patientInfo.nom}} {{patientInfo.prenom}}</span>
         </div>
         <div class="list-group list-group-flush nav nav-tabs" style="margin-top: 100px">
           <a routerLink="../../patient/{{patientInfo.username}}" class=" nav-link btn list-group-item list-group-item-action bg-light">
-            <img src="assets/images/profile.png" (click)="setTitle('Profile')"> Profile
+            <img src="assets/images/icons/settings.png" (click)="setTitle('Profile')"> Parametre profile
           </a>
 
             <a routerLink="../../pat/logout" class=" nav-link btn list-group-item list-group-item-action bg-light" (click)="reload()">

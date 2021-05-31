@@ -14,6 +14,9 @@ import {Title} from "@angular/platform-browser";
 import {Medecin} from "../../../Models/Medecin/medecin";
 import {MailService} from "../../../Services/mailService/mail.service";
 import {ToastrService} from "ngx-toastr";
+import {RendezVous} from "../../../Models/RendezVous/rendez-vous";
+import {Patient} from "../../../Models/Patient/patient";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-list-rendez-vous',
@@ -22,7 +25,8 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./list-rendez-vous.component.css'],
   styles: [`
     .dark-modal .modal-content {
-      background-color: #292b2c;
+      background-color: transparent;
+      opacity: 0.9;
       color: white;
     }
     .dark-modal .close {
@@ -65,14 +69,17 @@ export class ListRendezVousComponent implements OnInit {
 
 
   mail: Mail;
+  notification: Mail;
   dossierMed: DossierMedical;
   medecinInfo: Medecin = JSON.parse(sessionStorage.getItem("medecin"));
 
-  InWait: [] = null;
+  InWait: RendezVous[] = [];
   isInWait = false;
 
-  Confirmed: [] = null;
+  Confirmed: RendezVous[] = [];
   isConfirmed = false;
+
+  patientInfo: Patient;
 
   ngOnInit(): void {
     this.title.setTitle(" Liste Rendez-vous - DrAvicenne")
@@ -132,11 +139,39 @@ export class ListRendezVousComponent implements OnInit {
 
   // Operations on rendez-vous
 
-  Confirm(id_rdv): void{
+  Confirm(id_rdv: number, username: string): void{
     this.rendezvousService.editStatus("ACCEPTER",id_rdv)
       .subscribe(
         (response) => {
-          this.ngOnInit();
+          // send notification to patient
+          this.patientService.getByUsername(username)
+            .subscribe(
+              (patient) => {
+                this.patientInfo = patient;
+                console.log(this.patientInfo);
+                this.notification = new Mail(
+                  this.patientInfo.email,
+                  "dravicennegroupe@gmail.com",
+                  "Rendez-vous confirmer | DrAvicenne.com",
+                  " Le Dr " +this.medecinInfo.nom + this.medecinInfo.prenom + " viens de confirmer votre rendez-vous avec lui, il vous contactera d'ici peu pour plus de details " +
+                  "\n Merci d'avoir utiliser DrAvicenne.com pour votre rendez-vous médical "
+                );
+
+                this.mailService.sendMail(this.notification)
+                  .subscribe(
+                    () => {
+                        console.log(" Mail envoyer avec succès ");
+                        this.ngOnInit();
+                    },
+                    (error) => {
+                      console.log(" Erreur lors de l'envoi du mail")
+                    }
+                  )
+              },
+              (error: HttpErrorResponse) => {
+                console.log(' Patient non trouver ', error.type)
+              }
+            )
         },
         (error) => {
           this.ngOnInit();
@@ -145,11 +180,40 @@ export class ListRendezVousComponent implements OnInit {
       )
   }
 
-  Reject(id_rdv): void{
+  Reject(id_rdv: number, username: string): void{
     this.rendezvousService.editStatus("REFUSER", id_rdv)
       .subscribe(
         (response) => {
-          this.ngOnInit();
+          // send notification to patient
+          this.patientService.getByUsername(username)
+            .subscribe(
+              (patient) => {
+                this.patientInfo = patient;
+                this.notification = new Mail(
+                  this.patientInfo.email,
+                  "dravicennegroupe@gmail.com",
+                  "Rendez-vous refuser | DrAvicenne",
+                  "Nous sommes désoler " + this.patientInfo.nom +" votre rendez-vous avec le Dr " +this.medecinInfo.nom + " " + this.medecinInfo.prenom + " n'a pas pu être confirmer malheureusement"
+                  + "\nVeillez reessayer avec un autre médecin ! "
+                  + "\n\n Merci d'avoir utiliser DrAvicenne.com pour votre rendez-vous médical "
+                );
+
+                this.mailService.sendMail(this.notification)
+                  .subscribe(
+                    () => {
+                        console.log(" Mail envoyer avec succès");
+                        this.ngOnInit();
+                    },
+                    () => {
+                      console.log(" Error lors de l'envoi du mail");
+                      this.ngOnInit();
+                    }
+                  )
+              },
+              (error: HttpErrorResponse) => {
+                console.log(' Patient non trouver ', error.type)
+              }
+            )
         },
         (error) => {
           this.ngOnInit();
@@ -186,12 +250,15 @@ export class ListRendezVousComponent implements OnInit {
       .subscribe(
         (response) => {
           this.smsForm = new FormGroup({
-            nom: new FormControl(response['nom']),
+            nom: new FormControl(response['nom'] + ' ' + response['prenom']),
             numero: new FormControl(response['phone']),
-            message: new FormControl(''),
           })
         }
       )
+  }
+
+  sendNotification(username: string) {
+
   }
 
   sendMail(): void {
@@ -223,7 +290,7 @@ export class ListRendezVousComponent implements OnInit {
   }
 
   openWindowCustomClass(mail) {
-    this.modalService.open(mail, { windowClass: 'dark-modal' , centered: true, size: "lg"});
+    this.modalService.open(mail, { windowClass: 'dark-modal' ,centered: true, size: "lg"});
   }
 
   openSmallModal(Sms){
@@ -236,6 +303,10 @@ export class ListRendezVousComponent implements OnInit {
 
   warningConfirm(confirm) {
     this.modalService.open(confirm, { centered: true, size: "sm" })
+  }
+
+  showNumero(numero){
+    this.modalService.open(numero, { centered: true, size: "sm"})
   }
 
   warningRefuse(refuse) {

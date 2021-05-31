@@ -9,6 +9,10 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {SpecialiteService} from "../../../Services/specialiteService/specialite.service";
 import {Specialite} from "../../../Models/spacialite/specialite";
+import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http";
+import {saveAs} from "file-saver";
+import {FileService} from "../../../Services/fileService/file.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-med-profile',
@@ -23,6 +27,17 @@ export class MedProfileComponent implements OnInit, OnDestroy {
   specialite: Specialite[];
   med = JSON.parse(sessionStorage.getItem("medecin"));
   date = new Date();
+  filenames: string[] = [];
+  message = '';
+  validity = true;
+  show = false
+  picture: string;
+  fileStatus = {
+    status: '',
+    requestType: '',
+    percent: 0
+  };
+  formData = new FormData();
 
   medecinInfo = new FormGroup({
     nom: new FormControl(''),
@@ -38,6 +53,8 @@ export class MedProfileComponent implements OnInit, OnDestroy {
   constructor(
     public medService: MedecinService,
     private specialiteService: SpecialiteService,
+    private fileService: FileService,
+    private modalService: NgbModal,
     public activatedRoute: ActivatedRoute,
     private toaster: ToastrService,
     private title: Title) {
@@ -108,4 +125,81 @@ export class MedProfileComponent implements OnInit, OnDestroy {
       )
   }
 
+  // set profile pic
+  onUploadFile(files: File[]): void {
+    if(files[0].type === 'image/jpeg' || files[0].type === 'image/png' || files[0].type === 'image/gif'){
+      this.validity = true;
+      this.show = true;
+      for (const file of files) {
+        this.formData.append('files', file, file.name);
+      }
+
+    }else{
+      this.validity = false;
+      this.show = false;
+      this.message = " Format non autorisé !!!"
+    }
+  }
+
+  setPicture(): void {
+    this.fileService.setMedecinPic(this.formData, this.medecin.cin)
+      .subscribe(
+        (event) => {
+          console.log(event);
+          this.reportProgress(event);
+
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      )
+  }
+
+  private reportProgress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch (httpEvent.type) {
+      case HttpEventType.UploadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Uploading...')
+        break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Downloading...')
+        break;
+      case HttpEventType.ResponseHeader:
+        console.log(' Header returned ', httpEvent);
+        break;
+      case HttpEventType.Response:
+        if(httpEvent.body instanceof Array){
+          for(const filename of httpEvent.body){
+            this.filenames.unshift(filename)
+          }
+          sessionStorage.setItem("pic",JSON.stringify(this.filenames))
+          console.log(this.filenames);
+        }else{
+          saveAs(new File([httpEvent.body!], httpEvent.headers.get('File-Name')!,
+            {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}));
+        }
+        this.fileStatus.status = 'done';
+        break;
+      default:
+        console.log(httpEvent);
+        break;
+    }
+  }
+
+  private updateStatus(loaded: number, total: number, requestType: string) {
+    this.fileStatus.status = 'progress'
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total)
+  }
+
+  setProfileModal(profile): void {
+    this.modalService.open(profile, {centered: true, size: "sm"})
+  }
+
+  reload(): void {
+    setTimeout(
+      () => {
+        location.reload();
+      },1
+    )
+  }
 }

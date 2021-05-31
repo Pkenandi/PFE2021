@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListRdvComponent } from './list-rdv.component';
+import { ProfilePictureComponent } from './profile-picture.component';
 
-describe('ListRdvComponent', () => {
-  let component: ListRdvComponent;
-  let fixture: ComponentFixture<ListRdvComponent>;
+describe('ProfilePictureComponent', () => {
+  let component: ProfilePictureComponent;
+  let fixture: ComponentFixture<ProfilePictureComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListRdvComponent ]
+      declarations: [ ProfilePictureComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListRdvComponent);
+    fixture = TestBed.createComponent(ProfilePictureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

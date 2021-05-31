@@ -17,6 +17,8 @@ export class PatLogoutComponent implements OnInit {
     sessionStorage.removeItem("patient");
     sessionStorage.removeItem("medecin");
     sessionStorage.removeItem("medecins");
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("horraire");
     this.router.navigate(['mon-compte']);
   }
 

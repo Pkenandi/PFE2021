@@ -20,7 +20,7 @@ interface Alert {
 export class PatResetPasswordComponent implements OnInit {
 
   reset: ResetDto;
-  patientInfo: Patient = JSON.parse(sessionStorage.getItem("response"));
+  patientInfo: Patient = JSON.parse(localStorage.getItem("response_patient"));
   isReset= false;
   Alert: Alert[] = [{
     type: 'success',

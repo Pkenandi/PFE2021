@@ -16,7 +16,7 @@ import {MedLoginComponent} from './users/medecin/med-login/med-login.component';
 import {MedRegisterComponent} from './users/medecin/med-register/med-register.component';
 import {PatRegisterComponent} from './users/patient/pat-register/pat-register.component';
 import {PatLoginComponent} from './users/patient/pat-login/pat-login.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { PatDashboardComponent } from './users/patient/pat-dashboard/pat-dashboard.component';
 import { MedDashboardComponent } from './users/medecin/med-dashboard/med-dashboard.component';
@@ -74,8 +74,6 @@ import { SmsComponent } from './users/medecin/messagerie/sms/sms.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatCard, MatCardModule} from "@angular/material/card";
 import { MedNotifComponent } from './users/medecin/med-notif/med-notif.component';
-import { ListDossierComponent } from './users/medecin/list-dossier/list-dossier.component';
-import { ListRdvComponent } from './users/medecin/list-rdv/list-rdv.component';
 import { SpecialiteComponent } from './users/medecin/specialite/specialite.component';
 import { TacheComponent } from './users/medecin/tache/tache.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
@@ -92,6 +90,13 @@ import { AdminLoginComponent } from './users/administrateur/admin-login/admin-lo
 import { AdminListPatientComponent } from './users/administrateur/admin-list-patient/admin-list-patient.component';
 import { AdminListMedecinComponent } from './users/administrateur/admin-list-medecin/admin-list-medecin.component';
 import { AdminListSpecialiteComponent } from './users/administrateur/admin-list-specialite/admin-list-specialite.component';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {InterceptorService} from "./Services/interceptor/interceptor.service";
+import {TokenInterceptorService} from "./Services/token/token-interceptor.service";
+import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
+import { RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -125,8 +130,6 @@ import { AdminListSpecialiteComponent } from './users/administrateur/admin-list-
     MailComponent,
     SmsComponent,
     MedNotifComponent,
-    ListDossierComponent,
-    ListRdvComponent,
     SpecialiteComponent,
     TacheComponent,
     ConfirmComponent,
@@ -143,6 +146,7 @@ import { AdminListSpecialiteComponent } from './users/administrateur/admin-list-
     AdminListPatientComponent,
     AdminListMedecinComponent,
     AdminListSpecialiteComponent,
+    ProfilePictureComponent,
   ],
   imports: [
     BrowserModule,
@@ -178,8 +182,12 @@ import { AdminListSpecialiteComponent } from './users/administrateur/admin-list-
     MatCardModule,
     NgxMaterialTimepickerModule,
     MatCardModule,
+    MatTableModule,
     NgbModule,
     CountdownModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    RxReactiveFormsModule
   ],
   exports: [
     HeaderComponent,
@@ -202,6 +210,9 @@ import { AdminListSpecialiteComponent } from './users/administrateur/admin-list-
     MatSelectModule,
     MatOptionModule,
     MatCardModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatTableModule
   ],
   providers: [
     UserService,
@@ -212,7 +223,9 @@ import { AdminListSpecialiteComponent } from './users/administrateur/admin-list-
     MonthService,
     WorkWeekService,
     MonthAgendaService,
-    MatNativeDateModule
+    MatNativeDateModule,
+    {provide:HTTP_INTERCEPTORS,useClass:InterceptorService,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true}
   ],
   bootstrap: [AppComponent],
   entryComponents: [PatNotifComponent,SmsComponent,MailComponent,MedNotifComponent,TacheComponent,ConfirmComponent]

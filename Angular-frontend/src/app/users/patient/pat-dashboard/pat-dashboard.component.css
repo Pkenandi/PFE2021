@@ -12,9 +12,15 @@ body {
 }
 
 .sidebar-heading{
-  height: 10vh;
+  height: 15vh;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 10rem ;
+}
+
+.sidebar-heading img {
+  border-radius: 100%;
+  height: 180px;
+  width: 180px;
 }
 
 #sidebar-wrapper {
@@ -92,6 +98,11 @@ body {
   text-align: left;
   cursor: pointer;
   outline: none;
+}
+
+.sidebar-heading img{
+  width: 128px;
+  height: 128px;
 }
 
 /* Main content */

@@ -59,8 +59,8 @@ export class PatientResetComponent implements OnInit {
     this.patientService.checkEmail(this.emailDto.email)
       .subscribe(
         (response) => {
-          if(response != null){
-            sessionStorage.setItem("response",JSON.stringify(response));
+          if(response !== null){
+            localStorage.setItem("response_patient",JSON.stringify(response));
             this.is_found = true;
             this.not_found = false;
             this.resetFormEmail.reset({})

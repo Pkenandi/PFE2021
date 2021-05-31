@@ -9,6 +9,7 @@ import {PatNotifComponent} from "../../users/patient/pat-notif/pat-notif.compone
 import {MedNotifComponent} from "../../users/medecin/med-notif/med-notif.component";
 import {Patient} from "../../Models/Patient/patient";
 import {Medecin} from "../../Models/Medecin/medecin";
+import {SpinnerService} from "../../Services/spinnerService/spinner.service";
 
 @Component({
   selector: 'app-header',
@@ -22,6 +23,8 @@ export class HeaderComponent implements OnInit {
   isAuthenticated = false;
   patAuth: boolean = false;
   medAuth: boolean = false;
+  patientInfo: Patient;
+  medecinInfo: Medecin;
 
   constructor(
     public _service: UserService,
@@ -29,11 +32,14 @@ export class HeaderComponent implements OnInit {
     public medecinService: MedecinService,
     public rdvService: RendezVousService,
     private title: Title,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    public spinner: SpinnerService) { }
 
   ngOnInit(): void {
     this.patientService.isAuth();
     this.medecinService.isAuth();
+    this.isMedecinAuth();
+    this.isPatientAuth();
   }
 
   onLoggedIn(): void {
@@ -70,16 +76,33 @@ export class HeaderComponent implements OnInit {
   }
 
   isPatientAuth(): void {
+    // get values from sessions
+    this.patientInfo = JSON.parse(sessionStorage.getItem("patient"));
     if(this.patientService.isAuth()){
       this.patAuth = true;
+      this.patientService.getByUsername(this.patientInfo.username)
+        .subscribe(
+          (results) => {
+            sessionStorage.setItem("patient",JSON.stringify(results));
+            this.patientInfo = JSON.parse(sessionStorage.getItem("patient"));
+          }
+        )
     }else{
       this.patAuth = false;
     }
   }
 
   isMedecinAuth(): void {
+    this.medecinInfo = JSON.parse(sessionStorage.getItem("medecin"));
     if(this.medecinService.isAuth()){
       this.medAuth = true;
+      this.medecinService.getMedecinByCin(this.medecinInfo.cin)
+        .subscribe(
+          (results) => {
+            sessionStorage.setItem("medecin",JSON.stringify(results));
+            this.medecinInfo = JSON.parse(sessionStorage.getItem("medecin"));
+          }
+        )
     }else{
       this.medAuth = false;
     }

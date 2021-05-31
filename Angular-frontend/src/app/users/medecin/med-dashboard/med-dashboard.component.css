@@ -5,6 +5,13 @@ body {
 .color{
   background-color: lightpink;
 }
+
+.sidebar-heading img {
+  border-radius: 100%;
+  height: 150px;
+  width: 150px;
+}
+
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;

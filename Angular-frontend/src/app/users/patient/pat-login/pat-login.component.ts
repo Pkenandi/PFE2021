@@ -43,17 +43,15 @@ export class PatLoginComponent implements OnInit {
       .subscribe(
         (response) => {
         this.patient = response;
-        this.patientService.patient = response;
         this.patLogForm.reset({});
         this.userService.Username = this.patient.nom;
         this.patientService.Username = this.patient.username;
         this.patientService.name = this.patient.nom;
         this.patientService.lastName = this.patient.prenom;
-        this.userService.setIsAuthenticated(true);
-        this.patientService.log = true;
-        this.userService.isLoggedIn = true;
         sessionStorage.setItem("patient",JSON.stringify(this.patient));
-        sessionStorage.removeItem("response");
+        localStorage.setItem("token",response['token']);
+        localStorage.removeItem("response_patient");
+        this.reload();
         this._router.navigate(['../pat/dashboard']);
       },
       (error: HttpErrorResponse) => {
@@ -65,6 +63,14 @@ export class PatLoginComponent implements OnInit {
   logOut(): void{
     this.patientService.log = false;
     this.userService.isLoggedIn = false;
+  }
+
+  reload():void {
+    setTimeout(
+      () => {
+        location.reload();
+      }, 1
+    )
   }
 
 }

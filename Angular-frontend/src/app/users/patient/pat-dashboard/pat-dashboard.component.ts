@@ -14,6 +14,7 @@ export class PatDashboardComponent implements OnInit {
 
   dropdown = document.getElementsByClassName("dropdown-btn");
   patientInfo: Patient;
+  picture: string;
 
   constructor(public _service: UserService,
               public patientService: PatientService,
@@ -21,8 +22,17 @@ export class PatDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.patientInfo = JSON.parse(sessionStorage.getItem("patient"));
     this.title.setTitle(" Tableau de bord - DrAvicenne")
+    this.patientInfo = JSON.parse(sessionStorage.getItem("patient"));
+
+    this.patientService.getByUsername(this.patientInfo.username)
+      .subscribe(
+        (results) => {
+          sessionStorage.setItem("patient",JSON.stringify(results))
+          this.patientInfo = JSON.parse(sessionStorage.getItem("patient"));
+        }
+      )
+
     // Toggle Click Function
     $('#menu-toggle').click(function (e) {
       e.preventDefault();

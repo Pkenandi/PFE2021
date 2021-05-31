@@ -48,10 +48,10 @@
               </p>
             </div>
             <div class="form-floating">
-              <input formControlName="email" name="email" type="email" class="form-control mr-3" id="floatingInput" placeholder=" Email ">
+              <input formControlName="email" name="email" type="email" class="form-control mr-3" id="floatingInput" placeholder=" Email " email required>
             </div>
             <div style="margin-left: 80px">
-              <button class="w-40 mt-5 btn btn-sm btn-danger mx-auto" type="submit">
+              <button class="w-40 mt-5 btn btn-sm btn-danger mx-auto" type="submit" [disabled]="resetFormEmail.invalid">
                 Soumettre
               </button>
             </div>
@@ -78,10 +78,10 @@
             <h3 class="h3 mb-3 fw-normal text-center"> Réinitialisation du mot de passe </h3>
 
             <div class="form-floating">
-              <input formControlName="username" name="username" type="text" class="form-control" id="floatingInput" placeholder=" Nom d'utilisateur ">
+              <input formControlName="username" name="username" type="text" class="form-control" id="floatingInput" placeholder=" Nom d'utilisateur " required>
             </div>
             <div style="margin-left: 80px">
-              <button class="w-40 mt-5 btn btn-sm btn-danger mx-auto" type="submit">
+              <button class="w-40 mt-5 btn btn-sm btn-danger mx-auto" type="submit" [disabled]="resetFormUsername.invalid">
                 Soumettre
               </button>
             </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import {Medecin} from "../../Models/Medecin/medecin";
 
@@ -7,6 +7,9 @@ import {Medecin} from "../../Models/Medecin/medecin";
   providedIn: 'root'
 })
 export class MedGuardGuard implements CanActivate {
+
+  constructor(private router: Router) {
+  }
   medecinSession: Medecin = JSON.parse(sessionStorage.getItem("medecin"));
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -15,6 +18,7 @@ export class MedGuardGuard implements CanActivate {
     if(this.medecinSession != null){
       return true;
     }else{
+      this.router.navigate(['/med/login']);
       return false;
     }
   }

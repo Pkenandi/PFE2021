@@ -53,6 +53,7 @@ export class MedLoginComponent implements OnInit {
             this.medService.log = true;
             this.service.isLoggedIn = true;
             sessionStorage.setItem("medecin", JSON.stringify(this.medecin));
+            this.reload();
             this._router.navigate(['../med/dashboard']);
           },
           error => {
@@ -64,5 +65,13 @@ export class MedLoginComponent implements OnInit {
   logOut(): void {
     this.medService.log = false;
     this.service.isLoggedIn = false;
+  }
+
+  reload(): void {
+    setTimeout(
+      () => {
+        location.reload();
+      },1
+    )
   }
 }

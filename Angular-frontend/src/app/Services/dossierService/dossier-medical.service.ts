@@ -16,6 +16,10 @@ export class DossierMedicalService {
     return this.http.post<any>(`${mainUrl}dossier`, dossier);
   }
 
+  delete(id: number): Observable<DossierMedical>{
+    return this.http.delete<DossierMedical>(`${mainUrl}delete/${id}`)
+  }
+
   attachPatient(username: string, id: number ): Observable<any>{
     return this.http.get(`${mainUrl}user/patient/${username}/dossier/${id}/attach`);
   }

@@ -3,7 +3,7 @@
     <mat-tab label="Acceptés">
       <div class="container">
         <div *ngIf="!isAccepted; else accpt">
-          <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
+          <h2><i class="fas fa-exclamation-triangle" style="color: red"></i>
             Vous n'avez aucun rendez-vous Accepté pour le moment </h2>
         </div>
       </div>
@@ -27,6 +27,10 @@
               <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
               <td>{{item?.heure}}</td>
               <td><img src="assets/images/icons/confirm.png" alt="Acceptés" title="confirmer"></td>
+<!--              (click)="openPaymentModal(payment)"-->
+              <td style="cursor: pointer" (click)="pay(20)">
+                <img src="assets/images/icons/payment.png" alt=""> Payer pour la consultation
+              </td>
             </tr>
             </tbody>
           </table>
@@ -34,41 +38,42 @@
       </ng-template>
     </mat-tab>
     <mat-tab label="Attente">
-        <div class="container">
-          <div *ngIf="!isInWait; else att">
-            <h2> <i class="fas fa-exclamation-triangle" style="color: red"></i>
-              Vous n'avez aucun Rendez-vous en Attente</h2>
-          </div>
+      <div class="container">
+        <div *ngIf="!isInWait; else att">
+          <h2><i class="fas fa-exclamation-triangle" style="color: red"></i>
+            Vous n'avez aucun Rendez-vous en Attente</h2>
         </div>
-          <ng-template #att>
-            <h2>Vos rendez-vous en Attente</h2>
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                <tr>
-                  <th>Patient</th>
-                  <th>Médecin</th>
-                  <th>Date</th>
-                  <th>Heure</th>
-                  <th>Status</th>
-                  <th>Annuler</th>
-                </tr>
-                </thead>
-                <tbody *ngFor="let item of inWait">
-                <tr>
-                  <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
-                  <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
-                  <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
-                  <td>{{item?.heure}}</td>
-                  <td><img src="assets/images/icons/wait.png" alt="attente" title="en attente"></td>
-                  <td>
-                    <img src="assets/images/icons/x-button.png" style="cursor:pointer;" (click)="cancelRdv('ANNULER',item?.id)">
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </ng-template>
+      </div>
+      <ng-template #att>
+        <h2>Vos rendez-vous en Attente</h2>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Médecin</th>
+              <th>Date</th>
+              <th>Heure</th>
+              <th>Status</th>
+              <th>Annuler</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let item of inWait">
+            <tr>
+              <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
+              <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
+              <td>{{item?.date | date:'MM-dd-yyyy'}}</td>
+              <td>{{item?.heure}}</td>
+              <td><img src="assets/images/icons/wait.png" alt="attente" title="en attente"></td>
+              <td>
+                <img src="assets/images/icons/x-button.png" style="cursor:pointer;"
+                     (click)="cancelRdv('ANNULER',item?.id)">
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
     </mat-tab>
     <mat-tab label="Refusés">
       <div class="container">
@@ -77,32 +82,188 @@
             Vous n'avez aucun rendez-vous Refusé</h2>
         </div>
       </div>
-        <ng-template #den>
-          <h2>Vos rendez-vous Refusés</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Médecin</th>
-                <th>Date</th>
-                <th>Status</th>
-              </tr>
-              </thead>
-              <tbody *ngFor="let item of denied">
-              <tr>
-                <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
-                <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
-                <td>{{item?.date| date : 'MM-dd-yyyy'}}</td>
-                <td><img src="assets/images/icons/x-button.png" alt=""></td>
-                <td>
-                  <img src="assets/images/icons/delete.png" style="cursor: pointer" (click)="deleteRdv(item?.id)">
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </ng-template>
+      <ng-template #den>
+        <h2>Vos rendez-vous Refusés</h2>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Médecin</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let item of denied">
+            <tr>
+              <td>{{item?.plainPatientDto?.nom}} {{item?.plainPatientDto?.prenom}}</td>
+              <td>Dr {{item?.plainMedecinDto?.nom}} {{item?.plainMedecinDto?.prenom}}</td>
+              <td>{{item?.date| date : 'MM-dd-yyyy'}}</td>
+              <td><img src="assets/images/icons/x-button.png" alt=""></td>
+              <td>
+                <img src="assets/images/icons/delete.png" style="cursor: pointer" (click)="deleteRdv(item?.id)">
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>
+
+<ng-template #payment let-modal>
+  <h2>Stripe Checkout</h2>
+  <div class="modal-body content">
+    <div class="container-fluid contact-form px-0">
+      <div class="row">
+        <div class="col-12 mx-auto">
+          <div class="card">
+            <div class="card-header">
+              <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                <!-- Credit card form tabs -->
+                <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                  <li class="nav-item"><a data-toggle="pill" class="nav-link active ">
+                    <img src="assets/images/icons/paypal.png" alt=""> Paypal </a></li>
+                </ul>
+              </div>
+              <!-- End -->
+              <!-- Credit card form content -->
+              <div class="tab-content">
+                <!-- credit card info-->
+                <div id="credit-card" class="tab-pane fade show active pt-3">
+                  <form role="form">
+                    <div class="form-group">
+                      <label><h5>Adresse mail</h5></label>
+                      <input type="email" name="email" placeholder="email ..." class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label><h5>Numero carte</h5></label>
+                      <div class="input-group">
+                        <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control "
+                               required>
+                        <div class="input-group-append">
+                          <span class="input-group-text text-muted">
+                          <i class="fab fa-cc-visa mx-1"></i>
+                          <i class="fab fa-cc-mastercard mx-1"></i>
+                          <i class="fab fa-cc-amex mx-1"></i>
+                        </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div class="form-group">
+                          <label>
+                            <span class="hidden-xs"> <h5>Date d'expiration</h5></span>
+                          </label>
+                          <div class="input-group">
+                            <input type="number" placeholder="MM" name="" class="form-control" required>
+                            <input type="number" placeholder="YY" name="" class="form-control" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group mb-4">
+                          <label data-toggle="tooltip" title="les 3 chiffres dans le dos de votre carte">
+                            <h5>CVV <i class="fa fa-question-circle d-inline"></i></h5>
+                          </label> <input type="text" required class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <button type="button" class="subscribe btn btn-primary btn-block shadow-sm">
+                        Confirmer le paiement
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-lg-12 mx-auto">
+        <div class="card">
+          <div class="card-header">
+            <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+              <!-- Credit card form tabs -->
+              <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                <li class="nav-item"><a data-toggle="pill" class="nav-link active ">
+                  <img src="assets/images/icons/paypal.png" alt=""> Paypal </a></li>
+              </ul>
+            </div>
+            <!-- End -->
+            <!-- Credit card form content -->
+            <div class="tab-content">
+              <!-- credit card info-->
+              <div id="credit-card" class="tab-pane fade show active pt-3">
+                <form role="form">
+                  <div class="form-group">
+                    <label><h5>Adresse mail</h5></label>
+                    <input type="email" name="email" placeholder="email ..." class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label><h5>Numero carte</h5></label>
+                    <div class="input-group">
+                      <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control "
+                             required>
+                      <div class="input-group-append">
+                          <span class="input-group-text text-muted">
+                          <i class="fab fa-cc-visa mx-1"></i>
+                          <i class="fab fa-cc-mastercard mx-1"></i>
+                          <i class="fab fa-cc-amex mx-1"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <div class="form-group">
+                        <label>
+                          <span class="hidden-xs"> <h5>Date d'expiration</h5></span>
+                        </label>
+                        <div class="input-group">
+                          <input type="number" placeholder="MM" name="" class="form-control" required>
+                          <input type="number" placeholder="YY" name="" class="form-control" required>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group mb-4">
+                        <label data-toggle="tooltip" title="les 3 chiffres dans le dos de votre carte">
+                          <h5>CVV <i class="fa fa-question-circle d-inline"></i></h5>
+                        </label> <input type="text" required class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button type="button" class="subscribe btn btn-primary btn-block shadow-sm">
+                      Confirmer le paiement
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>

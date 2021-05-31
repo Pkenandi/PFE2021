@@ -66,7 +66,7 @@
                       </button>
                     </div>
                     <div class="col-6">
-                      <button type="button" class="btn btn-primary text-light" (click)="modal.close('Close click'); Confirm(item?.id); reload()">
+                      <button type="button" class="btn btn-primary text-light" (click)="modal.close('Close click'); Confirm(item?.id,item?.plainPatientDto?.username);">
                         Oui
                       </button>
                     </div>
@@ -99,7 +99,7 @@
                       </button>
                     </div>
                     <div class="col-6">
-                      <button type="button" class="btn btn-danger text-light" (click)="modal.close('Close click'); Reject(item?.id); reload()">
+                      <button type="button" class="btn btn-danger text-light" (click)="modal.close('Close click'); Reject(item?.id,item?.plainPatientDto?.username);">
                         Oui
                       </button>
                     </div>
@@ -137,7 +137,7 @@
               <th>Heure</th>
               <th>Status</th>
               <th>Dossier</th>
-              <th>Envoyer mail ou message</th>
+              <th>Envoyer mail ou appeler</th>
             </tr>
             </thead>
             <tbody *ngFor="let item of Confirmed">
@@ -151,8 +151,11 @@
                 <button class="btn btn-sm" (click)="openDossierModal(dossier); getDossier(item?.plainPatientDto?.username)"><img src="assets/images/icons/eye.png" alt="">Voir dossier</button>
               </td>
               <td>
-                <img src="assets/images/icons/gmail.png" style="margin-right: 15px; cursor: pointer" (click)="openWindowCustomClass(mail); setPatient(item?.plainPatientDto?.username)">
-                <img src="assets/images/icons/message.png" style="margin-right: 5px; cursor: pointer" (click)="openSmallModal(Sms); setValues(item?.plainPatientDto?.username)">
+                <span style="margin-right: 2px; cursor: pointer" (click)="openWindowCustomClass(mail); setPatient(item?.plainPatientDto?.username)">
+                  <img src="assets/images/icons/gmail.png" alt=""> envoyer un email </span> ||
+                <span  style="margin-right: 5px; cursor: pointer" (click)="openSmallModal(Sms); setValues(item?.plainPatientDto?.username)">
+                  <img src="assets/images/icons/call.png" alt=""> appeler
+                </span>
               </td>
             </tr>
             </tbody>
@@ -166,12 +169,12 @@
 <!-- MailSender Modal -->
 
 <ng-template #mail let-modal>
-  <div class="modal-body">
+  <div class="modal-body content">
     <div class="container-fluid px-0 contact-form shadow">
       <div class="contact-image">
         <img src="assets/images/icons/email.png" alt="rocket_contact"/>
       </div>
-      <form [formGroup]="mailForm" (ngSubmit)="sendMail()" autocomplete="off">
+      <form [formGroup]="mailForm" (ngSubmit)="sendMail()" class="contact-form" autocomplete="off">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -187,9 +190,9 @@
               <button type="submit" class="btn btn-sm" (click)="modal.close('Close click')">
                 <img src="assets/images/icons/send.png"> Envoyer
               </button>
-              <button class="btn btn-sm" style="margin-left: 5px" (click)="modal.close('Close click')">
-                <img src="assets/images/icons/x-button.png"> Annuler
-              </button>
+              <span class="btn btn-sm btn-outline-danger text-light" style="margin-left: 5px; cursor: pointer; color: red" (click)="modal.close('Close click')">
+                <img src="assets/images/icons/x-button.png"> fermer
+              </span>
             </div>
           </div>
           <div class="col-md-6">
@@ -210,33 +213,21 @@
     <img src="assets/images/icons/chat.png" alt="">
   </div>
   <div class="modal-body">
-    <div class="container-fluid px-0 shadow">
+    <div class="container-fluid px-0">
       <form [formGroup]="smsForm" (ngSubmit)="sendMail()" autocomplete="off">
         <div class="row">
           <div class="col-md-12">
+            <h2> Voici les coordonnées du patient </h2>
             <div class="form-group">
               <input formControlName="nom" type="text" name="nom" class="form-control" disabled/>
             </div>
             <div class="form-group">
               <input formControlName="numero" type="text" name="numero" class="form-control" disabled />
             </div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <textarea formControlName="message" name="message" class="form-control" placeholder=" Message ... "
-                          style="width: 100%; height: 150px;"></textarea>
-              </div>
-            </div>
-            <div class="form-group" align="center">
-              <button type="submit" class="btn btn-sm text-light" (click)="modal.close('Close click')">
-                <mat-icon>send</mat-icon> Envoyer
-              </button>
-              <button class="btn btn-sm text-light" style="margin-left: 5px" (click)="modal.close('Close click')">
-                <img src="assets/images/icons/x-button.png"> Annuler
-              </button>
-            </div>
           </div>
         </div>
       </form>
+      <div style="cursor:pointer;" (click)="modal.close('modal close')" class="btn btn-sm"> <mat-icon>close</mat-icon> </div>
     </div>
   </div>
 </ng-template>

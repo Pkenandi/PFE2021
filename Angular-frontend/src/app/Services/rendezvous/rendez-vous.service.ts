@@ -26,6 +26,10 @@ export class RendezVousService {
 
   //Patient
 
+  findById(id: number): Observable<RendezVous> {
+    return this.http.get<RendezVous>(`${mainUrl}rendezVous/${id}`);
+  }
+
   findByStatus(status, username): Observable<any>{
     return this.http.get<any>(`${mainUrl}rendezVous/getByStatus/${status}/patient/${username}`);
   }
@@ -46,8 +50,8 @@ export class RendezVousService {
     return this.http.get<any>(`${mainUrl}rendezVous/getWithMedecin/${status}/medecin/${cin}`);
   }
 
-  findWithMedecinAndPatient(cin: string, username: string): Observable<boolean>{
-    return this.http.get<boolean>(`${mainUrl}rendezVous/${cin}/${username}`);
+  findWithMedecinAndPatient(cin: string, username: string): Observable<RendezVous>{
+    return this.http.get<RendezVous>(`${mainUrl}rendezVous/${cin}/${username}`);
   }
 
 }

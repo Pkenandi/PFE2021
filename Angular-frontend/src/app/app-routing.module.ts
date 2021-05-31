@@ -21,7 +21,6 @@ import {AgendaComponent} from "./users/medecin/agenda/agenda.component";
 import {ProfileMedComponent} from "./users/patient/profile-med/profile-med.component";
 import {ListRendezVousComponent} from "./users/medecin/list-rendez-vous/list-rendez-vous.component";
 import {SmsComponent} from "./users/medecin/messagerie/sms/sms.component";
-import {ListDossierComponent} from "./users/medecin/list-dossier/list-dossier.component";
 import {PatGuardGuard} from "./guard/patientGuard/pat-guard.guard";
 import {MedGuardGuard} from "./guard/medecinGuard/med-guard.guard";
 import {PatientResetComponent} from "./users/patient/patient-forgotPassword/patient-reset.component";
@@ -32,6 +31,7 @@ import {AdminDashboardComponent} from "./users/administrateur/admin-dashboard/ad
 import {AdminLoginComponent} from "./users/administrateur/admin-login/admin-login.component";
 import {AdminListMedecinComponent} from "./users/administrateur/admin-list-medecin/admin-list-medecin.component";
 import {AdminListPatientComponent} from "./users/administrateur/admin-list-patient/admin-list-patient.component";
+import {ProfilePictureComponent} from "./components/profile-picture/profile-picture.component";
 
 
 const routes: Routes = [
@@ -55,6 +55,10 @@ const routes: Routes = [
     path: 'sms',
     component: SmsComponent,
     canActivate: [MedGuardGuard]
+  },
+  {
+    path: 'user/profile-picture',
+    component: ProfilePictureComponent
   },
 
   // Patient
@@ -150,11 +154,6 @@ const routes: Routes = [
     component: ListRendezVousComponent,
     canActivate: [MedGuardGuard]
   },
-  {
-    path: 'list',
-    component: ListDossierComponent,
-    canActivate: [MedGuardGuard]
-  },
 
   // Admin
   {
@@ -176,8 +175,8 @@ const routes: Routes = [
 
 
   {
-    path: '',
-    redirectTo: 'home',
+    path: '**',
+    redirectTo: '/home',
     pathMatch: 'full'
   }
 ];

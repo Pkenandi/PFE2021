@@ -1,3 +1,14 @@
+.horraire{
+  width: 130px;
+  border-right: darkgray solid 1px;
+  border-bottom: #1c1b1b solid 1px;
+}
+
+.padding-0{
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .myForm{
   border: dashed 1px black;
   padding: 50px;
