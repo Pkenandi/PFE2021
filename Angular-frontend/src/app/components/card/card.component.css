@@ -103,6 +103,10 @@ p {
   margin-bottom: 1rem;
 }
 
+#mapid{
+  height: 500px;
+}
+
 address {
   font-style: normal;
   line-height: inherit;

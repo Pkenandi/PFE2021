@@ -21,6 +21,7 @@ lastName: any;
 log = false;
 showMed = true;
 patient: Patient = JSON.parse(sessionStorage.getItem("patient"));
+credentials = false;
 
   constructor(
     private _service: UserService,

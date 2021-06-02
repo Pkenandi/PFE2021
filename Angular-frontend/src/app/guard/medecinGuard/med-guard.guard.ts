@@ -18,7 +18,7 @@ export class MedGuardGuard implements CanActivate {
     if(this.medecinSession != null){
       return true;
     }else{
-      this.router.navigate(['/med/login']);
+      this.router.navigate(['/med/login']).then();
       return false;
     }
   }

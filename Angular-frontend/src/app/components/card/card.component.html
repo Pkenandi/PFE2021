@@ -21,7 +21,7 @@
   </div>
 
   <div class="row">
-    <div class="col-12" *ngFor="let itr of medecins | searcheFilter: specialite | paginate: {itemsPerPage: 6, currentPage: page }">
+    <div class="col-md-6 col-sm-12 col-xl-6" *ngFor="let itr of medecins | searcheFilter: specialite | paginate: {itemsPerPage: 6, currentPage: page }">
       <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" style="width: 500px; height: 140px; margin-bottom: 5px">
           <div class="carousel-item active">
@@ -29,7 +29,12 @@
               <div class="card-horizontal">
                 <div class="card-body row">
                   <div class="col-3">
-                    <img src="../../../assets/files/{{itr.picture}}" alt="Profile" class="img-fluid rounded-circle w-60">
+                    <span *ngIf="itr.picture !== null">
+                      <img src="../../../assets/files/{{itr.picture}}" alt="Profile" class="img-fluid rounded-circle w-60">
+                    </span>
+                    <span *ngIf="itr.picture === null">
+                      <img src="../../../assets/images/home/doctor.png" alt="Profile" class="img-fluid rounded-circle w-60">
+                    </span>
                   </div>
                   <div class="col-5">
                     <div class="card-title align-self-center mb-0">
@@ -59,14 +64,15 @@
           </div>
         </div>
       </div>
+      <div class="mt-5">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      </div>
     </div>
-    <div *ngIf="medecins.length == 0">
-      <h2> Aucun médecin trouver !!</h2>
+    <div class="col-md-6 col-sm-12 col-lg-6" id="mapid">
+
     </div>
   </div>
-  <div class="mt-5">
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
-  </div>
+
 </div>
 
 <ng-template #content let-modal>
@@ -80,13 +86,17 @@
                 <div class="col-lg-3 order-lg-2">
                   <div class="card-profile-image">
                     <a href="#">
-                      <img src="assets/images/home/doctor.png"
-                           class="rounded-circle">
+                      <span *ngIf="medecin.picture === null">
+                        <img src="assets/images/home/doctor.png" class="rounded-circle" alt="">
+                      </span>
+                      <span *ngIf="medecin.picture !== null">
+                        <img src="assets/files/{{medecin.picture}}" class="rounded-circle" alt="">
+                      </span>
                     </a>
                   </div>
                 </div>
               </div>
-              <div class="card-body pt-0 pt-md-4">
+              <div class="card-body pt-0 pt-md-4 mt-5">
                 <div class="row">
                   <div class="col">
                     <div class="card-profile-stats d-flex justify-content-center mt-md-5">

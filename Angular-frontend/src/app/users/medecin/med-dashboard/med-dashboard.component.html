@@ -1,47 +1,101 @@
 <div class="d-flex" id="wrapper">
-    <!-- Sidebar -->
-    <div class="border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading color text-center mt-2 mb-2 shadow">
-          <img src="assets/files/{{medecinInfo.picture}}" alt="Photo de profile manquant"> <br>
-          <span id="Dr">Dr {{medecinInfo.prenom}} {{medecinInfo.nom}}</span>
-        </div>
-        <div class="list-group list-group-flush bg-secondary" style="margin-top: 83px">
-          <a routerLink="../../medecin/{{medecinInfo.cin}}" class="list-group-item list-group-item-action bg-light">
-            <img src="assets/images/icons/settings.png"> Parametre profile </a>
-            <a routerLink="../../med/logout" class="list-group-item list-group-item-action bg-light" (click)="reload()">
-              <img src="assets/images/logout.png" alt="logout"> Deconnexion </a>
-        </div>
-    </div>
+  <!-- Sidebar -->
+  <div class="border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading color text-center mt-2 mb-2 shadow">
+<span *ngIf="medecinService.credentials">
+               <img class="pic" alt="Photo de Profile manquant" src="assets/files/{{medecinInfo.picture}}"
+                    style="margin-left: 15px">
+              <img class="logo" (click)="setProfileModal(profile)" style="cursor: pointer" alt="" src="assets/images/icons/camera.png" title="modifier">
+              <br>
+              <span id="Dr">{{medecinInfo.nom}} {{medecinInfo.prenom}}</span>
+            </span>
 
-    <!-- /#sidebar-wrapper -->
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#agenda" data-toggle="tab">Mon agenda</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#Rdv" data-toggle="tab">Mes Rendez-vous</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#Sp" data-toggle="tab">Spécialités <img src="assets/images/icons/plus.png" width="17" height="17"></a>
-          </li>
-        </ul>
-      </nav>
-      <div class="container-fluid">
-        <div class="tab-content">
-          <div id="agenda" role="tabpanel" class="tab-pane active">
-            <app-agenda></app-agenda>
-          </div>
-          <div id="Rdv" role="tabpanel" class="tab-pane">
-            <app-list-rendez-vous> </app-list-rendez-vous>
-          </div>
-          <div id="Sp" role="tabpanel" class="tab-pane">
-            <app-specialite> </app-specialite>
-          </div>
+      <span *ngIf="!medecinService.credentials">
+              <img class="pic" alt="Photo de Profile manquant" src="assets/images/home/doctor.png" style="margin-left: 10px">
+              <img class="logo" (click)="setProfileModal(profile)" style="cursor: pointer" alt="" src="assets/images/icons/camera.png" title="modifier">
+              <br>
+              <span id="Dr">{{medecinInfo.nom}} {{medecinInfo.prenom}}</span>
+            </span>
+    </div>
+    <div class="list-group list-group-flush bg-secondary" style="margin-top: 83px">
+      <a class="list-group-item list-group-item-action bg-light" routerLink="../../medecin/{{medecinInfo.cin}}">
+        <img src="assets/images/icons/settings.png"> Parametre profile </a>
+      <a (click)="reload()" class="list-group-item list-group-item-action bg-light" routerLink="../../med/logout">
+        <img alt="logout" src="assets/images/logout.png"> Deconnexion </a>
+    </div>
+  </div>
+
+  <!-- /#sidebar-wrapper -->
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a aria-current="page" class="nav-link active" data-toggle="tab" href="#agenda">Mon agenda</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#Rdv">Mes Rendez-vous</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#Sp">Spécialités <img height="17"
+                                                                            src="assets/images/icons/plus.png" width="17"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#Dp">Disponibilité</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container-fluid">
+      <div class="tab-content">
+        <div class="tab-pane active" id="agenda" role="tabpanel">
+          <app-agenda></app-agenda>
+        </div>
+        <div class="tab-pane" id="Rdv" role="tabpanel">
+          <app-list-rendez-vous></app-list-rendez-vous>
+        </div>
+        <div class="tab-pane" id="Sp" role="tabpanel">
+          <app-specialite></app-specialite>
+        </div>
+        <div class="tab-pane" id="Dp" role="tabpanel">
+          <app-horraire></app-horraire>
         </div>
       </div>
+    </div>
     <!-- /#page-content-wrapper -->
-</div>
-<!-- /#wrapper -->
+  </div>
+  <!-- /#wrapper -->
+
+  <ng-template #profile let-modal>
+    <div class="container" style="margin-top: 20px; margin-bottom: 20px; padding: 10px">
+      <div class="row">
+        <div class="col-auto mx-auto">
+          <h3> Ajouter une photo de profile </h3>
+          <div *ngIf="!validity" class="alert alert-danger">
+            <p> {{ message }}</p>
+          </div>
+          <div *ngIf=" fileStatus.status === 'progress'" class="progress">
+            <div [style.width.%]="fileStatus.percent" aria-valuenow=""
+                 class="progress-bar progress-bar-animated bg-info" role="progressbar">
+              {{ fileStatus.requestType }}
+            </div>
+          </div>
+          <br>
+          <small class="text-muted">jpg/jpeg/png/gif</small>
+          <form enctype="multipart/form-data">
+            <div class="form-group">
+              <div>
+                <input (change)="onUploadFile($event.target.files)" class="form-control-file" name="file" required
+                       type="file">
+              </div>
+            </div>
+            <div>
+              <button (click)="setPicture(); modal.close('close modal');" [disabled]="!show"
+                      class="btn btn-sm btn-secondary">
+                Changer <img alt="" src="assets/images/icons/edit2.png">
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-template>

@@ -8,6 +8,8 @@ import {map} from "rxjs/operators";
 import {Title} from "@angular/platform-browser";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
+declare const L:any;
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -44,8 +46,29 @@ export class CardComponent implements OnInit {
           sessionStorage.removeItem("medecin");
           sessionStorage.setItem("medecin",JSON.stringify(result))
           this.medecin = JSON.parse(sessionStorage.getItem("medecin"));
+          this.asCredentials();
         }
       );
+
+    // Position On Maps
+
+    if(!navigator.geolocation){
+      console.log(" Location is not supported")
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log(`lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`);
+        let map = L.map('mapid').setView([35.7779900, 10.8261700], 15)
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGtlbmFuZGkiLCJhIjoiY2twZGRnOXBlMWw5djJzb2diZDU0emV5MSJ9.50r0n3mM0tRGq0CRlvfu-g', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'your.mapbox.access.token'
+        }).addTo(map);
+      });
+
   }
 
   public getMedecins(): void {
@@ -53,6 +76,10 @@ export class CardComponent implements OnInit {
       data => {
         this.medecins = data;
       });
+  }
+
+  asCredentials(): boolean {
+    return this.medecin.picture !== null;
   }
 
   setCin(cin) {

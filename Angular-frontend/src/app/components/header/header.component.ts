@@ -85,6 +85,7 @@ export class HeaderComponent implements OnInit {
           (results) => {
             sessionStorage.setItem("patient",JSON.stringify(results));
             this.patientInfo = JSON.parse(sessionStorage.getItem("patient"));
+            this.asCredentials();
           }
         )
     }else{
@@ -101,11 +102,19 @@ export class HeaderComponent implements OnInit {
           (results) => {
             sessionStorage.setItem("medecin",JSON.stringify(results));
             this.medecinInfo = JSON.parse(sessionStorage.getItem("medecin"));
+            this.asMedCredentials();
           }
         )
     }else{
       this.medAuth = false;
     }
+  }
+
+  asCredentials(): void {
+    this.patientService.credentials = this.patientInfo.picture !== null;
+  }
+  asMedCredentials(): void {
+    this.medecinService.credentials = this.medecinInfo.picture !== null;
   }
 
   reload(): void {

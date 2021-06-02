@@ -10,8 +10,12 @@
             <div class="col-lg-3 order-lg-2">
               <div class="card-profile-image">
                 <a href="#">
-                  <img src="assets/images/doctor.png"
-                       class="rounded-circle">
+                  <span *ngIf="medecin.picture === null">
+                    <img src="assets/images/doctor.png" class="rounded-circle" alt="">
+                  </span>
+                  <span *ngIf="medecin.picture !== null">
+                    <img src="assets/files/{{medecin.picture}}" class="rounded-circle" alt="">
+                  </span>
                 </a>
               </div>
             </div>

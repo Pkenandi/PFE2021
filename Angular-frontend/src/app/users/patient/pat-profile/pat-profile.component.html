@@ -1,111 +1,113 @@
 <div class="container mt-3">
-    <form [formGroup]="updateForm" (ngSubmit)="UpdatePatient()">
-        <div class="row gutters">
-            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                <div class="card h-50 shadow">
-                    <div class="card-body">
-                        <div class="account-settings">
-                            <div class="user-profile">
-                                <div class="user-avatar">
-                                    <img src="assets/files/{{picture}}" alt="Photo de profile manquant">
-                                    <mat-icon style="cursor: pointer" (click)="setProfileModal(profile)">edit</mat-icon>
-                                </div>
-                                <h2 class="user-name"> {{profileInfo?.prenom}} {{profileInfo?.nom}} </h2>
-
-                            </div>
-
-                        </div>
-                    </div>
+  <form [formGroup]="updateForm" (ngSubmit)="UpdatePatient()">
+    <div class="row gutters">
+      <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="card h-50 shadow">
+          <div class="card-body">
+            <div class="account-settings">
+              <div class="user-profile">
+                <div class="user-avatar">
+                    <img *ngIf="patientService.credentials" src="assets/files/{{picture}}" alt="Photo de profile manquant">
+                    <img *ngIf="!patientService.credentials" src="assets/images/home/patient.png" alt="Photo de profile manquant">
+                  <mat-icon style="cursor: pointer" (click)="setProfileModal(profile)">edit</mat-icon>
                 </div>
+                <h2 class="user-name"> {{profileInfo?.prenom}} {{profileInfo?.nom}} </h2>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+        <div class="card h-100 shadow">
+          <div class="card-body">
+            <div class="row gutters">
+
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="fullName">Nom</label>
+                  <input type="text" name="nom" class="form-control" id="fullName" formControlName="nom">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="eMail">Prenom</label>
+                  <input type="text" name="prenom" class="form-control" id="eMail" formControlName="prenom">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="phone">Email</label>
+                  <input type="email" name="email" class="form-control" id="phone" formControlName="email">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="website">Phone</label>
+                  <input type="text" name="phone" class="form-control" id="website" formControlName="phone">
+                </div>
+              </div>
+            </div>
+            <div class="row gutters">
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="Street">Nom d'utilisateur</label>
+                  <input type="text" name="username" class="form-control" id="Street" formControlName="username">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="ciTy">Ville</label>
+                  <input type="text" name="ville" class="form-control" id="ciTy" formControlName="ville">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="ciTy">Age</label>
+                  <input type="text" class="form-control" name="age" id="sTate" formControlName="age" disabled>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="dateNaiss">Date de naissance</label>
+                  <input type="date" class="form-control" name="dateNaiss" id="dateNaiss" formControlName="dateNaiss">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="groupeSang">Groupe sanguin</label>
+                  <input type="text" name="groupeSang" class="form-control" id="groupeSang"
+                         formControlName="groupeSang">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="password">Mot de passe </label>
+                  <input type="text" name="password" class="form-control" id="password" formControlName="password">
+                </div>
+              </div>
+
             </div>
 
-
-            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-                <div class="card h-100 shadow">
-                    <div class="card-body">
-                        <div class="row gutters">
-
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="fullName">Nom</label>
-                                    <input type="text" name="nom" class="form-control" id="fullName" formControlName="nom">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="eMail">Prenom</label>
-                                    <input type="text" name="prenom" class="form-control" id="eMail" formControlName="prenom">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="phone">Email</label>
-                                    <input type="email" name="email" class="form-control" id="phone" formControlName="email">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="website">Phone</label>
-                                    <input type="text" name="phone" class="form-control" id="website" formControlName="phone">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row gutters">
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="Street">Nom d'utilisateur</label>
-                                    <input type="text" name="username" class="form-control" id="Street" formControlName="username">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="ciTy">Ville</label>
-                                    <input type="text" name="ville" class="form-control" id="ciTy" formControlName="ville">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="ciTy">Age</label>
-                                    <input type="text" class="form-control" name="age" id="sTate" formControlName="age" disabled>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="dateNaiss">Date de naissance</label>
-                                    <input type="date" class="form-control" name="dateNaiss" id="dateNaiss" formControlName="dateNaiss">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="groupeSang">Groupe sanguin</label>
-                                    <input type="text" name="groupeSang" class="form-control" id="groupeSang" formControlName="groupeSang">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="form-group">
-                                    <label for="password">Mot de passe </label>
-                                    <input type="text" name="password" class="form-control" id="password" formControlName="password">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row gutters">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="text-right">
-                                    <button type="button" id="submit" name="submit" class="btn btn-secondary btn-sm mr-3" routerLink="../../pat/dashboard"><i class="fas fa-arrow-circle-left"></i></button>
-                                    <button type="submit" id="submit" name="submit" class="btn btn-primary btn-sm">Modifier</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="text-right">
+                  <button type="button" id="submit" name="submit" class="btn btn-secondary btn-sm mr-3"
+                          routerLink="../../pat/dashboard"><i class="fas fa-arrow-circle-left"></i></button>
+                  <button type="submit" id="submit" name="submit" class="btn btn-primary btn-sm">Modifier</button>
                 </div>
+              </div>
             </div>
+
+          </div>
 
         </div>
-    </form>
+      </div>
+
+    </div>
+  </form>
 </div>
 
 <ng-template #profile let-modal>
@@ -117,7 +119,8 @@
           <p> {{ message }}</p>
         </div>
         <div class="progress" *ngIf=" fileStatus.status === 'progress'">
-          <div [style.width.%]="fileStatus.percent" class="progress-bar progress-bar-animated bg-info" role="progressbar" aria-valuenow="">
+          <div [style.width.%]="fileStatus.percent" class="progress-bar progress-bar-animated bg-info"
+               role="progressbar" aria-valuenow="">
             {{ fileStatus.requestType }}
           </div>
         </div>
@@ -126,11 +129,13 @@
         <form enctype="multipart/form-data">
           <div class="form-group">
             <div>
-              <input (change)="onUploadFile($event.target.files)" type="file" name="file" class="form-control-file" required>
+              <input (change)="onUploadFile($event.target.files)" type="file" name="file" class="form-control-file"
+                     required>
             </div>
           </div>
           <div>
-            <button class="btn btn-sm btn-secondary" (click)="setPicture(); modal.close('close modal');" [disabled]="!show">
+            <button class="btn btn-sm btn-secondary" (click)="setPicture(); modal.close('close modal');"
+                    [disabled]="!show">
               Changer <img src="assets/images/icons/edit2.png" alt="">
             </button>
           </div>

@@ -26,6 +26,7 @@ export class MedecinService {
   constructor(private _http: HttpClient, private userService: UserService) { }
 
   medecin: Medecin = JSON.parse(sessionStorage.getItem("medecin"))
+  credentials = false;
 
   isAuth(): boolean {
     if(this.medecin != null){

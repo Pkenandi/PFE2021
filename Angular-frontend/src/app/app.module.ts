@@ -97,6 +97,7 @@ import {TokenInterceptorService} from "./Services/token/token-interceptor.servic
 import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 import { RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
 import {MatTableModule} from "@angular/material/table";
+import { HorraireComponent } from './users/medecin/horraire/horraire.component';
 
 @NgModule({
   declarations: [
@@ -147,6 +148,7 @@ import {MatTableModule} from "@angular/material/table";
     AdminListMedecinComponent,
     AdminListSpecialiteComponent,
     ProfilePictureComponent,
+    HorraireComponent,
   ],
   imports: [
     BrowserModule,
@@ -187,7 +189,7 @@ import {MatTableModule} from "@angular/material/table";
     CountdownModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    RxReactiveFormsModule
+    RxReactiveFormsModule,
   ],
   exports: [
     HeaderComponent,

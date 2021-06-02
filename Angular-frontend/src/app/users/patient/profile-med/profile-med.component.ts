@@ -68,6 +68,7 @@ export class ProfileMedComponent implements OnInit {
         );
       }
     );
+    this.medecin = JSON.parse(sessionStorage.getItem("medecin"));
   }
 
   reload(): void {

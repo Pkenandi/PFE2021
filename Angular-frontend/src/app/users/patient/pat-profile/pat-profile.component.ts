@@ -37,7 +37,7 @@ export class PatProfileComponent implements OnInit {
   message = '';
   validity = true;
   show = false
-  picture: string;
+  picture: string = '';
   fileStatus = {
     status: '',
     requestType: '',
@@ -74,6 +74,8 @@ export class PatProfileComponent implements OnInit {
         sessionStorage.setItem("patient",JSON.stringify(results));
       }
     )
+
+    this.asCredentials();
   }
 
   UpdatePatient(): void {
@@ -163,6 +165,10 @@ export class PatProfileComponent implements OnInit {
     this.fileStatus.status = 'progress'
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total)
+  }
+
+  asCredentials(): void {
+    this.patientService.credentials = this.picture !== '';
   }
 
   setProfileModal(profile): void {

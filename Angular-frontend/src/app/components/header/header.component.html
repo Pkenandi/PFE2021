@@ -32,13 +32,15 @@
             <ul class="navbar-nav ml-auto">
               <li class="nav-item" *ngIf="patientService.isAuth()" style="margin-left: 600px">
                 <div class="account" routerLink="../pat/dashboard" (click)="reload()">
-                  <img src="../../../assets/files/{{patientInfo.picture}}" alt="" class="rounded-circle">
+                    <img *ngIf="patientService.credentials" src="../../../assets/files/{{patientInfo.picture}}" alt="" class="rounded-circle">
+                    <img *ngIf="!patientService.credentials" src="../../../assets/images/home/patient.png" alt="" class="rounded-circle">
                   <span> dashboard </span> <i class="fas fa-caret-down" style="color: white"></i>
                 </div>
               </li>
               <li class="nav-item" *ngIf="medecinService.isAuth()" style="margin-left: 600px">
                 <div class="account" routerLink="../med/dashboard" (click)="reload()">
-                  <img src="../../../assets/files/{{medecinInfo.picture}}" alt="" class="rounded-circle">
+                  <img *ngIf="medecinService.credentials" src="../../../assets/files/{{medecinInfo.picture}}" alt="" class="rounded-circle">
+                  <img *ngIf="!medecinService.credentials" src="../../../assets/images/home/doctor.png" alt="" class="rounded-circle">
                   <span> dashboard </span> <i class="fas fa-caret-down" style="color: white"></i>
                 </div>
               </li>

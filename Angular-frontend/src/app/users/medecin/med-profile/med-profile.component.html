@@ -8,7 +8,8 @@
 
     <div class="profile-header-content">
       <div class="profile-header-img">
-        <img src="assets/files/{{medecin.picture}}" alt="Photo de profile manquant" />
+        <img *ngIf="medecin.picture !== null" src="assets/files/{{medecin.picture}}" alt="Photo de profile manquant" />
+        <img *ngIf="medecin.picture === null" src="assets/images/home/doctor.png" alt="Photo de profile manquant" />
       </div>
 
       <div class="profile-header-info">

@@ -39,6 +39,8 @@ export class RendezVousComponent implements OnInit {
   medecinInfo: Medecin;
   mail: Mail;
   found: boolean = false;
+  err = false;
+  message = '';
 
 
   constructor(
@@ -71,44 +73,54 @@ export class RendezVousComponent implements OnInit {
               (rendezvous: RendezVous) => {
                 if(rendezvous == null){
                   this.rendezVous = this.rdvForm.value;
-                  this.rendezVousService.createRendezVous(this.rdvForm.value).subscribe(
-                    (response) => {
-                      this.rendezVous = response;
-                      // Attach rendez-vous to a patient
+                  let D1 = new Date(this.rendezVous.date)
 
-                      this.patientService.addRendezVous(this.patient.username, this.rendezVous.id).subscribe(
-                        () => {
-                          // attach medecin to rendezVous
+                  if( D1.getDate() < Date.now()){
+                    this.err = true;
+                    this.message = " Veillez choisir une date valide";
+                    this.setInterval();
 
-                          this.medecinService.attachToRendezVous(this.medecinInfo.cin, this.rendezVous.id).subscribe(
-                            () => {
-                              this.alert = true;
-                              this.setInterval();
-                              this.send_notification(); // envoi du mail au médecin
+                  }else{
+                    this.rendezVousService.createRendezVous(this.rdvForm.value).subscribe(
+                      (response) => {
+                        this.rendezVous = response;
+                        // Attach rendez-vous to a patient
 
-                              // Give Medecin access to Dossier
-                              this.dossierService.attachMedecin(this.medecinInfo.cin,this.dossier.id)
-                                .subscribe(
-                                  (medecin) => {
-                                    this.medecin = medecin;
-                                  }
-                                )
-                            },
-                            () => {
-                              this.toast.error("Erreur lors de l'assignation du dossier au médecin  !");
-                            }
+                        this.patientService.addRendezVous(this.patient.username, this.rendezVous.id).subscribe(
+                          () => {
+                            // attach medecin to rendezVous
 
-                          )
-                        },
-                        (error) => {
-                          this.toast.error("Erreur lors de l'ajout du patient au rendez-vous !");
-                        }
-                      )
-                    },
-                    error => {
+                            this.medecinService.attachToRendezVous(this.medecinInfo.cin, this.rendezVous.id).subscribe(
+                              () => {
+                                this.alert = true;
+                                this.setInterval();
+                                this.send_notification(); // envoi du mail au médecin
 
-                    }
-                  )
+                                // Give Medecin access to Dossier
+                                this.dossierService.attachMedecin(this.medecinInfo.cin,this.dossier.id)
+                                  .subscribe(
+                                    (medecin) => {
+                                      this.medecin = medecin;
+                                    }
+                                  )
+                              },
+                              () => {
+                                this.toast.error("Erreur lors de l'assignation du dossier au médecin  !");
+                              }
+
+                            )
+                          },
+                          (error) => {
+                            this.toast.error("Erreur lors de l'ajout du patient au rendez-vous !");
+                          }
+                        )
+                      },
+                      error => {
+
+                      }
+                    )
+                  }
+
                 }else {
                   this.toast.info(" Désoler! Vous avez dèja un rendez-vous avec ce Médecin !", "Attention !");
                 }
@@ -159,6 +171,7 @@ export class RendezVousComponent implements OnInit {
     setInterval(
       () => {
         this.alert = false;
+        this.err = false;
       }, 5000
     )
   }

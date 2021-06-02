@@ -19,7 +19,7 @@ export class PatGuardGuard implements CanActivate {
     if(this.patientSession != null){
       return true
     }else{
-      this.router.navigate(['/pat/login']);
+      this.router.navigate(['/pat/login']).then();
       return false
     }
   }

@@ -17,10 +17,16 @@ body {
   font-size: 10rem ;
 }
 
-.sidebar-heading img {
+.sidebar-heading .pic {
   border-radius: 100%;
   height: 180px;
   width: 180px;
+}
+
+.sidebar-heading .logo{
+  position: absolute;
+  left: 13.5%;
+  top: 6%;
 }
 
 #sidebar-wrapper {
@@ -100,7 +106,7 @@ body {
   outline: none;
 }
 
-.sidebar-heading img{
+.sidebar-heading .pic{
   width: 128px;
   height: 128px;
 }

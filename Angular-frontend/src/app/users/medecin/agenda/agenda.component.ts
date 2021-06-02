@@ -91,6 +91,7 @@ export class AgendaComponent implements OnInit {
     this.medecinInfo = JSON.parse(sessionStorage.getItem("medecin"));
     this.agendaInfo = JSON.parse(sessionStorage.getItem("agenda"));
     this.listTache = JSON.parse(sessionStorage.getItem("listTache"));
+    this.asCredentials();
     this.check();
   }
 
@@ -195,6 +196,10 @@ export class AgendaComponent implements OnInit {
     this.clicked = this.clicked == false;
   }
 
+  asCredentials(): boolean{
+    return this.medecinInfo.picture !== null;
+  }
+
   // Tasks Methods
 
   createTask() {
@@ -261,6 +266,14 @@ export class AgendaComponent implements OnInit {
           })
         }
       )
+  }
+
+  get sortedArray(): Tache[]{
+    return this.listTache.sort(
+      (tache_1, tache_2) => {
+        return <any>new Date(tache_2.date) - <any>new Date(tache_1.date);
+      }
+    );
   }
 
   closeResult = '';
