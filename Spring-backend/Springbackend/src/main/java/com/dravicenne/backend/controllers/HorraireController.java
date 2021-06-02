@@ -27,4 +27,27 @@ public class HorraireController {
 
         return ResponseEntity.ok().body(horraireList);
     }
+
+    @GetMapping(value = "/get/{id}")
+    public ResponseEntity<Horraire> findById(@PathVariable final Long id){
+        Horraire horraire = this.horraireService.findById(id);
+
+        return ResponseEntity.ok().body(horraire);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<Horraire> delete(@PathVariable final Long id){
+        Horraire horraire = this.horraireService.findById(id);
+        this.horraireService.delete(horraire);
+        return ResponseEntity.ok().body(horraire);
+    }
+
+    @PutMapping(value = "/edit/{id}")
+    public ResponseEntity<Horraire> edit(@PathVariable final Long id,
+                                         @RequestBody final Horraire horraire) throws Exception {
+        Horraire horraire1 = this.horraireService.edit(id, horraire);
+
+        return ResponseEntity.ok().body(horraire1);
+    }
+
 }

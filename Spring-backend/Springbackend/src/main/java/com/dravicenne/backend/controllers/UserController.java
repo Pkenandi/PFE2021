@@ -1,5 +1,6 @@
 package com.dravicenne.backend.controllers;
 
+import com.dravicenne.backend.models.Horraire;
 import com.dravicenne.backend.models.Medecin;
 import com.dravicenne.backend.models.Patient;
 import com.dravicenne.backend.models.User;
@@ -7,6 +8,7 @@ import com.dravicenne.backend.models.dto.*;
 import com.dravicenne.backend.models.login.LoginMedecin;
 import com.dravicenne.backend.models.login.LoginPatient;
 import com.dravicenne.backend.services.DossierService;
+import com.dravicenne.backend.services.HorraireService;
 import com.dravicenne.backend.services.MailService;
 import com.dravicenne.backend.services.UserService;
 import lombok.AllArgsConstructor;
@@ -29,6 +31,7 @@ public class UserController {
     private final UserService userService;
     private final DossierService dossierService;
     private final MailService mailService;
+    private final HorraireService horraireService;
     private static final SecureRandom secureRandom = new SecureRandom(); //threadsafe
     private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder(); //threadsafe
 
@@ -386,6 +389,22 @@ public class UserController {
             return new ResponseEntity<>(PatientDto.from(patient), HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping(value = "/horraire/{cin}")
+    public ResponseEntity<MedecinDto> addHorraire(@RequestBody final Horraire horraire,
+                                                  @PathVariable final String cin) throws Exception {
+        Medecin medecin = this.userService.findMedecinByCin(cin);
+        Horraire horraire1 = this.horraireService.findByDay(horraire.getJour());
+
+        if(Objects.nonNull(horraire1)){
+            throw new Exception(" already exist ");
+        }else{
+            medecin.addHorraire(horraire);
+            this.userService.SaveUser(medecin);
+
+            return ResponseEntity.ok().body(MedecinDto.from(medecin));
+        }
     }
 
 }

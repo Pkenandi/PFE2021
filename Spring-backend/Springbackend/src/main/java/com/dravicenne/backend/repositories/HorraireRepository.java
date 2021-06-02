@@ -9,4 +9,5 @@ import java.util.List;
 public interface HorraireRepository extends JpaRepository<Horraire, Long> {
     @Query(value = "select * from horraire h where h.medecin_id=?1", nativeQuery = true)
     List<Horraire> belongsToMedecin(Long id);
+    Horraire findHorraireByJour(String jour);
 }
