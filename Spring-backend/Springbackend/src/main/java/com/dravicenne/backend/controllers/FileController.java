@@ -91,4 +91,19 @@ public class FileController {
                 .headers(httpHeaders)
                 .body(resource);
     }
+
+    //remove
+    @GetMapping(value = "/remove/patient/{username}")
+    public ResponseEntity<Patient> removeProfilePatient(@PathVariable final String username){
+        Patient patient = this.userService.removeProfilePatient(username);
+
+        return ResponseEntity.ok().body(patient);
+    }
+
+    @GetMapping(value = "/remove/medecin/{cin}")
+    public ResponseEntity<Medecin> removeProfileMedecin(@PathVariable final String cin){
+        Medecin medecin = this.userService.removeProfilePicture(cin);
+
+        return ResponseEntity.ok().body(medecin);
+    }
 }

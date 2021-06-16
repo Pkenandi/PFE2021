@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,12 +49,19 @@ public class TacheController {
         return new ResponseEntity<>(TacheDto.from(tache), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/get/{date}/{heure}")
+    public TacheDto findByDateAndHeure(@PathVariable final LocalDate date,
+                                       @PathVariable final String heure) throws Exception {
+        return TacheDto.from(this.tacheService.findByHeureAndDate(date, heure));
+    }
+
     @PutMapping(value = "edit/{id}")
     public ResponseEntity<TacheDto> Edit(@PathVariable final Long id,
                                       @RequestBody TacheDto tache){
-        Tache tacheToEdit = this.tacheService.editTache(Tache.from(tache), id);
-
-        return new ResponseEntity<>(TacheDto.from(tacheToEdit), HttpStatus.OK);
+        return new ResponseEntity<>(TacheDto
+                .from(this.tacheService
+                        .editTache(Tache.from(tache), id)),
+                HttpStatus.OK);
     }
 
     @DeleteMapping(value = "delete/{id}")

@@ -14,12 +14,19 @@ public interface MedecinRepository extends JpaRepository<Medecin, String> {
     Medecin findMedecinBycin(String cin);
     Medecin findMedecinByCinAndPassword(String cin, String password);
     Medecin findByEmail(String email);
+
     @Modifying
     @Query("update Medecin med set med.password=?1, med.Cpassword=?2 where med.cin=?3")
     void resetPassword(String password, String Cpassword, String cin);
+
     @Modifying
     @Query("update Medecin m set m.picture=?1 where m.cin=?2")
     void setProfilePicture(String picture, String cin);
+
+    @Modifying
+    @Query("update Medecin m set m.picture='NULL' where m.cin=?1")
+    void removeProfilePicture(String cin);
+
     List<Medecin> findMedecinByNom(String nom);
     List<Medecin> findMedecinBySpecialite(String specialite);
 }

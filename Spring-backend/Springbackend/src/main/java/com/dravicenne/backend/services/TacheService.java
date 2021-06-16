@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @Service
@@ -28,6 +30,16 @@ public class TacheService {
                 .orElseThrow(
                         () -> new NotFoundException(" Task not found !")
                 );
+    }
+
+    public Tache findByHeureAndDate(LocalDate date, String heure) throws Exception {
+        Tache tache = this.tacheRepository.findTacheByDateAndHeure(date, heure);
+
+        if(Objects.nonNull(tache)){
+            throw new Exception(" already existe ");
+        }else{
+            return null;
+        }
     }
 
     public List<Tache> findWithAgenda(Long id){

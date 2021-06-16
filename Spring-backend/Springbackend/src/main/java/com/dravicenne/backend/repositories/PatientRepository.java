@@ -20,4 +20,8 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
     @Modifying
     @Query("update Patient p set p.picture=?1 where p.username=?2")
     void setProfilePicture(String picture, String username);
+
+    @Modifying
+    @Query("update Patient m set m.picture='NULL' where m.username=?1")
+    void removeProfilePicture(String username);
 }

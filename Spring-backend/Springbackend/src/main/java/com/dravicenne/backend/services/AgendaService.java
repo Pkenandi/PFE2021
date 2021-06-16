@@ -40,13 +40,13 @@ public class AgendaService {
 
     public Agenda editAgenda(Agenda agenda, Long id) {
         Agenda agendaToEdit = this.findById(id);
-        if (agendaToEdit == null) {
-            return null;
-        } else {
-            agendaToEdit.setTitre(agenda.getTitre());
+        agendaToEdit.setTitre(agenda.getTitre());
 
-            return this.agendaRepository.save(agendaToEdit);
-        }
+        return this.agendaRepository.save(agendaToEdit);
+    }
+
+    public void updateAgenda(String titre, String cin){
+        this.agendaRepository.updateAgenda(titre, cin);
     }
 
     public Agenda deleteAgenda(Long id) {

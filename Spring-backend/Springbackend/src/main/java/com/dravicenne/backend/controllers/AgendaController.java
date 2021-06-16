@@ -50,9 +50,16 @@ public class AgendaController {
         }
     }
 
+    @GetMapping(value = "/update/{titre}/{cin}")
+    public ResponseEntity<String> updateAgenda(@PathVariable final String titre,
+                                               @PathVariable final String cin){
+        this.agendaService.updateAgenda(titre, cin);
+        return ResponseEntity.ok().body(" Agenda mis Updated ");
+    }
+
     @PutMapping(value = "/edit/{id}")
     public ResponseEntity<AgendaDto> Edit(@RequestBody final AgendaDto agenda, @PathVariable final Long id){
-        Agenda agendaToEdit = this.agendaService.editAgenda(Agenda.from(agenda),id);
+        Agenda agendaToEdit = this.agendaService.editAgenda(Objects.requireNonNull(Agenda.from(agenda)),id);
 
         return new ResponseEntity<>(AgendaDto.from(agendaToEdit), HttpStatus.OK);
 

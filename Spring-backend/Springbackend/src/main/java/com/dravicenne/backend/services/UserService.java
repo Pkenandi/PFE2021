@@ -108,6 +108,11 @@ public class UserService {
             return null;
         }
     }
+    public Medecin removeProfilePicture(String cin){
+        Medecin medecin = this.findMedecinByCin(cin);
+        medecin.setPicture(null);
+        return medecin;
+    }
 
     public Medecin connectToRendezVous(String cin, Long rdvId){
         Medecin medecin = this.medecinRepository.findMedecinBycin(cin);
@@ -224,6 +229,11 @@ public class UserService {
         }else{
             return null;
         }
+    }
+    public Patient removeProfilePatient(String username){
+        Patient patient = this.findPatientByUsername(username);
+        patient.setPicture(null);
+        return patient;
     }
 
     public Patient deleteRendezVous(String username, Long RdvId){
