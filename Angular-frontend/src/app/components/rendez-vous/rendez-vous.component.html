@@ -39,7 +39,9 @@
               <div class="card-horizontal">
                 <div class="card-body row">
                   <div class="col-3">
-                    <img src="../../../assets/files/{{medecinInfo.picture}}" alt="Profile"
+                    <img *ngIf="medecinInfo.picture !== null" src="../../../assets/files/{{medecinInfo.picture}}" alt="Profile"
+                         class="img-fluid rounded-circle w-60">
+                    <img *ngIf="medecinInfo.picture === null" src="../../../assets/images/icons/user.png" alt="Profile"
                          class="img-fluid rounded-circle w-60">
                   </div>
                   <div class="col-5">

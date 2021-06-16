@@ -74,6 +74,8 @@ export class AgendaComponent implements OnInit {
   modal = true;
   medecinInfo: Medecin;
   agendaInfo: Agenda;
+  err = false;
+  message = '';
 
   constructor(public agendaService: AgendaService,
               public medecinService: MedecinService,
@@ -87,7 +89,6 @@ export class AgendaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.setTitle(" Agenda - DrAvicenne")
     this.medecinInfo = JSON.parse(sessionStorage.getItem("medecin"));
     this.agendaInfo = JSON.parse(sessionStorage.getItem("agenda"));
     this.listTache = JSON.parse(sessionStorage.getItem("listTache"));
@@ -102,17 +103,19 @@ export class AgendaComponent implements OnInit {
       .subscribe(
         (response) => {
           this.agenda = response;
+          this.medecinInfo = JSON.parse(sessionStorage.getItem("medecin"));
           // Attaching agenda to a medecin
           this.medecinService.attachToAgenda(this.medecinInfo.cin, this.agenda.id)
             .subscribe(
               () => {
-                this.ngOnInit();
                 sessionStorage.setItem("agenda", JSON.stringify(this.agenda));
                 this.agendaInfo = JSON.parse(sessionStorage.getItem("agenda"));
                 this.toast.info(" Votre agenda est maintenant disponible !", "Création");
+                this.ngOnInit();
               },
               (errors) => {
                 this.toast.error(" Error lors de la  creation de l'agenda ", errors)
+
               }
             )
         }
@@ -174,6 +177,8 @@ export class AgendaComponent implements OnInit {
 
   edit(): void {
     this.agenda = this.editForm.value;
+    this.agendaInfo = JSON.parse(sessionStorage.getItem("agenda"));
+
     this.agendaService.edit(this.agenda, this.agendaInfo.id)
       .subscribe(
         (response) => {
@@ -181,6 +186,7 @@ export class AgendaComponent implements OnInit {
           this.showEditForm = false;
           this.agendaForm.reset({});
           this.ngOnInit();
+          this.reload();
         },
         (error) => {
           console.log(" Erreur ", error.message);
@@ -204,26 +210,36 @@ export class AgendaComponent implements OnInit {
 
   createTask() {
     this.tache = this.taskForm.value;
-    this.tacheService.create(this.tache)
-      .subscribe(
-        (response) => {
-          this.tache = response;
-          this.agendaService.addTasks(this.agendaInfo.id, this.tache.id)
-            .subscribe(
-              (rep) => {
-                this.toast.success(" Tache créer avec succès !");
-                this.ngOnInit();
-              },
-              (error) => {
-                this.toast.error(" Erreur lors de l'ajout de la tache !");
-              }
-            )
-        },
-        (error) => {
-          console.log(" Erreur ", error.message);
-          this.toast.error(" Error lors de la creation de la tache !");
-        }
-      )
+    let date = new Date(this.tache.date).getDate();
+    let date2 = new Date();
+    if(date < date2.getDate()){
+      this.err = true;
+      this.message = `Attention !! \n La date entrée doit être superieur ou égale à la date d'aujourd'hui`;
+      this.setInterval();
+    }else{
+      this.tacheService.create(this.tache)
+        .subscribe(
+          (response) => {
+            this.agendaInfo = JSON.parse(sessionStorage.getItem("agenda"));
+            this.tache = response;
+            this.agendaService.addTasks(this.agendaInfo.id, this.tache.id)
+              .subscribe(
+                (rep) => {
+                  this.toast.success(" Tache créer avec succès !");
+                  this.ngOnInit();
+                  this.reload();
+                },
+                (error) => {
+                  this.toast.error(" Erreur lors de l'ajout de la tache !");
+                }
+              )
+          },
+          (error) => {
+            console.log(" Erreur ", error.message);
+            this.toast.error(" Error lors de la creation de la tache !");
+          }
+        )
+    }
   }
 
   editTask(): void {
@@ -313,6 +329,14 @@ export class AgendaComponent implements OnInit {
       () => {
         location.reload();
       }, 1
+    )
+  }
+
+  setInterval(): void {
+    setInterval(
+      () => {
+        this.err = false;
+      }, 3000
     )
   }
 }

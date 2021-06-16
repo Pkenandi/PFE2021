@@ -14,8 +14,7 @@
 .navbar {
     background: none;
     background: #dbe4ea;
-    background: -webkit-linear-gradient(59deg, #47758d, #3c4145);
-    background: linear-gradient(59deg, #3A6073, #16222A);
+    border-bottom: rgba(143, 190, 213, 0.43) 5px solid;
 }
 
 .dropdown-content a:hover {

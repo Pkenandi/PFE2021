@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {PatientService} from "../../../Services/patientservice/patient.service";
+import {PatientService} from "../../../Services/patientService/patient.service";
 import {UsernameDto} from "../../../Models/reset/Dto/Username/username-dto";
 import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";

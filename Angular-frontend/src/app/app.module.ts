@@ -5,6 +5,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { CommonModule} from "@angular/common";
 import { NgbModalModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { FlatpickrModule} from "angularx-flatpickr";
+import {FullCalendarModule} from "@fullcalendar/angular";
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -29,7 +32,7 @@ import { PatProfileComponent } from './users/patient/pat-profile/pat-profile.com
 import { MedProfileComponent } from './users/medecin/med-profile/med-profile.component';
 import { UserService } from './Services/userService/user.service';
 import { MedecinService } from './Services/medecinService/medecin.service';
-import { PatientService } from './Services/patientservice/patient.service';
+import { PatientService } from './Services/patientService/patient.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
@@ -47,15 +50,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { AgendaComponent } from './users/medecin/agenda/agenda.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatDialogModule} from "@angular/material/dialog";
-import {
-  ScheduleModule,
-  RecurrenceEditorModule,
-  DayService,
-  WeekService,
-  MonthService,
-  WorkWeekService,
-  MonthAgendaService
-} from "@syncfusion/ej2-angular-schedule";
 import {
   CalendarModule, DateAdapter
 } from 'angular-calendar';
@@ -93,12 +87,26 @@ import { AdminListSpecialiteComponent } from './users/administrateur/admin-list-
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {InterceptorService} from "./Services/interceptor/interceptor.service";
-import {TokenInterceptorService} from "./Services/token/token-interceptor.service";
 import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 import { RxReactiveFormsModule } from "@rxweb/reactive-form-validators";
 import {MatTableModule} from "@angular/material/table";
 import { HorraireComponent } from './users/medecin/horraire/horraire.component';
+import {TokenInterceptorService} from "./Services/token/token-interceptor.service";
+import {
+  AgendaService,
+  DayService,
+  MonthAgendaService,
+  MonthService,
+  ScheduleModule, TimelineMonthService, TimelineViewsService,
+  WeekService,
+  WorkWeekService
+} from "@syncfusion/ej2-angular-schedule";
 
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin
+]);
 @NgModule({
   declarations: [
     AppComponent,
@@ -172,7 +180,6 @@ import { HorraireComponent } from './users/medecin/horraire/horraire.component';
     MatIconModule,
     MatBadgeModule,
     ToastrModule.forRoot(),
-    ScheduleModule,
     CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
     CommonModule,
     NgbModalModule,
@@ -190,6 +197,8 @@ import { HorraireComponent } from './users/medecin/horraire/horraire.component';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     RxReactiveFormsModule,
+    ScheduleModule,
+    FullCalendarModule
   ],
   exports: [
     HeaderComponent,
@@ -220,12 +229,8 @@ import { HorraireComponent } from './users/medecin/horraire/horraire.component';
     UserService,
     MedecinService,
     PatientService,
-    DayService,
-    WeekService,
-    MonthService,
-    WorkWeekService,
-    MonthAgendaService,
     MatNativeDateModule,
+    DayService, WeekService, WorkWeekService, MonthService, AgendaService, MonthAgendaService, TimelineViewsService, TimelineMonthService,
     {provide:HTTP_INTERCEPTORS,useClass:InterceptorService,multi:true},
     {provide:HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true}
   ],

@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ResetDto} from "../../../Models/reset/Dto/Reset/reset-dto";
-import {PatientService} from "../../../Services/patientservice/patient.service";
+import {PatientService} from "../../../Services/patientService/patient.service";
 import {Router} from "@angular/router";
 import {Patient} from "../../../Models/Patient/patient";
 import {CustomValidationService} from "../../../Services/validations/custom-validation.service";

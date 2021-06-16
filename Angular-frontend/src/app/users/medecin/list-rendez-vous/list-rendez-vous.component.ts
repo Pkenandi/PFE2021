@@ -7,7 +7,7 @@ import {SmsComponent} from "../messagerie/sms/sms.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Mail} from "../../../Models/messagerie/mail/mail";
-import {PatientService} from "../../../Services/patientservice/patient.service";
+import {PatientService} from "../../../Services/patientService/patient.service";
 import {DossierMedical} from "../../../Models/DossierMedical/dossier-medical";
 import {DossierMedicalService} from "../../../Services/dossierService/dossier-medical.service";
 import {Title} from "@angular/platform-browser";
@@ -82,7 +82,6 @@ export class ListRendezVousComponent implements OnInit {
   patientInfo: Patient;
 
   ngOnInit(): void {
-    this.title.setTitle(" Liste Rendez-vous - DrAvicenne")
     this.rendezvousService.mw_note = 0;
     this.rendezvousService.ma_note = 0;
     this.rendezvousService.m_notifications = 0;

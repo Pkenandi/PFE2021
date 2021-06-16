@@ -48,7 +48,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"> <img src="assets/images/icons/coding.png" alt="Cin"/> </span>
               </div>
-              <input formControlName="cin" name="cin" class="form-control" placeholder="CIN ..." type="text"
+              <input formControlName="cin" name="cin" class="form-control" placeholder="Numero d'ordre ..." type="text"
                      [ngClass]="{'is-invalid': regValue.cin.errors && regValue.cin.touched}">
               <div *ngIf="regValue.cin.errors" class="invalid-feedback">
                 <span *ngIf="regValue.nom.touched"> Au moins 5 caracteres, au plus 8 caracteres </span>

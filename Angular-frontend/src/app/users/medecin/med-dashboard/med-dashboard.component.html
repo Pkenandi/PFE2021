@@ -1,27 +1,29 @@
 <div class="d-flex" id="wrapper">
   <!-- Sidebar -->
   <div class="border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading color text-center mt-2 mb-2 shadow">
-<span *ngIf="medecinService.credentials">
-               <img class="pic" alt="Photo de Profile manquant" src="assets/files/{{medecinInfo.picture}}"
-                    style="margin-left: 15px">
-              <img class="logo" (click)="setProfileModal(profile)" style="cursor: pointer" alt="" src="assets/images/icons/camera.png" title="modifier">
-              <br>
-              <span id="Dr">{{medecinInfo.nom}} {{medecinInfo.prenom}}</span>
+    <div class="sidebar-heading color text-center mb-2 shadow">
+      <span *ngIf="medecinService.credentials">
+              <img class="pic" alt="Photo de Profile manquant" src="assets/files/{{medecinInfo.picture}}" style="margin-left: 15px">
+              <img class="logo" (click)="setProfileModal(profile)" style="cursor: pointer" alt="" src="assets/images/icons/pic2.png" title="modifier">
+              <img class="logo2" (click)="setProfileModal(remove)" style="cursor: pointer" alt="" src="assets/images/icons/remove.png" title="supprimer">
+              <br><br>
+              <span id="Dr">Dr {{medecinInfo.nom}} {{medecinInfo.prenom}}</span>
             </span>
 
       <span *ngIf="!medecinService.credentials">
-              <img class="pic" alt="Photo de Profile manquant" src="assets/images/home/doctor.png" style="margin-left: 10px">
-              <img class="logo" (click)="setProfileModal(profile)" style="cursor: pointer" alt="" src="assets/images/icons/camera.png" title="modifier">
+              <img class="pic" alt="Photo de Profile manquant" src="assets/images/icons/user.png"
+                   style="margin-left: 10px; background-color: white">
+              <img class="logo" (click)="setProfileModal(profile)" style="cursor: pointer" alt="" src="assets/images/icons/pic2.png" title="modifier">
               <br>
-              <span id="Dr">{{medecinInfo.nom}} {{medecinInfo.prenom}}</span>
+              <span id="Dr"> Dr {{medecinInfo.nom}} {{medecinInfo.prenom}}</span>
             </span>
     </div>
-    <div class="list-group list-group-flush bg-secondary" style="margin-top: 83px">
+
+    <div class="list-group list-group-flush bg-secondary" style="margin-top: 110px">
       <a class="list-group-item list-group-item-action bg-light" routerLink="../../medecin/{{medecinInfo.cin}}">
-        <img src="assets/images/icons/settings.png"> Parametre profile </a>
+        <img src="assets/images/icons/settings.png" alt="parametre"> Parametre profile </a>
       <a (click)="reload()" class="list-group-item list-group-item-action bg-light" routerLink="../../med/logout">
-        <img alt="logout" src="assets/images/logout.png"> Deconnexion </a>
+        <img alt="logout" src="assets/images/icons/logout.png"> Deconnexion </a>
     </div>
   </div>
 
@@ -31,17 +33,16 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a aria-current="page" class="nav-link active" data-toggle="tab" href="#agenda">Mon agenda</a>
+          <a aria-current="page" class="nav-link active" data-toggle="tab" href="#agenda"
+             (click)="setTitle('('+rdvService.m_notifications+') Agenda')">Mon agenda</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#Rdv">Mes Rendez-vous</a>
+          <a class="nav-link" data-toggle="tab" href="#Rdv"
+             (click)="setTitle('('+rdvService.m_notifications+') Liste Rendez-vous')">Mes Rendez-vous</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#Sp">Spécialités <img height="17"
-                                                                            src="assets/images/icons/plus.png" width="17"></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#Dp">Disponibilité</a>
+          <a class="nav-link" data-toggle="tab" href="#Dp"
+             (click)="setTitle('('+rdvService.m_notifications+') Emploi du temps')">Disponibilité</a>
         </li>
       </ul>
     </nav>
@@ -52,9 +53,6 @@
         </div>
         <div class="tab-pane" id="Rdv" role="tabpanel">
           <app-list-rendez-vous></app-list-rendez-vous>
-        </div>
-        <div class="tab-pane" id="Sp" role="tabpanel">
-          <app-specialite></app-specialite>
         </div>
         <div class="tab-pane" id="Dp" role="tabpanel">
           <app-horraire></app-horraire>
@@ -95,6 +93,37 @@
               </button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #remove let-modal>
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-basic-title"> Photo de profile  </h2>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="container">
+          <div class="justify-content-center">
+            <div class="alert alert-warning text-center">
+              <strong><img src="assets/images/icons/info.png" alt=""> Attention </strong><br>Voulez-vous supprimer votre photo de profil ?
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="row" align="center">
+        <div class="col-6">
+          <button type="button" class="btn btn-outline-light text-dark" (click)="modal.close('Close click')">
+            <img src="assets/images/icons/previous.png" alt="">Annuler
+          </button>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-danger text-light" (click)="removePicture();modal.close('Close click')">
+            Oui
+          </button>
         </div>
       </div>
     </div>

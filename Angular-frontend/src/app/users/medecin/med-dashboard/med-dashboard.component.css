@@ -3,7 +3,7 @@ body {
 }
 
 .color{
-  background-color: lightpink;
+  background-color: whitesmoke;
 }
 
 .sidebar-heading .pic {
@@ -14,14 +14,20 @@ body {
 
 .sidebar-heading .logo{
   position: absolute;
-  left: 13.5%;
+  left: 14%;
+  top: 6%;
+}
+
+.sidebar-heading .logo2{
+  position: absolute;
+  left: 4.5%;
   top: 6%;
 }
 
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
-  background-color: floralwhite;
+  background-color: whitesmoke;
   -webkit-transition: margin .25s ease-out;
   -moz-transition: margin .25s ease-out;
   -o-transition: margin .25s ease-out;
@@ -31,7 +37,7 @@ body {
 #sidebar-wrapper .sidebar-heading {
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
-  background-color: lightpink;
+  background-color: #585757;
   border-radius: 2px;
   height: 100px;
 }
@@ -67,7 +73,7 @@ body {
   color: black;
   font-weight: bolder;
   font-size: 20px;
-  font-style: oblique;
+  font-family: 'Mate SC', serif;
 }
 
 #wrapper{

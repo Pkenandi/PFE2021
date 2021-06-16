@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Patient } from 'src/app/Models/Patient/patient';
-import { PatientService } from 'src/app/Services/patientservice/patient.service';
+import { PatientService } from 'src/app/Services/patientService/patient.service';
 import { UserService } from 'src/app/Services/userService/user.service';
 import {ToastrService} from "ngx-toastr";
 import {Title} from "@angular/platform-browser";
@@ -38,21 +38,16 @@ export class PatLoginComponent implements OnInit {
 
   login(): void {
     this.logData = this.patLogForm.value;
-    console.log(this.logData);
     this.patientService.Login(this.logData.username, this.logData.password)
       .subscribe(
         (response) => {
         this.patient = response;
         this.patLogForm.reset({});
-        this.userService.Username = this.patient.nom;
-        this.patientService.Username = this.patient.username;
-        this.patientService.name = this.patient.nom;
-        this.patientService.lastName = this.patient.prenom;
         sessionStorage.setItem("patient",JSON.stringify(this.patient));
         localStorage.setItem("token",response['token']);
         localStorage.removeItem("response_patient");
         this.reload();
-        this._router.navigate(['../pat/dashboard']);
+        this._router.navigate(['../pat/dashboard']).then();
       },
       (error: HttpErrorResponse) => {
         this.message = 'User not found !';

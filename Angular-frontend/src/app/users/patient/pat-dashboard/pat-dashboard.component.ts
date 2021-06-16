@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as $ from 'jquery'
-import {PatientService} from 'src/app/Services/patientservice/patient.service';
+import {PatientService} from 'src/app/Services/patientService/patient.service';
 import {UserService} from 'src/app/Services/userService/user.service';
 import {Title} from "@angular/platform-browser";
 import {Patient} from "../../../Models/Patient/patient";
@@ -8,6 +8,7 @@ import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http"
 import {saveAs} from "file-saver";
 import {FileService} from "../../../Services/fileService/file.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.service";
 
 @Component({
   selector: 'app-pat-dashboard',
@@ -29,18 +30,19 @@ export class PatDashboardComponent implements OnInit {
     percent: 0
   };
   formData = new FormData();
+  allNot: number = null;
 
-  constructor(public _service: UserService,
-              public patientService: PatientService,
+  constructor(public patientService: PatientService,
+              public rendezService: RendezVousService,
               private fileService: FileService,
               private modalService: NgbModal,
               private title: Title) {
   }
 
   ngOnInit(): void {
-    this.title.setTitle(" Tableau de bord - DrAvicenne")
+    this.title.setTitle(` Tableau de bord - DrAvicenne`)
     this.patientInfo = JSON.parse(sessionStorage.getItem("patient"));
-
+    this.allNot = this.rendezService.p_notifications;
     this.patientService.getByUsername(this.patientInfo.username)
       .subscribe(
         (results) => {
@@ -101,6 +103,18 @@ export class PatDashboardComponent implements OnInit {
         },
         (error: HttpErrorResponse) => {
           console.log(error);
+        }
+      )
+  }
+
+  removePicture(): void {
+    this.fileService.removePicturePatient(this.patientInfo.username)
+      .subscribe(
+        (success) => {
+          this.reload();
+        },
+        (error) => {
+          this.reload();
         }
       )
   }

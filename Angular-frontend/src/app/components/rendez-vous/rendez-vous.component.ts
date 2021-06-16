@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PatientService} from "../../Services/patientservice/patient.service";
+import {PatientService} from "../../Services/patientService/patient.service";
 import {MedecinService} from "../../Services/medecinService/medecin.service";
 import {UserService} from "../../Services/userService/user.service";
 import {Medecin} from "../../Models/Medecin/medecin";
@@ -74,8 +74,9 @@ export class RendezVousComponent implements OnInit {
                 if(rendezvous == null){
                   this.rendezVous = this.rdvForm.value;
                   let D1 = new Date(this.rendezVous.date)
+                  let D2 = new Date();
 
-                  if( D1.getDate() < Date.now()){
+                  if( D1.getDate() < D2.getDate()){
                     this.err = true;
                     this.message = " Veillez choisir une date valide";
                     this.setInterval();

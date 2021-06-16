@@ -28,8 +28,14 @@
               <td>{{item?.heure}}</td>
               <td><img src="assets/images/icons/confirm.png" alt="Acceptés" title="confirmer"></td>
 <!--              (click)="openPaymentModal(payment)"-->
-              <td style="cursor: pointer" (click)="pay(20)">
+              <td style="cursor: pointer" (click)="pay(20)" *ngIf="payed===false">
                 <img src="assets/images/icons/payment.png" alt=""> Payer pour la consultation
+              </td>
+              <td *ngIf="payed">
+                Déjà Payer |
+                <span (click)="rollback()" style="cursor: pointer">
+                  <img src="assets/images/icons/cancel.png" alt=""> annuler le paiement
+                </span>
               </td>
             </tr>
             </tbody>

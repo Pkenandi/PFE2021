@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 import { Observable } from 'rxjs';
-import { basedUrl, mainUrl } from 'src/environments/environment';
+import { mainUrl } from 'src/environments/environment';
 import { Patient } from '../../Models/Patient/patient';
 import { UserService } from '../userService/user.service';
 import {UsernameDto} from "../../Models/reset/Dto/Username/username-dto";
 import {ResetDto} from "../../Models/reset/Dto/Reset/reset-dto";
-import {Email} from "../../Models/reset/Dto/email/email";
 import {Mail} from "../../Models/reset/Dto/mail/mail";
 
 @Injectable({
@@ -56,8 +55,8 @@ credentials = false;
       return this._http.get<Patient>(`${mainUrl}user/patient/${username}`);
   }
 
-  updatePatient(patientDetails, username): Observable<any> {
-    return this._http.put<any>(`${mainUrl}user/patient/update/${username}`, patientDetails);
+  updatePatient(patientDetails, username): Observable<Patient> {
+    return this._http.put<Patient>(`${mainUrl}user/patient/update/${username}`, patientDetails);
   }
 
   addRendezVous(username: string, id: number): Observable<any>{

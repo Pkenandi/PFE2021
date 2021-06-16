@@ -1,9 +1,9 @@
 import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Patient } from 'src/app/Models/Patient/patient';
-import { PatientService } from 'src/app/Services/patientservice/patient.service';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Patient} from 'src/app/Models/Patient/patient';
+import {PatientService} from 'src/app/Services/patientService/patient.service';
 import {ToastrService} from "ngx-toastr";
 import {Title} from "@angular/platform-browser";
 import {FileService} from "../../../Services/fileService/file.service";
@@ -50,7 +50,8 @@ export class PatProfileComponent implements OnInit {
               private toaster: ToastrService,
               private fileService: FileService,
               private modalService: NgbModal,
-              private title: Title) { }
+              private title: Title) {
+  }
 
 
   ngOnInit(): void {
@@ -71,7 +72,7 @@ export class PatProfileComponent implements OnInit {
           cpassword: new FormControl(results['cpassword']),
         });
         this.picture = results['picture'];
-        sessionStorage.setItem("patient",JSON.stringify(results));
+        sessionStorage.setItem("patient", JSON.stringify(results));
       }
     )
 
@@ -81,36 +82,52 @@ export class PatProfileComponent implements OnInit {
   UpdatePatient(): void {
     this.UpdatedDetails = this.updateForm.value;
 
-    this.patientService.updatePatient(this.UpdatedDetails , this.route.snapshot.params.username).subscribe(
-      response => {
-        sessionStorage.removeItem("patient");
-        this.profileInfo = this.UpdatedDetails;
-        sessionStorage.setItem("patient",JSON.stringify(this.UpdatedDetails));
-        this.toaster.success(
-          "Vos informations ont étaient modifiées le \n"
-          + this.date.getDate()
-          + "-" + this.date.getMonth()
-          + "-" + this.date.getFullYear(),
-          "Modification");
-        this.ngOnInit();
-      },
-      (error: HttpErrorResponse) => {
-        this.toaster.error(
-          "Désoler, impossible de modifier vos informations !! \n",
-          " => " + error.type);
-      });
+    this.patientService.updatePatient(this.UpdatedDetails, this.route.snapshot.params.username)
+      .subscribe(
+        (response) => {
+          this.profileInfo = response;
+          this.toaster.success(
+            "Vos informations ont étaient modifiées le \n"
+            + this.date.getDate()
+            + "-" + this.date.getMonth()
+            + "-" + this.date.getFullYear(),
+            "Modification");
+          //this.ngOnInit();
+          this.form(response)
+        },
+        (error: HttpErrorResponse) => {
+          this.toaster.error(
+            "Désoler, impossible de modifier vos informations !! \n",
+            " => " + error.type);
+        });
+  }
+
+  form(response: any): void {
+    this.updateForm = new FormGroup({
+      nom: new FormControl(response['nom']),
+      prenom: new FormControl(response['prenom']),
+      age: new FormControl(response['age']),
+      dateNaiss: new FormControl(response['dateNaiss']),
+      groupeSang: new FormControl(response['groupeSang']),
+      ville: new FormControl(response['ville']),
+      phone: new FormControl(response['phone']),
+      email: new FormControl(response['email']),
+      username: new FormControl(response['username']),
+      password: new FormControl(response['password']),
+      cpassword: new FormControl(response['cpassword']),
+    });
   }
 
   // Profile Pic
   onUploadFile(files: File[]): void {
-    if(files[0].type === 'image/jpeg' || files[0].type === 'image/png' || files[0].type === 'image/gif'){
+    if (files[0].type === 'image/jpeg' || files[0].type === 'image/png' || files[0].type === 'image/gif') {
       this.validity = true;
       this.show = true;
       for (const file of files) {
         this.formData.append('files', file, file.name);
       }
 
-    }else{
+    } else {
       this.validity = false;
       this.show = false;
       this.message = " Format non autorisé !!!"
@@ -143,13 +160,13 @@ export class PatProfileComponent implements OnInit {
         console.log(' Header returned ', httpEvent);
         break;
       case HttpEventType.Response:
-        if(httpEvent.body instanceof Array){
-          for(const filename of httpEvent.body){
+        if (httpEvent.body instanceof Array) {
+          for (const filename of httpEvent.body) {
             this.filenames.unshift(filename)
           }
-          sessionStorage.setItem("pic",JSON.stringify(this.filenames))
+          sessionStorage.setItem("pic", JSON.stringify(this.filenames))
           console.log(this.filenames);
-        }else{
+        } else {
           saveAs(new File([httpEvent.body!], httpEvent.headers.get('File-Name')!,
             {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}));
         }
@@ -179,7 +196,7 @@ export class PatProfileComponent implements OnInit {
     setTimeout(
       () => {
         location.reload();
-      },1
+      }, 1
     )
   }
 }

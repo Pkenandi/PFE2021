@@ -19,7 +19,7 @@
                 <div class="input-group">
                   <input class="form-control" type="text" disabled
                          name="titre" formControlName="titre"
-                         style="border: 0 none; box-shadow: none; background-color: white">
+                         style="border: 0 none; box-shadow: none; background-color: #b39494">
                   <button (click)="warningAgenda(agenda)" class="btn btn-sm" type="button">
                     <img src="assets/images/icons/delete_2.png" style="cursor: pointer"
                          title="Supprimer l'agenda" alt="">
@@ -42,7 +42,7 @@
                   <label> Nouveau nom </label>
                   <input class="form-control" name="titre" formControlName="titre" type="text">
                 </div>
-                <button type="submit" class="btn btn-sm" (click)="reload()">
+                <button type="submit" class="btn btn-sm">
                   <mat-icon>save</mat-icon>
                 </button>
               </form>
@@ -50,84 +50,91 @@
             <!-- End -->
 
             <!-- Adding tasks zone -->
-            <div class="col-3">
+            <div class="col-5">
               <button class="btn btn-sm" (click)="open(add)"><img src="assets/images/icons/plus.png"> Ajouter une tache
               </button>
+              <button *ngIf="listTache.length >= 2" class="btn btn-sm" type="button" (click)="sortedArray">
+                <img src="assets/images/icons/sort.png" alt=""> Trier par recent
+              </button>
             </div>
-
+            <div class="col-7">
+              <div class="alert alert-danger" *ngIf="err">
+                {{ message }}
+              </div>
+            </div>
             <div *ngIf="listTache.length == 0; else showTask">
               <div class="alert alert-warning mt-5" style="width: 700px;">
-                <strong><img src="assets/images/icons/danger.png"></strong> Aucune tache trouvée !!!
+                <strong><img src="assets/images/icons/danger.png" alt=""></strong> Veillez ajouter vos tâches !!!
               </div>
             </div>
             <ng-template #showTask>
-              <div class="row">
-                <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3" *ngFor="let item of listTache">
-                  <div class="myCard shadow">
-                    <div class="myCard-title">
-                      <h3> {{ item?.tache }} </h3>
-                    </div>
-                    <hr style="background-color: whitesmoke; margin-top: -3px">
-                    <div class="myCard-content">
-                      À <span> {{ item?.heure }} </span>, le <span> {{ item?.date | date: 'MM-dd-yyyy' }} </span>
-                      <br> <br>
-                      <div class="description mb-4">
-                        {{ item?.description }}
+              <div class="container">
+                <div class="row" style="overflow: hidden">
+                  <div class="col-md-3 col-lg-3 col-xl-3" *ngFor="let item of listTache">
+                    <div class="myCard shadow">
+                      <div class="myCard-title">
+                        <h3> {{ item?.tache }} </h3>
                       </div>
-                    </div>
-                    <div class="myCard-footer">
+                      <hr style="background-color: whitesmoke; margin-top: -3px">
+                      <div class="myCard-content">
+                        À <span> {{ item?.heure }} </span>, le <span> {{ item?.date | date: 'MM-dd-yyyy' }} </span>
+                        <br> <br>
+                        <div class="description mb-4">
+                          {{ item?.description }}
+                        </div>
+                      </div>
+                      <div class="myCard-footer">
                       <span class="delete">
                         <img src="assets/images/icons/delete2.png" (click)="warningTask(task)">
                       </span>
-                      <span class="edit">
+                        <span class="edit">
                         <img src="assets/images/icons/edit.png"
                              (click)="openVerticallyCentered(content); getTaskById(item?.id)">
                       </span>
+                      </div>
                     </div>
 
-                  </div>
 
-                  <!-- Alert before delete  Task -->
+                    <!-- Alert before delete  Task -->
 
-                  <ng-template #task let-modal>
-                    <div class="modal-header">
-                      <h2 class="modal-title" id="modal-basic-title"> Suppression d'une Tâche </h2>
-                    </div>
-                    <div class="modal-body">
-                      <div class="row">
-                        <div class="container">
-                          <div class="justify-content-center">
-                            <div class="alert alert-danger text-center">
-                              <strong><img src="assets/images/icons/warning.png" alt=""> Attention </strong> cette
-                              opération est irreversible !
+                    <ng-template #task let-modal>
+                      <div class="modal-header">
+                        <h2 class="modal-title" id="modal-basic-title"> Suppression d'une Tâche </h2>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="container">
+                            <div class="justify-content-center">
+                              <div class="alert alert-danger text-center">
+                                <strong><img src="assets/images/icons/warning.png" alt=""> Attention </strong> cette
+                                opération est irreversible !
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="modal-footer">
-                      <div class="row" align="center">
-                        <div class="col-6">
-                          <button type="button" class="btn btn-outline-light text-dark"
-                                  (click)="modal.close('Close click')">
-                            <img src="assets/images/icons/previous.png" alt="">Annuler
-                          </button>
-                        </div>
-                        <div class="col-6">
-                          <button type="button" class="btn btn-danger text-light"
-                                  (click)="modal.close('Close click'); deleteTask(item?.id); reload()">
-                            Supprimer
-                          </button>
+                      <div class="modal-footer">
+                        <div class="row" align="center">
+                          <div class="col-6">
+                            <button type="button" class="btn btn-outline-light text-dark"
+                                    (click)="modal.close('Close click')">
+                              <img src="assets/images/icons/previous.png" alt="">Annuler
+                            </button>
+                          </div>
+                          <div class="col-6">
+                            <button type="button" class="btn btn-danger text-light"
+                                    (click)="modal.close('Close click'); deleteTask(item?.id); reload()">
+                              Supprimer
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </ng-template>
+                    </ng-template>
 
-                  <!-- End Warning -->
-
+                    <!-- End Warning -->
+                  </div>
                 </div>
               </div>
-
             </ng-template>
           </div>
         </div>
@@ -177,7 +184,7 @@
                                        class="img-fluid rounded-circle w-60">
                                 </span>
                                 <span *ngIf="!medecinService.credentials">
-                                  <img src="assets/images/home/doctor.png" alt="Profile"
+                                  <img src="assets/images/icons/user.png" alt="Profile"
                                        class="img-fluid rounded-circle w-60">
                                 </span>
                               </div>

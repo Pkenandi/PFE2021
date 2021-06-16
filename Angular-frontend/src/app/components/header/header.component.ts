@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MedecinService } from '../../Services/medecinService/medecin.service';
-import { PatientService } from '../../Services/patientservice/patient.service';
+import { PatientService } from '../../Services/patientService/patient.service';
 import { UserService } from '../../Services/userService/user.service';
 import {Title} from "@angular/platform-browser";
 import {RendezVousService} from "../../Services/rendezvous/rendez-vous.service";
@@ -113,6 +113,7 @@ export class HeaderComponent implements OnInit {
   asCredentials(): void {
     this.patientService.credentials = this.patientInfo.picture !== null;
   }
+
   asMedCredentials(): void {
     this.medecinService.credentials = this.medecinInfo.picture !== null;
   }

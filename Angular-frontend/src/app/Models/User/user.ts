@@ -9,8 +9,7 @@ export class User {
   public cpassword: string;
   public picture: string;
 
-  constructor(nom: string, prenom: string, ville: string, email: string, phone: string, password: string, cpassword: string)
-  {
+  constructor(nom: string, prenom: string, ville: string, email: string, phone: string, password: string, cpassword: string) {
     this.nom = nom;
     this.prenom = prenom;
     this.phone = phone;
@@ -19,37 +18,25 @@ export class User {
     this.password = password;
     this.cpassword = cpassword;
   }
-
-  public getNom(): string
-  {
+  public getNom(): string {
     return this.nom;
   }
-
-  getPrenom(): string
-  {
+  getPrenom(): string {
     return this.prenom;
   }
-
-  getVille(): string
-  {
+  getVille(): string {
     return this.ville;
   }
-
-  getPhone(): string
-  {
+  getPhone(): string {
     return this.phone;
   }
-
-  getEmail(): string
-  {
+  getEmail(): string {
     return this.email;
   }
-  getPassword(): string
-  {
+  getPassword(): string {
     return this.password;
   }
-  getCpassword(): string
-  {
+  getCpassword(): string {
     return this.cpassword;
   }
 

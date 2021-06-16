@@ -1,9 +1,18 @@
-<div class="container" align="center">
-  <div class="content-container">
-    <span class="content-span full-width">
-      <h3> {{data.message}} <img src="../../../assets/images/icons/danger.png" alt=""></h3>
-    </span>
-  </div>
-  <button class="btn btn-sm btn-success mr-2" (click)="closeDialog()">Non</button>
-  <button class="btn btn-sm btn-danger">Oui</button>
+<div class="container">
+  <h1> Agenda Scheduler </h1>
+  <full-calendar [options]="calendarOptions">
+
+  </full-calendar>
 </div>
+<form [formGroup]="Date" (ngSubmit)="send()">
+  <input type="text" class="form-control" formControlName="title" name="title">
+  <input type="datetime-local" class="form-control" formControlName="start" name="start">
+  <input type="datetime-local" class="form-control" formControlName="end" name="end">
+  <button class="btn btn-sm btn-primary" type="submit"> send </button>
+</form>
+<!--<ejs-schedule-->
+<!--  height="850" width="1250"-->
+<!--  [(currentView)]="setView"-->
+<!--[(selectedDate)]="setDate"-->
+<!--[eventSettings]="eventObject">-->
+<!--</ejs-schedule>-->

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PatientService} from "../../../Services/patientservice/patient.service";
+import {PatientService} from "../../../Services/patientService/patient.service";
 import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.service";
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
 import {Title} from "@angular/platform-browser";
@@ -27,6 +27,8 @@ export class ListRendezvousComponent implements OnInit {
   patientInfo: Patient = JSON.parse(sessionStorage.getItem("patient"));
   handler:any = null;
   name: string = '';
+  payed = false;
+  token: string;
 
   accepted: [] = null;
   isAccepted: boolean = false
@@ -48,8 +50,8 @@ export class ListRendezvousComponent implements OnInit {
               private title: Title) {}
 
    ngOnInit(): void {
-     this.title.setTitle(" Liste Rendez-vous - DrAvicenne")
-     this.loadStripe();
+    this.loadStripe();
+    this.checkPayment();
     this.rdvService.p_notifications = 0;
     this.rdvService.pr_note = 0;
     this.rdvService.pw_note = 0;
@@ -160,8 +162,9 @@ export class ListRendezvousComponent implements OnInit {
       key: 'pk_test_51HxRkiCumzEESdU2Z1FzfCVAJyiVHyHifo0GeCMAyzHPFme6v6ahYeYbQPpD9BvXbAacO2yFQ8ETlKjo4pkHSHSh00qKzqUVK9',
       locale: 'auto',
       token: function (token: any) {
-        console.log(token)
+        sessionStorage.setItem("payment",JSON.stringify(token));
         alert('Paiement effectuer avec suucès !/');
+        location.reload();
       }
     });
 
@@ -172,8 +175,17 @@ export class ListRendezvousComponent implements OnInit {
     });
   }
 
-  loadStripe() {
+  rollback(): void {
+    sessionStorage.removeItem("payment");
+    location.reload();
+  }
 
+  checkPayment(): void{
+    this.token = JSON.parse(sessionStorage.getItem("payment"))
+    this.payed = this.token != null;
+  }
+
+  loadStripe() {
     if(!window.document.getElementById('stripe-script')) {
       let s = window.document.createElement("script");
       s.id = "stripe-script";

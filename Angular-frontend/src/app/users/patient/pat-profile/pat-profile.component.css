@@ -14,13 +14,19 @@ body {
     margin: 0 0 1rem 0;
 }
 
-.account-settings .user-profile .user-avatar img {
+.account-settings .user-profile .user-avatar .img {
     width: 150px;
     height: 150px;
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
     border-radius: 100px;
     margin-left: 15px;
+}
+
+.account-settings .user-profile .user-avatar .logo{
+  position: absolute;
+  top: 15%;
+  right: 18%;
 }
 
 .account-settings .user-profile h5.user-name {

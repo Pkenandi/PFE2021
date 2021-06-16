@@ -1,7 +1,7 @@
 import { DossierMedical } from '../../../Models/DossierMedical/dossier-medical';
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Patient } from 'src/app/Models/Patient/patient';
-import { PatientService } from 'src/app/Services/patientservice/patient.service';
+import { PatientService } from 'src/app/Services/patientService/patient.service';
 import { DossierMedicalService } from 'src/app/Services/dossierService/dossier-medical.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
@@ -66,7 +66,6 @@ export class DossierMedicalComponent implements OnInit {
               private title: Title) { }
 
   ngOnInit(): void {
-    this.title.setTitle(" Dossier - DrAvicenne ")
     this.findWithPatient();
   }
 

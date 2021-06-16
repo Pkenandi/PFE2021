@@ -22,7 +22,7 @@ export class AgendaService {
     return this.http.get<Agenda>(`${mainUrl}agenda/medecin/${cin}`);
   }
 
-  edit(agenda, id): Observable<Agenda>{
+  edit(agenda: Agenda, id: number): Observable<Agenda>{
     return this.http.put<Agenda>(`${mainUrl}agenda/edit/${id}`,agenda)
   }
 

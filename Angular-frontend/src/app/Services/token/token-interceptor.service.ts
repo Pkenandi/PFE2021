@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import {HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import { PatientService } from "../patientservice/patient.service";
+import { PatientService } from "../patientService/patient.service";
 
 @Injectable({
   providedIn: 'root'

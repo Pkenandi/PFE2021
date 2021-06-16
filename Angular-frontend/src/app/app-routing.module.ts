@@ -32,6 +32,7 @@ import {AdminLoginComponent} from "./users/administrateur/admin-login/admin-logi
 import {AdminListMedecinComponent} from "./users/administrateur/admin-list-medecin/admin-list-medecin.component";
 import {AdminListPatientComponent} from "./users/administrateur/admin-list-patient/admin-list-patient.component";
 import {ProfilePictureComponent} from "./components/profile-picture/profile-picture.component";
+import {ConfirmComponent} from "./components/confirm/confirm.component";
 
 
 const routes: Routes = [
@@ -59,6 +60,10 @@ const routes: Routes = [
   {
     path: 'user/profile-picture',
     component: ProfilePictureComponent
+  },
+  {
+    path: 'scheduler',
+    component: ConfirmComponent
   },
 
   // Patient

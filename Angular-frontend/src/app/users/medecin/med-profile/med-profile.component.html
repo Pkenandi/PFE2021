@@ -9,13 +9,13 @@
     <div class="profile-header-content">
       <div class="profile-header-img">
         <img *ngIf="medecin.picture !== null" src="assets/files/{{medecin.picture}}" alt="Photo de profile manquant" />
-        <img *ngIf="medecin.picture === null" src="assets/images/home/doctor.png" alt="Photo de profile manquant" />
+        <img *ngIf="medecin.picture === null" src="assets/images/icons/user_edit.png" alt="Photo de profile manquant"
+        style="background-color: whitesmoke;cursor:pointer;" (click)="setProfileModal(profile)" title="modifier la photo"/>
       </div>
 
       <div class="profile-header-info">
-        <h4 class="m-t-sm">{{ medecin.nom }} {{ medecin.prenom }}</h4>
+        <h4 class="m-t-sm">Dr {{ medecin.nom }} {{ medecin.prenom }}</h4>
         <p class="m-b-sm">{{medecin.specialite}}</p>
-        <p style="cursor:pointer;" (click)="setProfileModal(profile)"><img src="assets/images/icons/edit2.png" alt=""> Modifier</p>
       </div>
     </div>
 
@@ -31,7 +31,7 @@
           <div class="card-header bg-white border-0">
           </div>
           <div class="card-body">
-            <form [formGroup]="medecinInfo" (ngSubmit)="updateMedecin()">
+            <form [formGroup]="medecinInfo" (ngSubmit)="updateMedecin()" autocomplete="off">
               <div class="pl-lg-4">
                 <div class="row">
                   <div class="col-lg-6">
@@ -78,16 +78,41 @@
                   </div>
                   <div class="col-lg-4">
                     <div class="form-group focused">
-                      <label class="form-control-label" for="input-country">Specialité principale</label>
-                      <input type="text" id="input-country" class="form-control form-control-alternative"
-                             placeholder="Country" name="specialite" formControlName="specialite">
+                      <label class="form-control-label" for="specialite">Specialité</label>
+                      <select id="specialite" formControlName="specialite" name="specialite" class="form-select form-control"
+                              aria-label="Default select example">
+                        <option value="" disabled selected> Specialité</option>
+                        <option value="Anesthésiologie"> Anesthésiologie</option>
+                        <option value="Andrologie"> Andrologie</option>
+                        <option value="Immunologie"> Immunologie</option>
+                        <option value="Chirurgie"> Chirurgie</option>
+                        <option value="Chirurgie pédiatrique"> Chirurgie pédiatrique</option>
+                        <option value="Chirurgie maxillo-faciale"> Chirurgie maxillo-faciale</option>
+                        <option value="Dermatologie"> Dermatologie</option>
+                        <option value="Neurochirurgie"> Neurochirurgie</option>
+                        <option value="Néphrologie"> Néphrologie</option>
+                        <option value="Nutrition et maladies nutritionnelles"> Nutrition et maladies nutritionnelles</option>
+                        <option value="Hématologie"> Hématologie</option>
+                        <option value="Hépatologie"> Hépatologie</option>
+                        <option value="Infectiologie"> Infectiologie</option>
+                        <option value="Ophtalmologie"> Ophtalmologie</option>
+                        <option value="Pédiatrie"> Pédiatrie</option>
+                        <option value="Psychiatrie"> Psychiatrie</option>
+                        <option value="Pédopsychiatrie"> Pédopsychiatrie</option>
+                        <option value="Radiothérapie"> Radiothérapie</option>
+                        <option value="Obstétrique"> Obstétrique</option>
+                        <option value="Gastro-entérologie"> Gastro-entérologie</option>
+                        <option value="Urologie"> Urologie</option>
+                        <option value="Imagerie médicale"> Imagerie médicale</option>
+                        <option value="Radiothérapie carcinologique"> Radiothérapie carcinologique</option>
+                        <option value="Réanimation médicale"> Réanimation médicale</option>
+                        <option value="Médecine générale"> Médecine générale</option>
+                        <option value="Médecine interne"> Médecine interne</option>
+                        <option value="Médecine interne"> Médecine interne</option>
+                        <option value="Médecine d'urgence"> Médecine d'urgence</option>
+                        <option value="A definir plus tard"> Autres </option>
+                      </select>
                     </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <label> Autres spécialités : </label>
-                    <ul class="list-group list-group-flush" *ngFor="let item of specialite">
-                      <li class="list-group-item">{{item?.specialite}} <br> Description : {{item?.description}}</li>
-                    </ul>
                   </div>
                 </div>
               </div>

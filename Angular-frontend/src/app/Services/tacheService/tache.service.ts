@@ -21,6 +21,9 @@ export class TacheService {
     return this.subject.asObservable()
   }
 
+  getAllTasks(): Observable<Tache[]>{
+    return this.http.get<Tache[]>(`${mainUrl}tache`);
+  }
   create(tache): Observable<Tache>{
     return this.http.post<Tache>(`${mainUrl}tache`,tache);
   }
@@ -39,5 +42,9 @@ export class TacheService {
 
   getOne(id: number): Observable<Tache>{
     return this.http.get<Tache>(`${mainUrl}tache/${id}`);
+  }
+
+  findByDateAndHeure(date: Date, heure: string): Observable<Tache>{
+    return this.http.get<Tache>(`${mainUrl}tache/get/${date}/${heure}`);
   }
 }

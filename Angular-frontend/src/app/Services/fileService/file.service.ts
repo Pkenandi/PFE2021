@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpEvent} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {mainUrl} from "../../../environments/environment";
+import {Medecin} from "../../Models/Medecin/medecin";
+import {Patient} from "../../Models/Patient/patient";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,14 @@ export class FileService {
       reportProgress: true,
       observe: 'events'
     })
+  }
+
+  removePictureMedecin(cin: string): Observable<Medecin>{
+    return this.http.get<Medecin>(`${mainUrl}file/remove/medecin/${cin}`)
+  }
+
+  removePicturePatient(username: string): Observable<Patient>{
+    return this.http.get<Patient>(`${mainUrl}file/remove/patient/${username}`);
   }
 
   download(filename: string): Observable<HttpEvent<Blob>>{

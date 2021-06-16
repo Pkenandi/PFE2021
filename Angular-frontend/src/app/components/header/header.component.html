@@ -1,5 +1,5 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-<nav class="navbar sticky-top navbar-expand-lg navbar-light shadow bg-info">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light">
   <div class="container">
     <a class="navbar-brand" routerLink="" (click)="setTitle('Acceuil')">
       <img src="../../../assets/images/logo1.png" alt="Home"></a>
@@ -19,8 +19,8 @@
         </li>
 
         <li class="nav-item" *ngIf="!(patientService.isAuth() || medecinService.isAuth())">
-          <a class="nav-link text-light"
-             style="margin-left: 10px">
+          <a class="nav-link"
+             style="margin-left: 10px; color: black">
             <img src="../../../assets/images/cloud-off.png" alt=""> pas connecter </a>
         </li>
         <li>
@@ -33,20 +33,22 @@
               <li class="nav-item" *ngIf="patientService.isAuth()" style="margin-left: 600px">
                 <div class="account" routerLink="../pat/dashboard" (click)="reload()">
                     <img *ngIf="patientService.credentials" src="../../../assets/files/{{patientInfo.picture}}" alt="" class="rounded-circle">
-                    <img *ngIf="!patientService.credentials" src="../../../assets/images/home/patient.png" alt="" class="rounded-circle">
+                    <img *ngIf="!patientService.credentials" src="../../../assets/images/icons/user.png" alt="" class="rounded-circle"
+                    style="background-color: whitesmoke">
                   <span> dashboard </span> <i class="fas fa-caret-down" style="color: white"></i>
                 </div>
               </li>
               <li class="nav-item" *ngIf="medecinService.isAuth()" style="margin-left: 600px">
                 <div class="account" routerLink="../med/dashboard" (click)="reload()">
                   <img *ngIf="medecinService.credentials" src="../../../assets/files/{{medecinInfo.picture}}" alt="" class="rounded-circle">
-                  <img *ngIf="!medecinService.credentials" src="../../../assets/images/home/doctor.png" alt="" class="rounded-circle">
+                  <img *ngIf="!medecinService.credentials" src="../../../assets/images/icons/user.png" alt="" class="rounded-circle"
+                  style="background-color: whitesmoke">
                   <span> dashboard </span> <i class="fas fa-caret-down" style="color: white"></i>
                 </div>
               </li>
 
               <li class="nav-item ml-3" *ngIf="patientService.isAuth() || medecinService.isAuth()">
-                <div class="line">
+                <div class="line" style="color: black">
                   <img src="../../../assets/images/icons/online.png"> En ligne
                 </div>
               </li>

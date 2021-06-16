@@ -14,7 +14,7 @@ export class PatGuardGuard implements CanActivate {
   patientSession: Patient = JSON.parse(sessionStorage.getItem("patient"));
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot): boolean {
 
     if(this.patientSession != null){
       return true

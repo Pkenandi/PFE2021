@@ -21,54 +21,63 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6 col-sm-12 col-xl-6" *ngFor="let itr of medecins | searcheFilter: specialite | paginate: {itemsPerPage: 6, currentPage: page }">
-      <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" style="width: 500px; height: 140px; margin-bottom: 5px">
-          <div class="carousel-item active">
-            <div class="card" style="border-radius: 5px">
-              <div class="card-horizontal">
-                <div class="card-body row">
-                  <div class="col-3">
+
+    <div class="col-6 col-md-6 col-sm-12 col-lg-6">
+      <div *ngIf="medecins.length === 0" class="alert alert-info">
+        <h3> Pas des médecin disponible pour l'instant </h3>
+      </div>
+      <div *ngIf="medecins.length > 0">
+        <div *ngFor="let itr of medecins | searcheFilter: specialite | paginate: {itemsPerPage: 6, currentPage: page }">
+          <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner" style="width: 500px; height: 140px; margin-bottom: 5px">
+              <div class="carousel-item active">
+                <div class="card" style="border-radius: 5px">
+                  <div class="card-horizontal">
+                    <div class="card-body row">
+                      <div class="col-3">
                     <span *ngIf="itr.picture !== null">
                       <img src="../../../assets/files/{{itr.picture}}" alt="Profile" class="img-fluid rounded-circle w-60">
                     </span>
-                    <span *ngIf="itr.picture === null">
-                      <img src="../../../assets/images/home/doctor.png" alt="Profile" class="img-fluid rounded-circle w-60">
+                        <span *ngIf="itr.picture === null">
+                      <img src="../../../assets/images/icons/user.png" alt="Profile" class="img-fluid rounded-circle w-60">
                     </span>
-                  </div>
-                  <div class="col-5">
-                    <div class="card-title align-self-center mb-0">
-                      <h3>
+                      </div>
+                      <div class="col-5">
+                        <div class="card-title align-self-center mb-0">
+                          <h3>
                       <span style="font-weight: bold; color: #00aaff">
                         Dr {{itr?.prenom}} {{itr?.nom}}
                       </span>
-                        <br>
-                        <span style="font-family: 'Times New Roman', Times, serif; font-style: italic">
+                            <br>
+                            <span style="font-family: 'Times New Roman', Times, serif; font-style: italic">
                         {{itr?.specialite}}
                       </span>
-                      </h3>
-                      <h4 class="m-0"><img src="../../../assets/images/location.png" size="10"> {{itr?.ville}} </h4>
+                          </h3>
+                          <h4 class="m-0"><img src="../../../assets/images/location.png" size="10"> {{itr?.ville}} </h4>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 col-4">
+                        <ul class="social-links list-inline mb-0 row">
+                          <button routerLink="../../rendezVous" class="btn btn-info btn-sm mr-2" (click)="setCin(itr?.cin); reload()"><i class="far fa-calendar-alt"></i> Prendre rendez-vous</button>
+                        </ul>
+                        <ul class="social-links list-inline mt-3 row">
+                          <button class="btn btn-danger btn-sm mr-2" (click)="setTitle('Profile'); openProfileModal(content); setCin(itr?.cin)">Voir profile</button>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-4 col-4">
-                    <ul class="social-links list-inline mb-0 row">
-                      <button routerLink="../../rendezVous" class="btn btn-info btn-sm mr-2" (click)="setCin(itr?.cin); reload()"><i class="far fa-calendar-alt"></i> Prendre rendez-vous</button>
-                    </ul>
-                    <ul class="social-links list-inline mt-3 row">
-                      <button class="btn btn-danger btn-sm mr-2" (click)="setTitle('Profile'); openProfileModal(content); setCin(itr?.cin)">Voir profile</button>
-                    </ul>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="mt-5">
+          <pagination-controls (pageChange)="page = $event"></pagination-controls>
+        </div>
       </div>
-      <div class="mt-5">
-        <pagination-controls (pageChange)="page = $event"></pagination-controls>
-      </div>
+
     </div>
-    <div class="col-md-6 col-sm-12 col-lg-6" id="mapid">
+    <div class="col-6 col-md-6 col-sm-12 col-lg-6" id="mapid">
 
     </div>
   </div>

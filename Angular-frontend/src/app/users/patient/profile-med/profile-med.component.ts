@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MedecinService} from "../../../Services/medecinService/medecin.service";
-import {PatientService} from "../../../Services/patientservice/patient.service";
+import {PatientService} from "../../../Services/patientService/patient.service";
 import {UserService} from "../../../Services/userService/user.service";
 import {Subscription} from "rxjs";
 import {Medecin} from "../../../Models/Medecin/medecin";

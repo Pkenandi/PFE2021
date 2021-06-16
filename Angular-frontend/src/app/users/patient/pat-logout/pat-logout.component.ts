@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {PatientService} from "../../../Services/patientservice/patient.service";
+import {PatientService} from "../../../Services/patientService/patient.service";
 import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-pat-logout',
@@ -19,14 +18,8 @@ export class PatLogoutComponent implements OnInit {
     sessionStorage.removeItem("medecins");
     localStorage.removeItem("token");
     sessionStorage.removeItem("horraire");
-    this.router.navigate(['mon-compte']);
+
+    this.router.navigate(['mon-compte']).then();
   }
 
-  reload(): void {
-    setTimeout(
-      () => {
-        window.location.reload();
-      }, 1
-    )
-  }
 }

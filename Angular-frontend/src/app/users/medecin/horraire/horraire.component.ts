@@ -40,6 +40,8 @@ export class HorraireComponent implements OnInit {
 
   save(): void {
     this.horraire = this.horraireForm.value;
+    this.horraireForm.reset({});
+
     if (this.horraire.heure_fin <= this.horraire.heure_debut) {
       this.message = " Intervalle d'heure invalide "
       this.err = true;
@@ -51,7 +53,7 @@ export class HorraireComponent implements OnInit {
             this.ngOnInit();
           },
           (error: HttpErrorResponse) => {
-            this.message = " Ce <jour> de la semaine est deja pris dans votre horraire";
+            this.message = `Vous avez deja ajouter ${this.horraire.jour} dans votre emploi du temps !`;
             this.err = true;
             this.setIntervalTime();
           }

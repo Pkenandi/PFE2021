@@ -8,6 +8,7 @@ import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http"
 import {saveAs} from "file-saver";
 import {FileService} from "../../../Services/fileService/file.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RendezVousService} from "../../../Services/rendezvous/rendez-vous.service";
 
 @Component({
   selector: 'app-med-dashboard',
@@ -29,9 +30,9 @@ export class MedDashboardComponent implements OnInit {
   };
   formData = new FormData();
 
-  constructor(public _service: UserService,
-              public medecinService: MedecinService,
+  constructor(public medecinService: MedecinService,
               private fileService: FileService,
+              public rdvService: RendezVousService,
               private modalService: NgbModal,
               private title: Title) { }
 
@@ -53,6 +54,9 @@ export class MedDashboardComponent implements OnInit {
     });
   }
 
+  setTitle(title: string): void{
+    this.title.setTitle(title + " - DrAvicenne ")
+  }
   // Profile Pic
   onUploadFile(files: File[]): void {
     if(files[0].type === 'image/jpeg' || files[0].type === 'image/png' || files[0].type === 'image/gif'){
@@ -81,6 +85,18 @@ export class MedDashboardComponent implements OnInit {
           console.log(error);
         }
       )
+  }
+
+  removePicture(): void {
+    this.fileService.removePictureMedecin(this.medecinInfo.cin)
+      .subscribe(
+        (response) => {
+          this.reload();
+        },
+        (error: HttpErrorResponse) => {
+          this.reload();
+        }
+      );
   }
 
   private reportProgress(httpEvent: HttpEvent<string[] | Blob>): void {
